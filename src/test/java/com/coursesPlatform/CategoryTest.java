@@ -66,7 +66,7 @@ public class CategoryTest {
     @Test
     public void shouldSaveCategoryWhenTitleLengthCorrect() {
         //given
-        Category category =  new Category(RandomStringUtils.randomAlphanumeric(299));
+        Category category =  new Category(RandomStringUtils.randomAlphanumeric(255));
         //when
             categoryService.add(category);
         //then
