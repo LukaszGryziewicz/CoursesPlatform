@@ -14,16 +14,16 @@ public class CourseService {
         this.courseRepository = courseRepository;
     }
 
-    public void add(Course course){
+    public Course add(Course course) {
         Optional<Course> courseById = courseRepository.findCourseById(course.getId());
-        if ( courseById.isPresent() ){
+        if ( courseById.isPresent() ) {
             throw new IllegalStateException("course already exists");
         }
 
-        courseRepository.save(course);
+        return courseRepository.save(course);
     }
 
-    public List<Course> findAllCourses(){
-      return courseRepository.findAll();
+    public List<Course> findAllCourses() {
+        return courseRepository.findAll();
     }
 }

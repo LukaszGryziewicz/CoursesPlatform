@@ -13,14 +13,19 @@ public class CategoryService {
         this.categoryRepository = categoryRepository;
     }
 
-    public void add(Category category) {
+    public Category add(Category category) {
         Optional<Category> categoryById = categoryRepository.findCategoryById(category.getId());
 
         if ( categoryById.isPresent() ) {
             throw new IllegalStateException("Category already exists");
         }
+         if (category.getTitle().length() >= 300 ) {
+             throw new IllegalLengthException();
+         }
 
-        categoryRepository.save(category);
+
+
+       return categoryRepository.save(category);
     }
 
     public List<Category> findAllCategories() {
