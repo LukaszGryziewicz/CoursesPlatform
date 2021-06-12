@@ -9,6 +9,7 @@ import javax.persistence.Id;
 public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
     private String title;
     private String description;
 //    private Category category;
@@ -20,6 +21,14 @@ public class Course {
     }
 
     public Course() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getTitle() {
