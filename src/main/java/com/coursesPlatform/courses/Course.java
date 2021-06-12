@@ -6,7 +6,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.util.HashMap;
 
 @Entity
 public class Course {
@@ -15,13 +14,13 @@ public class Course {
     private Long id;
     private String title;
     private String description;
-    private Category category;
+    //    private Category category;
 
 
-    public Course(String title, String description, Category category) {
+    public Course(String title, String description ) {
         this.title = title;
         this.description = description;
-        this.category = category;
+//        this.category = category;
     }
 
     public Course() {
@@ -48,12 +47,8 @@ public class Course {
         this.description = description;
     }
 
-    public Category getCategory() {
-        return category;
-    }
 
-    public void setCategory(Category category) {
-        this.category = category;
-    }
+
+
 
 }
