@@ -1,6 +1,5 @@
 package com.coursesPlatform.lecture;
 
-import com.coursesPlatform.category.Category;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,6 +8,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/lecture")
+@CrossOrigin(origins = "http://localhost:4200/")
 public class LectureController {
     private final LectureService lectureService;
 
