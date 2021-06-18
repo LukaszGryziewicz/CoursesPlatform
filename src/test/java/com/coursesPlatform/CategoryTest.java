@@ -27,7 +27,7 @@ public class CategoryTest {
     @Test
     void shouldAddCategory() {
         //given
-        Category category = new Category("");
+        Category category = new Category("","");
         //when
         categoryService.add(category);
         //then
@@ -37,7 +37,7 @@ public class CategoryTest {
     @Test
     void shouldReturnListOfAllCategories() {
         //given
-        Category category = new Category("");
+        Category category = new Category("","");
         categoryRepository.save(category);
         //when
         List<Category> allCategories = categoryService.findAllCategories();
@@ -47,7 +47,7 @@ public class CategoryTest {
     @Test
     public void shouldThrowExceptionAfterTextIsTooLong() {
         //given
-        Category category =  new Category(RandomStringUtils.randomAlphanumeric(300));
+        Category category =  new Category(RandomStringUtils.randomAlphanumeric(300),"");
         //when
         Throwable thrown =  catchThrowable(() ->categoryService.add(category));
         //then
@@ -57,7 +57,7 @@ public class CategoryTest {
     @Test
     public void shouldThrowExceptionAboveThreeHundredsLetters() {
         //given
-        Category category =  new Category(RandomStringUtils.randomAlphanumeric(301));
+        Category category =  new Category(RandomStringUtils.randomAlphanumeric(301),"");
         //when
         Throwable thrown = catchThrowable(() ->categoryService.add(category));
         //then
@@ -66,7 +66,7 @@ public class CategoryTest {
     @Test
     public void shouldSaveCategoryWhenTitleLengthCorrect() {
         //given
-        Category category =  new Category(RandomStringUtils.randomAlphanumeric(255));
+        Category category =  new Category(RandomStringUtils.randomAlphanumeric(255),"");
         //when
             categoryService.add(category);
         //then

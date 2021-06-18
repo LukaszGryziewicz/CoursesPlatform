@@ -9,9 +9,11 @@ public class Category {
     @Column(nullable = false,updatable = false)
     private Long id;
     private String title;
+    private String description;
 
-    public Category(String title) {
+    public Category(String title, String description) {
         this.title = title;
+        this.description = description;
     }
 
     public Category() {
@@ -31,5 +33,13 @@ public class Category {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

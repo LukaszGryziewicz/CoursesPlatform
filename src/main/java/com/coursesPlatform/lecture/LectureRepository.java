@@ -6,4 +6,6 @@ import java.util.Optional;
 
 public interface LectureRepository extends JpaRepository<Lecture, Long> {
     Optional<Lecture> findLectureById(Long id);
+
+    Optional<Lecture>findLectureByTitleAndDescription(String title,String description);
 }

@@ -14,18 +14,17 @@ public class CategoryService {
     }
 
     public Category add(Category category) {
-        Optional<Category> categoryById = categoryRepository.findCategoryById(category.getId());
+        Optional<Category> titleAndDescription = categoryRepository.findCategoryByTitleAndDescription(category.getTitle(), category.getDescription());
 
-        if ( categoryById.isPresent() ) {
-            throw new IllegalStateException("Category already exists");
+        if ( titleAndDescription.isPresent() ) {
+            throw new IllegalStateException("Category with given title and description already exists");
         }
-         if (category.getTitle().length() >= 300 ) {
-             throw new IllegalLengthException();
-         }
+        if ( category.getTitle().length() >= 300 ) {
+            throw new IllegalLengthException();
+        }
 
 
-
-       return categoryRepository.save(category);
+        return categoryRepository.save(category);
     }
 
     public List<Category> findAllCategories() {

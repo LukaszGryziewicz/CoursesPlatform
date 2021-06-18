@@ -1,5 +1,6 @@
 package com.coursesPlatform.course;
 
+import com.coursesPlatform.category.IllegalLengthException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,9 +16,12 @@ public class CourseService {
     }
 
     public Course add(Course course) {
-        Optional<Course> courseById = courseRepository.findCourseById(course.getId());
-        if ( courseById.isPresent() ) {
-            throw new IllegalStateException("course already exists");
+        Optional<Course> titleAndDescription = courseRepository.findCourseByTitleAndDescription(course.getTitle(), course.getDescription());
+        if ( titleAndDescription.isPresent() ) {
+            throw new IllegalStateException("Course with given title and description already exists");
+        }
+        if ( course.getDescription().length() >= 300 ) {
+            throw new IllegalLengthException();
         }
 
         return courseRepository.save(course);

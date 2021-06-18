@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.transaction.Transactional;
+import java.math.BigDecimal;
+import java.time.Instant;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -24,7 +26,7 @@ public class LectureTest {
     @Test
     void shouldAddLecture() {
         //given
-        Lecture lecture = new Lecture("", "");
+        Lecture lecture = new Lecture("", "", BigDecimal.ONE, Instant.ofEpochSecond(1));
         //when
         lectureService.add(lecture);
         //then
@@ -34,7 +36,7 @@ public class LectureTest {
     @Test
     void shouldFindAllLectures() {
         //given
-        Lecture lecture = new Lecture("", "");
+        Lecture lecture = new Lecture("", "",BigDecimal.ONE,Instant.ofEpochSecond(1));
         //when
         lectureService.add(lecture);
         //then
