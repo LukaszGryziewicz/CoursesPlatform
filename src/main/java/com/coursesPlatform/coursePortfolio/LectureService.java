@@ -1,7 +1,5 @@
-package com.coursesPlatform.lecture;
+package com.coursesPlatform.coursePortfolio;
 
-import com.coursesPlatform.course.Course;
-import com.coursesPlatform.course.CourseRepository;
 import com.coursesPlatform.exceptions.CourseNotFoundException;
 import com.coursesPlatform.exceptions.IllegalLengthException;
 import org.springframework.stereotype.Service;
@@ -10,16 +8,16 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class LectureService {
+class LectureService {
     private final LectureRepository lectureRepository;
     private final CourseRepository courseRepository;
 
-    public LectureService(LectureRepository lectureRepository, CourseRepository courseRepository) {
+    LectureService(LectureRepository lectureRepository, CourseRepository courseRepository) {
         this.lectureRepository = lectureRepository;
         this.courseRepository = courseRepository;
     }
 
-    public Lecture add(Lecture lecture, String courseTitle) {
+    Lecture add(Lecture lecture, String courseTitle) {
         Optional<Course> courseByTitle = courseRepository.findCourseByTitle(courseTitle);
         courseByTitle.orElseThrow(CourseNotFoundException::new);
 
@@ -35,8 +33,7 @@ public class LectureService {
         return lectureRepository.save(lecture);
     }
 
-    public List<Lecture> findAllLectures() {
+    List<Lecture> findAllLectures() {
         return lectureRepository.findAll();
     }
-
 }

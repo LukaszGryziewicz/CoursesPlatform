@@ -1,4 +1,4 @@
-package com.coursesPlatform.category;
+package com.coursesPlatform.coursePortfolio;
 
 import com.coursesPlatform.exceptions.IllegalLengthException;
 import org.springframework.stereotype.Service;
@@ -7,14 +7,14 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class CategoryService {
+class CategoryService {
     private final CategoryRepository categoryRepository;
 
-    public CategoryService(CategoryRepository categoryRepository) {
+    CategoryService(CategoryRepository categoryRepository) {
         this.categoryRepository = categoryRepository;
     }
 
-    public Category add(Category category) {
+    Category add(Category category) {
         Optional<Category> titleAndDescription = categoryRepository.findCategoryByTitleAndDescription(category.getTitle(), category.getDescription());
 
         if ( titleAndDescription.isPresent() ) {
@@ -24,11 +24,10 @@ public class CategoryService {
             throw new IllegalLengthException();
         }
 
-
         return categoryRepository.save(category);
     }
 
-    public List<Category> findAllCategories() {
+    List<Category> findAllCategories() {
         return categoryRepository.findAll();
     }
 }

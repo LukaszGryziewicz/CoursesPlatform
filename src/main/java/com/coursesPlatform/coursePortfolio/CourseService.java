@@ -1,7 +1,5 @@
-package com.coursesPlatform.course;
+package com.coursesPlatform.coursePortfolio;
 
-import com.coursesPlatform.category.Category;
-import com.coursesPlatform.category.CategoryRepository;
 import com.coursesPlatform.exceptions.CategoryNotFoundException;
 import com.coursesPlatform.exceptions.IllegalLengthException;
 import org.springframework.stereotype.Service;
@@ -10,17 +8,17 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class CourseService {
+class CourseService {
 
     private final CourseRepository courseRepository;
     private final CategoryRepository categoryRepository;
 
-    public CourseService(CourseRepository courseRepository, CategoryRepository categoryRepository) {
+    CourseService(CourseRepository courseRepository, CategoryRepository categoryRepository) {
         this.courseRepository = courseRepository;
         this.categoryRepository = categoryRepository;
     }
 
-    public Course add(Course course, String categoryTitle) {
+    Course add(Course course, String categoryTitle) {
         Optional<Category> categoryByTitle = categoryRepository.findCategoryByTitle(categoryTitle);
         categoryByTitle.orElseThrow(CategoryNotFoundException::new);
 
@@ -36,7 +34,7 @@ public class CourseService {
         return courseRepository.save(course);
     }
 
-    public List<Course> findAllCourses() {
+    List<Course> findAllCourses() {
         return courseRepository.findAll();
     }
 }

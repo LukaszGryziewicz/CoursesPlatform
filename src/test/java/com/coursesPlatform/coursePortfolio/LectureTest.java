@@ -1,10 +1,5 @@
-package com.coursesPlatform;
+package com.coursesPlatform.coursePortfolio;
 
-import com.coursesPlatform.course.Course;
-import com.coursesPlatform.course.CourseRepository;
-import com.coursesPlatform.lecture.Lecture;
-import com.coursesPlatform.lecture.LectureRepository;
-import com.coursesPlatform.lecture.LectureService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

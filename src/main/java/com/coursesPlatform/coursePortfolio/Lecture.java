@@ -1,6 +1,5 @@
-package com.coursesPlatform.lecture;
+package com.coursesPlatform.coursePortfolio;
 
-import com.coursesPlatform.course.Course;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.*;
@@ -8,12 +7,13 @@ import java.math.BigDecimal;
 import java.time.Instant;
 
 @Entity
-public class Lecture {
+class Lecture {
     @Id()
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false, updatable = false)
     private Long id;
     private String title;
+    @Column(length = 300)
     private String description;
     private BigDecimal price;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "hh:mm")
@@ -24,50 +24,50 @@ public class Lecture {
     public Lecture() {
     }
 
-    public Lecture(String title, String description, BigDecimal price, Instant duration) {
+    Lecture(String title, String description, BigDecimal price, Instant duration) {
         this.title = title;
         this.description = description;
         this.price = price;
         this.duration = duration;
     }
 
-    public Long getId() {
+    Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    void setId(Long id) {
         this.id = id;
     }
 
-    public String getTitle() {
+    String getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
+    void setTitle(String title) {
         this.title = title;
     }
 
-    public String getDescription() {
+    String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
+    void setDescription(String description) {
         this.description = description;
     }
 
-    public BigDecimal getPrice() {
+    BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(BigDecimal price) {
+    void setPrice(BigDecimal price) {
         this.price = price;
     }
 
-    public Instant getDuration() {
+    Instant getDuration() {
         return duration;
     }
 
-    public void setDuration(Instant duration) {
+    void setDuration(Instant duration) {
         this.duration = duration;
     }
 }

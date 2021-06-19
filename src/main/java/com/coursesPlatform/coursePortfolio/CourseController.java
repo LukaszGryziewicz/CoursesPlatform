@@ -1,4 +1,4 @@
-package com.coursesPlatform.course;
+package com.coursesPlatform.coursePortfolio;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,24 +9,23 @@ import java.util.List;
 @RestController
 @RequestMapping("/course")
 @CrossOrigin(origins = "http://localhost:4200/")
-public class CourseController {
+class CourseController {
     private final CourseService courseService;
 
-    public CourseController(CourseService courseService) {
+    CourseController(CourseService courseService) {
         this.courseService = courseService;
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<Course>> getAllCourses() {
+    ResponseEntity<List<Course>> getAllCourses() {
         List<Course> allCourses = courseService.findAllCourses();
         return new ResponseEntity<>(allCourses, HttpStatus.OK);
     }
 
     @PostMapping("/add/{title}")
-    public ResponseEntity<Course> addNewCourse(@RequestBody Course course, @PathVariable("title") String categoryTitle) {
+    ResponseEntity<Course> addNewCourse(@RequestBody Course course, @PathVariable("title") String categoryTitle) {
         Course add = courseService.add(course, categoryTitle);
         return new ResponseEntity<>(add, HttpStatus.CREATED);
     }
-
 
 }
