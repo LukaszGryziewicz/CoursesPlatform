@@ -1,4 +1,4 @@
-package com.coursesPlatform.category;
+package com.coursesPlatform.exceptions;
 
 public class IllegalLengthException extends RuntimeException {
 

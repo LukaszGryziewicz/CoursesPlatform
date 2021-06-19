@@ -1,8 +1,9 @@
 package com.coursesPlatform.lecture;
 
-import com.coursesPlatform.category.IllegalLengthException;
 import com.coursesPlatform.course.Course;
 import com.coursesPlatform.course.CourseRepository;
+import com.coursesPlatform.exceptions.CourseNotFoundException;
+import com.coursesPlatform.exceptions.IllegalLengthException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

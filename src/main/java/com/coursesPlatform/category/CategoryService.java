@@ -1,5 +1,6 @@
 package com.coursesPlatform.category;
 
+import com.coursesPlatform.exceptions.IllegalLengthException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

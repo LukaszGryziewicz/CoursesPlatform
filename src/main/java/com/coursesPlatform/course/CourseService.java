@@ -2,7 +2,8 @@ package com.coursesPlatform.course;
 
 import com.coursesPlatform.category.Category;
 import com.coursesPlatform.category.CategoryRepository;
-import com.coursesPlatform.category.IllegalLengthException;
+import com.coursesPlatform.exceptions.CategoryNotFoundException;
+import com.coursesPlatform.exceptions.IllegalLengthException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.coursesPlatform.lecture;
+package com.coursesPlatform.exceptions;
 
 public class CourseNotFoundException extends RuntimeException {
     public CourseNotFoundException() {

@@ -3,14 +3,13 @@ package com.coursesPlatform;
 import com.coursesPlatform.category.Category;
 import com.coursesPlatform.category.CategoryRepository;
 import com.coursesPlatform.category.CategoryService;
-import com.coursesPlatform.category.IllegalLengthException;
+import com.coursesPlatform.exceptions.IllegalLengthException;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.transaction.Transactional;
-
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
