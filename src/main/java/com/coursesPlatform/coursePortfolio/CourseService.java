@@ -2,6 +2,7 @@ package com.coursesPlatform.coursePortfolio;
 
 import com.coursesPlatform.exceptions.CategoryNotFoundException;
 import com.coursesPlatform.exceptions.IllegalLengthException;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,6 +13,11 @@ class CourseService {
 
     private final CourseRepository courseRepository;
     private final CategoryRepository categoryRepository;
+    @Value("${title.length.limit}")
+    private int titleLengthLimit;
+    @Value("${description.length.limit}")
+    private int descriptionLengthLimit;
+
 
     CourseService(CourseRepository courseRepository, CategoryRepository categoryRepository) {
         this.courseRepository = courseRepository;
@@ -20,17 +26,20 @@ class CourseService {
 
     Course add(Course course, String categoryTitle) {
         Optional<Category> categoryByTitle = categoryRepository.findCategoryByTitle(categoryTitle);
-        categoryByTitle.orElseThrow(CategoryNotFoundException::new);
+        Category category = categoryByTitle.orElseThrow(CategoryNotFoundException::new);
 
         Optional<Course> titleAndDescription = courseRepository.findCourseByTitleAndDescription(course.getTitle(), course.getDescription());
         if ( titleAndDescription.isPresent() ) {
             throw new IllegalStateException("Course with given title and description already exists");
         }
-        if ( course.getDescription().length() >= 300 ) {
+        if ( course.getDescription().length() >= titleLengthLimit ) {
+            throw new IllegalLengthException();
+        }
+        if ( course.getDescription().length() >= descriptionLengthLimit ) {
             throw new IllegalLengthException();
         }
 
-        categoryByTitle.get().getCourses().add(course);
+        category.getCourses().add(course);
         return courseRepository.save(course);
     }
 

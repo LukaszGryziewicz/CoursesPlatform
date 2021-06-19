@@ -11,7 +11,7 @@ class Category {
     @Column(nullable = false, updatable = false)
     private Long id;
     private String title;
-    @Column(length = 300)
+    @Column(length = 1000)
     private String description;
     @OneToMany()
     private List<Course> courses = new ArrayList<>();

@@ -6,7 +6,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
-import java.time.Instant;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -24,7 +23,7 @@ public class LectureTest {
     void shouldAddLecture() {
         //given
         Course course = new Course("", "");
-        Lecture lecture = new Lecture("", "", BigDecimal.ONE, Instant.ofEpochSecond(1));
+        Lecture lecture = new Lecture("", "", BigDecimal.ONE, 1);
         courseRepository.save(course);
         //when
         lectureService.add(lecture, course.getTitle());
@@ -36,7 +35,7 @@ public class LectureTest {
     void shouldFindAllLectures() {
         //given
         Course course = new Course("", "");
-        Lecture lecture = new Lecture("", "", BigDecimal.ONE, Instant.ofEpochSecond(1));
+        Lecture lecture = new Lecture("", "", BigDecimal.ONE, 1);
         courseRepository.save(course);
         //when
         lectureService.add(lecture, course.getTitle());
