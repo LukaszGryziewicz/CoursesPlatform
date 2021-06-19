@@ -14,8 +14,6 @@ class Course {
     private String title;
     @Column(length = 1000)
     private String description;
-    @ManyToOne
-    private Category category;
     @OneToMany(mappedBy = "course", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private List<Lecture> lectures = new ArrayList<>();
 
@@ -58,5 +56,15 @@ class Course {
 
     void setLectures(List<Lecture> lectures) {
         this.lectures = lectures;
+    }
+
+    @Override
+    public String toString() {
+        return "Course{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", lectures=" + lectures +
+                '}';
     }
 }

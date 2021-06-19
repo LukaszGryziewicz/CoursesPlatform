@@ -15,7 +15,7 @@ import static org.assertj.core.api.Assertions.catchThrowable;
 
 @SpringBootTest
 @Transactional
-public class CategoryTest {
+public class CategoryServiceTest {
     @Autowired
     private CategoryRepository categoryRepository;
     @Autowired
@@ -24,7 +24,7 @@ public class CategoryTest {
     @Test
     void shouldAddCategory() {
         //given
-        Category category = new Category("","");
+        Category category = new Category("", "");
         //when
         categoryService.add(category);
         //then
