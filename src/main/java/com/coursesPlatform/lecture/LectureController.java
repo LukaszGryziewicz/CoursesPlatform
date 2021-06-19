@@ -15,15 +15,16 @@ public class LectureController {
     public LectureController(LectureService lectureService) {
         this.lectureService = lectureService;
     }
+
     @GetMapping("/all")
     public ResponseEntity<List<Lecture>> getAllLectures() {
         List<Lecture> allLectures = lectureService.findAllLectures();
         return new ResponseEntity<>(allLectures, HttpStatus.OK);
     }
 
-    @PostMapping("/add")
-    public ResponseEntity<Lecture> addNewLecture(@RequestBody Lecture lecture){
-        Lecture add = lectureService.add(lecture);
+    @PostMapping("/add/{title}")
+    public ResponseEntity<Lecture> addNewLecture(@RequestBody Lecture lecture, @PathVariable("title") String courseTitle) {
+        Lecture add = lectureService.add(lecture, courseTitle);
         return new ResponseEntity<>(add, HttpStatus.CREATED);
     }
 }

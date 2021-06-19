@@ -1,21 +1,29 @@
 package com.coursesPlatform.course;
 
+import com.coursesPlatform.category.Category;
+import com.coursesPlatform.lecture.Lecture;
+
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(nullable = false,updatable = false)
+    @Column(nullable = false, updatable = false)
     private Long id;
     private String title;
     private String description;
-//    private Category category;
-
+    @ManyToOne
+    private Category category;
+    @OneToMany(mappedBy = "course", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    private List<Lecture> lectures = new ArrayList<>();
 
     public Course(String title, String description) {
         this.title = title;
         this.description = description;
+
     }
 
     public Course() {
@@ -43,5 +51,13 @@ public class Course {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public List<Lecture> getLectures() {
+        return lectures;
+    }
+
+    public void setLectures(List<Lecture> lectures) {
+        this.lectures = lectures;
     }
 }

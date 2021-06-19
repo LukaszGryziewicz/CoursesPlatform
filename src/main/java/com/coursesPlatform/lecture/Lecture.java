@@ -1,5 +1,6 @@
 package com.coursesPlatform.lecture;
 
+import com.coursesPlatform.course.Course;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.*;
@@ -10,13 +11,15 @@ import java.time.Instant;
 public class Lecture {
     @Id()
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(nullable = false,updatable = false)
+    @Column(nullable = false, updatable = false)
     private Long id;
     private String title;
     private String description;
     private BigDecimal price;
-    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="hh:mm")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "hh:mm")
     private Instant duration;
+    @ManyToOne
+    private Course course;
 
     public Lecture() {
     }

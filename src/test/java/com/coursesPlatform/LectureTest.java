@@ -1,6 +1,7 @@
 package com.coursesPlatform;
 
-import com.coursesPlatform.category.Category;
+import com.coursesPlatform.course.Course;
+import com.coursesPlatform.course.CourseRepository;
 import com.coursesPlatform.lecture.Lecture;
 import com.coursesPlatform.lecture.LectureRepository;
 import com.coursesPlatform.lecture.LectureService;
@@ -11,7 +12,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.time.Instant;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -22,13 +22,17 @@ public class LectureTest {
     private LectureRepository lectureRepository;
     @Autowired
     private LectureService lectureService;
+    @Autowired
+    private CourseRepository courseRepository;
 
     @Test
     void shouldAddLecture() {
         //given
+        Course course = new Course("", "");
         Lecture lecture = new Lecture("", "", BigDecimal.ONE, Instant.ofEpochSecond(1));
+        courseRepository.save(course);
         //when
-        lectureService.add(lecture);
+        lectureService.add(lecture, course.getTitle());
         //then
         assertThat(lectureRepository.findAll()).contains(lecture);
     }
@@ -36,9 +40,11 @@ public class LectureTest {
     @Test
     void shouldFindAllLectures() {
         //given
-        Lecture lecture = new Lecture("", "",BigDecimal.ONE,Instant.ofEpochSecond(1));
+        Course course = new Course("", "");
+        Lecture lecture = new Lecture("", "", BigDecimal.ONE, Instant.ofEpochSecond(1));
+        courseRepository.save(course);
         //when
-        lectureService.add(lecture);
+        lectureService.add(lecture, course.getTitle());
         //then
         assertThat(lectureRepository.findAll()).contains(lecture);
     }
