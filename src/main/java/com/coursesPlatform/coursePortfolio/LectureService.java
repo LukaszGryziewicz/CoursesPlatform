@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 class LectureService {
@@ -17,31 +18,48 @@ class LectureService {
     @Value("${description.length.limit}")
     private int descriptionLengthLimit;
 
-    LectureService(LectureRepository lectureRepository, CourseRepository courseRepository) {
-        this.lectureRepository = lectureRepository;
-        this.courseRepository = courseRepository;
+    LectureService(LectureRepository lectureRepository, CourseRepository courseRepository) { this.lectureRepository = lectureRepository;this.courseRepository = courseRepository; }
+
+    private LectureDTO convertLectureToDTO(Lecture lecture){
+        return  new LectureDTO(
+                lecture.getTitle(),
+                lecture.getDescription(),
+                lecture.getPrice(),
+                lecture.getDuration()
+        );
     }
 
-    Lecture add(Lecture lecture, String courseTitle) {
+   private Lecture convertLectureDTOToLecture(LectureDTO lectureDTO){
+        Lecture lecture = new Lecture();
+        lecture.setTitle(lectureDTO.getTitle());
+        lecture.setDescription(lectureDTO.getDescription());
+        lecture.setDuration(lectureDTO.getDuration());
+        lecture.setPrice(lectureDTO.getPrice());
+        return lecture;
+    }
+
+    List<LectureDTO> findAllLectures(){
+        return lectureRepository.findAll()
+                .stream()
+                .map(this::convertLectureToDTO)
+                .collect(Collectors.toList());
+    }
+
+    LectureDTO add(LectureDTO lectureDTO, String courseTitle) {
         Optional<Course> courseByTitle = courseRepository.findCourseByTitle(courseTitle);
         Course course = courseByTitle.orElseThrow(CourseNotFoundException::new);
 
-        Optional<Lecture> titleAndDescription = lectureRepository.findLectureByTitleAndDescription(lecture.getTitle(), lecture.getDescription());
-        if ( titleAndDescription.isPresent() ) {
+        Optional<Lecture> lecture = lectureRepository.findLectureByTitleAndDescription(lectureDTO.getTitle(), lectureDTO.getDescription());
+        if ( lecture.isPresent()) {
             throw new IllegalStateException("Lecture with given title and description already exists");
         }
-        if ( lecture.getDescription().length() >= titleLengthLimit ) {
+        if ( lectureDTO.getTitle().length() >= titleLengthLimit ) {
             throw new IllegalLengthException();
         }
-        if ( lecture.getDescription().length() >= descriptionLengthLimit ) {
+        if ( lectureDTO.getDescription().length() >= descriptionLengthLimit ) {
             throw new IllegalLengthException();
         }
-
-        course.getLectures().add(lecture);
-        return lectureRepository.save(lecture);
-    }
-
-    List<Lecture> findAllLectures() {
-        return lectureRepository.findAll();
+        Lecture lecture1 = lectureRepository.save(convertLectureDTOToLecture(lectureDTO));
+        return  convertLectureToDTO(lecture1);
     }
 }

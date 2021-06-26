@@ -60,15 +60,15 @@ public class LectureControllerTest {
         categoryService.add(category);
         CourseDTO course = new CourseDTO("Abc", "Xyz");
         courseService.add(course, category.getTitle());
-        Lecture lecture = new Lecture("Abc", "Xyz", BigDecimal.ONE, 100);
-        lectureService.add(lecture, course.getTitle());
+        LectureDTO lectureDTO = new LectureDTO("Abc", "Xyz", BigDecimal.ONE, 100);
+        lectureService.add(lectureDTO, course.getTitle());
         //expect
         mockMvc.perform(get("/lecture/all"))
                 .andExpect(status().isOk())
                 .andDo(print())
-                .andExpect(jsonPath("$[0].title").value(lecture.getTitle()))
-                .andExpect(jsonPath("$[0].description").value(lecture.getDescription()))
-                .andExpect(jsonPath("$[0].price").value(lecture.getPrice()))
-                .andExpect(jsonPath("$[0].duration").value(lecture.getDuration()));
+                .andExpect(jsonPath("$[0].title").value(lectureDTO.getTitle()))
+                .andExpect(jsonPath("$[0].description").value(lectureDTO.getDescription()))
+                .andExpect(jsonPath("$[0].price").value(lectureDTO.getPrice()))
+                .andExpect(jsonPath("$[0].duration").value(lectureDTO.getDuration()));
     }
 }
