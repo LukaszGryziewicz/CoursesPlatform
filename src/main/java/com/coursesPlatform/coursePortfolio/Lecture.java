@@ -1,27 +1,26 @@
-package com.coursesPlatform.lecture;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
+package com.coursesPlatform.coursePortfolio;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.time.Instant;
 
 @Entity
-public class Lecture {
+class Lecture {
     @Id()
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(nullable = false,updatable = false)
+    @Column(nullable = false, updatable = false)
     private Long id;
     private String title;
+    @Column(length = 1000)
     private String description;
     private BigDecimal price;
-    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="hh:mm")
-    private Instant duration;
+    private int duration;
+    @ManyToOne
+    private Course course;
 
     public Lecture() {
     }
 
-    public Lecture(String title, String description, BigDecimal price, Instant duration) {
+    Lecture(String title, String description, BigDecimal price, int duration) {
         this.title = title;
         this.description = description;
         this.price = price;
@@ -60,11 +59,11 @@ public class Lecture {
         this.price = price;
     }
 
-    public Instant getDuration() {
+    public int getDuration() {
         return duration;
     }
 
-    public void setDuration(Instant duration) {
+    public void setDuration(int duration) {
         this.duration = duration;
     }
 }

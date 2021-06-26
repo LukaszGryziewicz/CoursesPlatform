@@ -1,16 +1,13 @@
-package com.coursesPlatform;
+package com.coursesPlatform.coursePortfolio;
 
-import com.coursesPlatform.category.Category;
-import com.coursesPlatform.category.CategoryRepository;
-import com.coursesPlatform.category.CategoryService;
-import com.coursesPlatform.category.IllegalLengthException;
+import com.coursesPlatform.exceptions.IllegalLengthException;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.transaction.Transactional;
-
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -18,7 +15,7 @@ import static org.assertj.core.api.Assertions.catchThrowable;
 
 @SpringBootTest
 @Transactional
-public class CategoryTest {
+public class CategoryServiceTest {
     @Autowired
     private CategoryRepository categoryRepository;
     @Autowired
@@ -27,7 +24,7 @@ public class CategoryTest {
     @Test
     void shouldAddCategory() {
         //given
-        Category category = new Category("","");
+        Category category = new Category("", "");
         //when
         categoryService.add(category);
         //then
@@ -42,7 +39,7 @@ public class CategoryTest {
         //when
         List<Category> allCategories = categoryService.findAllCategories();
         //then
-        assertThat(allCategories).contains(category);
+        Assertions.assertThat(allCategories).contains(category);
     }
     @Test
     public void shouldThrowExceptionAfterTextIsTooLong() {

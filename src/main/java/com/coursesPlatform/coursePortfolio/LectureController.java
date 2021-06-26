@@ -1,4 +1,4 @@
-package com.coursesPlatform.lecture;
+package com.coursesPlatform.coursePortfolio;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,21 +9,22 @@ import java.util.List;
 @RestController
 @RequestMapping("/lecture")
 @CrossOrigin(origins = "http://localhost:4200/")
-public class LectureController {
+class LectureController {
     private final LectureService lectureService;
 
-    public LectureController(LectureService lectureService) {
+    LectureController(LectureService lectureService) {
         this.lectureService = lectureService;
     }
+
     @GetMapping("/all")
-    public ResponseEntity<List<Lecture>> getAllLectures() {
+    ResponseEntity<List<Lecture>> getAllLectures() {
         List<Lecture> allLectures = lectureService.findAllLectures();
         return new ResponseEntity<>(allLectures, HttpStatus.OK);
     }
 
-    @PostMapping("/add")
-    public ResponseEntity<Lecture> addNewLecture(@RequestBody Lecture lecture){
-        Lecture add = lectureService.add(lecture);
+    @PostMapping("/add/{title}")
+    ResponseEntity<Lecture> addNewLecture(@RequestBody Lecture lecture, @PathVariable("title") String courseTitle) {
+        Lecture add = lectureService.add(lecture, courseTitle);
         return new ResponseEntity<>(add, HttpStatus.CREATED);
     }
 }
