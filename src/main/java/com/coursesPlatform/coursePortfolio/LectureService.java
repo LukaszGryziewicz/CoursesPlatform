@@ -20,7 +20,7 @@ class LectureService {
 
     LectureService(LectureRepository lectureRepository, CourseRepository courseRepository) { this.lectureRepository = lectureRepository;this.courseRepository = courseRepository; }
 
-    LectureDTO convertLectureTOTDO(Lecture lecture){
+    private LectureDTO convertLectureToDTO(Lecture lecture){
         return  new LectureDTO(
                 lecture.getTitle(),
                 lecture.getDescription(),
@@ -28,7 +28,8 @@ class LectureService {
                 lecture.getDuration()
         );
     }
-    Lecture convertLectureDTOToLecture(LectureDTO lectureDTO){
+
+   private Lecture convertLectureDTOToLecture(LectureDTO lectureDTO){
         Lecture lecture = new Lecture();
         lecture.setTitle(lectureDTO.getTitle());
         lecture.setDescription(lectureDTO.getDescription());
@@ -36,10 +37,13 @@ class LectureService {
         lecture.setPrice(lectureDTO.getPrice());
         return lecture;
     }
-    List<LectureDTO> findAllLectures(){
-        return lectureRepository.findAll().stream().map(this::convertLectureTOTDO).collect(Collectors.toList());
-    }
 
+    List<LectureDTO> findAllLectures(){
+        return lectureRepository.findAll()
+                .stream()
+                .map(this::convertLectureToDTO)
+                .collect(Collectors.toList());
+    }
 
     LectureDTO add(LectureDTO lectureDTO, String courseTitle) {
         Optional<Course> courseByTitle = courseRepository.findCourseByTitle(courseTitle);
@@ -56,10 +60,6 @@ class LectureService {
             throw new IllegalLengthException();
         }
         Lecture lecture1 = lectureRepository.save(convertLectureDTOToLecture(lectureDTO));
-        return  convertLectureTOTDO(lecture1);
-//        course.getLectures().add(convertLectureDTOToLecture(lecture));
-//        return lectureRepository.save(convertLectureDTOToLecture(lecture));
+        return  convertLectureToDTO(lecture1);
     }
-
-
 }
