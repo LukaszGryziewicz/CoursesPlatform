@@ -23,23 +23,23 @@ public class LectureTest {
     void shouldAddLecture() {
         //given
         Course course = new Course("", "");
-        Lecture lecture = new Lecture("", "", BigDecimal.ONE, 1);
+        LectureDTO lectureDTO = new LectureDTO("", "", BigDecimal.ONE, 1);
         courseRepository.save(course);
         //when
-        lectureService.add(lecture, course.getTitle());
+        lectureService.add(lectureDTO, course.getTitle());
         //then
-        assertThat(lectureRepository.findAll()).contains(lecture);
+        assertThat(lectureService.findAllLectures()).containsExactlyInAnyOrder(lectureDTO);
     }
 
     @Test
     void shouldFindAllLectures() {
         //given
         Course course = new Course("", "");
-        Lecture lecture = new Lecture("", "", BigDecimal.ONE, 1);
+        LectureDTO lectureDTO = new LectureDTO("", "", BigDecimal.ONE, 1);
         courseRepository.save(course);
         //when
-        lectureService.add(lecture, course.getTitle());
+        lectureService.add(lectureDTO, course.getTitle());
         //then
-        assertThat(lectureRepository.findAll()).contains(lecture);
+        assertThat(lectureService.findAllLectures()).contains((lectureDTO));
     }
 }
