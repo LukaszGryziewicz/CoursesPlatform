@@ -35,7 +35,7 @@ public class LectureControllerTest {
     @Test
     public void shouldAddLecture() throws Exception {
         //given
-        Category category = new Category("IT", "ABC");
+        CategoryDTO category = new CategoryDTO("IT", "ABC");
         categoryService.add(category);
         Course course = new Course("Abc", "Xyz");
         courseService.add(course, category.getTitle());
@@ -56,7 +56,7 @@ public class LectureControllerTest {
     @Test
     public void shouldReturnAllLectures() throws Exception {
         //given
-        Category category = new Category("IT", "ABC");
+        CategoryDTO category = new CategoryDTO("IT", "ABC");
         categoryService.add(category);
         Course course = new Course("Abc", "Xyz");
         courseService.add(course, category.getTitle());
