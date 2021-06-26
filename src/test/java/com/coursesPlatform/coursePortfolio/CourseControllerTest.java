@@ -51,7 +51,7 @@ public class CourseControllerTest {
         //given
         CategoryDTO category = new CategoryDTO("IT", "ABC");
         categoryService.add(category);
-        Course course = new Course("Abc", "Xyz");
+        CourseDTO course = new CourseDTO("Abc", "Xyz");
         courseService.add(course, category.getTitle());
         //expect
         mockMvc.perform(get("/course/all"))

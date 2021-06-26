@@ -37,7 +37,7 @@ public class LectureControllerTest {
         //given
         CategoryDTO category = new CategoryDTO("IT", "ABC");
         categoryService.add(category);
-        Course course = new Course("Abc", "Xyz");
+        CourseDTO course = new CourseDTO("Abc", "Xyz");
         courseService.add(course, category.getTitle());
         Lecture lecture = new Lecture("Abc", "Xyz", BigDecimal.ONE, 100);
         String content = objectMapper.writeValueAsString(lecture);
@@ -58,7 +58,7 @@ public class LectureControllerTest {
         //given
         CategoryDTO category = new CategoryDTO("IT", "ABC");
         categoryService.add(category);
-        Course course = new Course("Abc", "Xyz");
+        CourseDTO course = new CourseDTO("Abc", "Xyz");
         courseService.add(course, category.getTitle());
         Lecture lecture = new Lecture("Abc", "Xyz", BigDecimal.ONE, 100);
         lectureService.add(lecture, course.getTitle());

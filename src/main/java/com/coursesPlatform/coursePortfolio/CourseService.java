@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 class CourseService {
@@ -24,26 +25,45 @@ class CourseService {
         this.categoryRepository = categoryRepository;
     }
 
-    Course add(Course course, String categoryTitle) {
+    CourseDTO add(CourseDTO courseDTO, String categoryTitle) {
         Optional<Category> categoryByTitle = categoryRepository.findCategoryByTitle(categoryTitle);
         Category category = categoryByTitle.orElseThrow(CategoryNotFoundException::new);
 
-        Optional<Course> titleAndDescription = courseRepository.findCourseByTitleAndDescription(course.getTitle(), course.getDescription());
-        if ( titleAndDescription.isPresent() ) {
+        Optional<Course> course = courseRepository
+                .findCourseByTitleAndDescription(courseDTO.getTitle(), courseDTO.getDescription());
+        if ( course.isPresent() ) {
             throw new IllegalStateException("Course with given title and description already exists");
         }
-        if ( course.getDescription().length() >= titleLengthLimit ) {
+        if ( courseDTO.getDescription().length() >= titleLengthLimit ) {
             throw new IllegalLengthException();
         }
-        if ( course.getDescription().length() >= descriptionLengthLimit ) {
+        if ( courseDTO.getDescription().length() >= descriptionLengthLimit ) {
             throw new IllegalLengthException();
         }
 
-        category.getCourses().add(course);
-        return courseRepository.save(course);
+        Course savedCourse = courseRepository.save(convertDTOToCourse(courseDTO));
+        return convertCourseToDTO(savedCourse);
     }
 
-    List<Course> findAllCourses() {
-        return courseRepository.findAll();
+    List<CourseDTO> findAllCourses() {
+        return courseRepository.findAll()
+                .stream()
+                .map(this::convertCourseToDTO)
+                .collect(Collectors.toList());
+    }
+
+    private CourseDTO convertCourseToDTO(Course course) {
+        return new CourseDTO(
+                course.getTitle(),
+                course.getDescription()
+        );
+    }
+
+    private Course convertDTOToCourse(CourseDTO courseDTO) {
+        Course course = new Course();
+        course.setTitle(courseDTO.getTitle());
+        course.setDescription(courseDTO.getDescription());
+        return course;
+
     }
 }

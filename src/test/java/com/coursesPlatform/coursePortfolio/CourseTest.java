@@ -18,29 +18,31 @@ public class CourseTest {
     private CourseService courseService;
     @Autowired
     private CategoryRepository categoryRepository;
+    @Autowired
+    private CategoryService categoryService;
 
     @Test
     public void shouldAddCourse() {
         //given
-        Category category = new Category("", "");
-        Course course = new Course("", "");
-        categoryRepository.save(category);
+        CategoryDTO category = new CategoryDTO("", "");
+        CourseDTO course = new CourseDTO("", "");
+        categoryService.add(category);
         //when
         courseService.add(course, category.getTitle());
         //then
-        assertThat(courseRepository.findAll()).contains(course);
-        assertThat(category.getCourses()).contains(course);
+        assertThat(courseService.findAllCourses()).contains(course);
+        assertThat(categoryService.findAllCategories()).contains(category);
     }
 
     @Test
     public void shouldReturnAllCourses() {
         //given
-        Category category = new Category("", "");
-        Course course = new Course("", "");
-        courseRepository.save(course);
-        categoryRepository.save(category);
+        CategoryDTO category = new CategoryDTO("", "");
+        CourseDTO course = new CourseDTO("", "");
+        categoryService.add(category);
+        courseService.add(course,category.getTitle());
         //when
-        List<Course> allCourses = courseService.findAllCourses();
+        List<CourseDTO> allCourses = courseService.findAllCourses();
         //then
         assertThat(allCourses).contains(course);
     }
