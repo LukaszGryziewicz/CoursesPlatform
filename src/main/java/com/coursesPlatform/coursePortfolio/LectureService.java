@@ -40,21 +40,6 @@ class LectureService {
         return lectureRepository.findAll().stream().map(this::convertLectureTOTDO).collect(Collectors.toList());
     }
 
-//    LectureDTO add(LectureDTO lectureDTO){
-//        Optional<Lecture> lecture= lectureRepository
-//        .findLectureByTitleAndDescription(lectureDTO.getTitle(), lectureDTO.getDescription());
-//        if (lecture.isPresent()){
-//            throw new IllegalStateException("Lecture with given title and description is not kozak");
-//        }
-//        if (lectureDTO.getTitle().length() >= titleLengthLimit){
-//            throw new IllegalLengthException();
-//        }
-//        if (lectureDTO.getDescription().length() >=descriptionLengthLimit){
-//            throw new IllegalLengthException();
-//        }
-//        Lecture lecture1  = lectureRepository.save(convertLectureDTOToLecture(lectureDTO));
-//        return convertLectureTOTDO(lecture1);
-//    }
 
     LectureDTO add(LectureDTO lectureDTO, String courseTitle) {
         Optional<Course> courseByTitle = courseRepository.findCourseByTitle(courseTitle);
