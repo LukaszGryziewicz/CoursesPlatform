@@ -17,14 +17,14 @@ class CourseController {
     }
 
     @GetMapping("/all")
-    ResponseEntity<List<Course>> getAllCourses() {
-        List<Course> allCourses = courseService.findAllCourses();
+    ResponseEntity<List<CourseDTO>> getAllCourses() {
+        List<CourseDTO> allCourses = courseService.findAllCourses();
         return new ResponseEntity<>(allCourses, HttpStatus.OK);
     }
 
     @PostMapping("/add/{title}")
-    ResponseEntity<Course> addNewCourse(@RequestBody Course course, @PathVariable("title") String categoryTitle) {
-        Course add = courseService.add(course, categoryTitle);
+    ResponseEntity<CourseDTO> addNewCourse(@RequestBody CourseDTO courseDTO, @PathVariable("title") String courseTitle) {
+        CourseDTO add = courseService.add(courseDTO, courseTitle);
         return new ResponseEntity<>(add, HttpStatus.CREATED);
     }
 
