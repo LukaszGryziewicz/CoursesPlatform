@@ -17,14 +17,14 @@ class CategoryController {
     }
 
     @GetMapping("/all")
-    ResponseEntity<List<Category>> getAllCategories() {
-        List<Category> allCourses = categoryService.findAllCategories();
+    ResponseEntity<List<CategoryDTO>> getAllCategories() {
+        List<CategoryDTO> allCourses = categoryService.findAllCategories();
         return new ResponseEntity<>(allCourses, HttpStatus.OK);
     }
 
     @PostMapping("/add")
-    ResponseEntity<Category> addNewCategory(@RequestBody Category category) {
-        Category add = categoryService.add(category);
+    ResponseEntity<CategoryDTO> addNewCategory(@RequestBody CategoryDTO categoryDTO) {
+        CategoryDTO add = categoryService.add(categoryDTO);
         return new ResponseEntity<>(add, HttpStatus.CREATED);
     }
 

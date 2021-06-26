@@ -48,8 +48,8 @@ public class CategoryControllerTest {
     @Test
     void shouldAddCategory() throws Exception {
         //given
-        Category category = new Category("abc", "def");
-        Category category2 = new Category("xyz", "sadf");
+        CategoryDTO category = new CategoryDTO("abc", "def");
+        CategoryDTO category2 = new CategoryDTO("xyz", "sadf");
         String content = objectMapper.writeValueAsString(category);
         //expect
         mockMvc.perform(
@@ -75,7 +75,7 @@ public class CategoryControllerTest {
     @Test
     void shouldReturnAllCategories() throws Exception {
         //given
-        Category category = new Category("Cleaning", "abc");
+        CategoryDTO category = new CategoryDTO("Cleaning", "abc");
         categoryService.add(category);
         //expect
         this.mockMvc.perform(get("/category/all")).andDo(print())

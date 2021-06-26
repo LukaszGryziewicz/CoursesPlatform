@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 class CategoryService {
@@ -20,24 +21,45 @@ class CategoryService {
         this.categoryRepository = categoryRepository;
     }
 
-    Category add(Category category) {
+    CategoryDTO convertCategoryToDTO(Category category) {
+        return new CategoryDTO(
+                category.getTitle(),
+                category.getDescription()
+        );
+    }
 
-        Optional<Category> titleAndDescription = categoryRepository.findCategoryByTitleAndDescription(category.getTitle(), category.getDescription());
+    Category convertDTOToCategory(CategoryDTO categoryDTO) {
+        Category category = new Category();
+        category.setTitle(categoryDTO.getTitle());
+        category.setDescription(categoryDTO.getDescription());
+        return category;
+
+    }
+
+    List<CategoryDTO> findAllCategories() {
+        return categoryRepository.findAll()
+                .stream()
+                .map(this::convertCategoryToDTO)
+                .collect(Collectors.toList());
+    }
+
+    CategoryDTO add(CategoryDTO categoryDTO) {
+
+        Optional<Category> titleAndDescription = categoryRepository
+                .findCategoryByTitleAndDescription(categoryDTO.getTitle(),
+                        categoryDTO.getDescription());
 
         if ( titleAndDescription.isPresent() ) {
             throw new IllegalStateException("Category with given title and description already exists");
         }
-        if ( category.getTitle().length() >= titleLengthLimit ) {
+        if ( categoryDTO.getTitle().length() >= titleLengthLimit ) {
             throw new IllegalLengthException();
         }
-        if ( category.getDescription().length() >= descriptionLengthLimit ) {
+        if ( categoryDTO.getDescription().length() >= descriptionLengthLimit ) {
             throw new IllegalLengthException();
         }
 
-        return categoryRepository.save(category);
-    }
-
-    List<Category> findAllCategories() {
-        return categoryRepository.findAll();
+        Category category = categoryRepository.save(convertDTOToCategory(categoryDTO));
+        return convertCategoryToDTO(category);
     }
 }

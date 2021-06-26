@@ -32,7 +32,7 @@ public class CourseControllerTest {
     @Test
     void shouldAddCourse() throws Exception {
         //given
-        Category category = new Category("IT", "ABC");
+        CategoryDTO category = new CategoryDTO("IT", "ABC");
         categoryService.add(category);
         Course course = new Course("Abc", "Xyz");
         String content = objectMapper.writeValueAsString(course);
@@ -49,7 +49,7 @@ public class CourseControllerTest {
     @Test
     void shouldReturnAllCourses() throws Exception {
         //given
-        Category category = new Category("IT", "ABC");
+        CategoryDTO category = new CategoryDTO("IT", "ABC");
         categoryService.add(category);
         Course course = new Course("Abc", "Xyz");
         courseService.add(course, category.getTitle());
