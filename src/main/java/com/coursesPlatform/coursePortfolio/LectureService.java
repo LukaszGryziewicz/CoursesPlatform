@@ -40,38 +40,38 @@ class LectureService {
         return lectureRepository.findAll().stream().map(this::convertLectureTOTDO).collect(Collectors.toList());
     }
 
-    LectureDTO add(LectureDTO lectureDTO){
-        Optional<Lecture> lecture= lectureRepository
-        .findLectureByTitleAndDescription(lectureDTO.getTitle(), lectureDTO.getDescription());
-        if (lecture.isPresent()){
-            throw new IllegalStateException("Lecture with given title and description is not kozak");
-        }
-        if (lectureDTO.getTitle().length() >= titleLengthLimit){
-            throw new IllegalLengthException();
-        }
-        if (lectureDTO.getDescription().length() >=descriptionLengthLimit){
-            throw new IllegalLengthException();
-        }
-        Lecture lecture1  = lectureRepository.save(convertLectureDTOToLecture(lectureDTO));
-        return convertLectureTOTDO(lecture1);
-    }
+//    LectureDTO add(LectureDTO lectureDTO){
+//        Optional<Lecture> lecture= lectureRepository
+//        .findLectureByTitleAndDescription(lectureDTO.getTitle(), lectureDTO.getDescription());
+//        if (lecture.isPresent()){
+//            throw new IllegalStateException("Lecture with given title and description is not kozak");
+//        }
+//        if (lectureDTO.getTitle().length() >= titleLengthLimit){
+//            throw new IllegalLengthException();
+//        }
+//        if (lectureDTO.getDescription().length() >=descriptionLengthLimit){
+//            throw new IllegalLengthException();
+//        }
+//        Lecture lecture1  = lectureRepository.save(convertLectureDTOToLecture(lectureDTO));
+//        return convertLectureTOTDO(lecture1);
+//    }
 
-    Lecture add(LectureDTO lecture, String courseTitle) {
+    LectureDTO add(LectureDTO lectureDTO, String courseTitle) {
         Optional<Course> courseByTitle = courseRepository.findCourseByTitle(courseTitle);
         Course course = courseByTitle.orElseThrow(CourseNotFoundException::new);
 
-        Optional<Lecture> titleAndDescription = lectureRepository.findLectureByTitleAndDescription(lecture.getTitle(), lecture.getDescription());
-        if ( titleAndDescription.isPresent() ) {
+        Optional<Lecture> lecture = lectureRepository.findLectureByTitleAndDescription(lectureDTO.getTitle(), lectureDTO.getDescription());
+        if ( lecture.isPresent()) {
             throw new IllegalStateException("Lecture with given title and description already exists");
         }
-        if ( lecture.getDescription().length() >= titleLengthLimit ) {
+        if ( lectureDTO.getTitle().length() >= titleLengthLimit ) {
             throw new IllegalLengthException();
         }
-        if ( lecture.getDescription().length() >= descriptionLengthLimit ) {
+        if ( lectureDTO.getDescription().length() >= descriptionLengthLimit ) {
             throw new IllegalLengthException();
         }
-        Lecture lectures = lectureRepository.save(convertLectureDTOToLecture(lecture));
-        return  convertLectureDTOToLecture(lecture);
+        Lecture lecture1 = lectureRepository.save(convertLectureDTOToLecture(lectureDTO));
+        return  convertLectureTOTDO(lecture1);
 //        course.getLectures().add(convertLectureDTOToLecture(lecture));
 //        return lectureRepository.save(convertLectureDTOToLecture(lecture));
     }

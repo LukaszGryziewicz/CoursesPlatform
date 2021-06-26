@@ -24,7 +24,7 @@ class LectureController {
 
     @PostMapping("/add/{title}")
     ResponseEntity<LectureDTO> addNewLecture(@RequestBody LectureDTO lectureDTO, @PathVariable("title") String courseTitle) {
-        LectureDTO add = lectureService.add(lectureDTO);
+        LectureDTO add = lectureService.add(lectureDTO, courseTitle);
         return new ResponseEntity<>(add, HttpStatus.CREATED);
     }
 }
