@@ -7,7 +7,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toList;
 
 @Service
 class CategoryService {
@@ -47,7 +48,7 @@ class CategoryService {
         return categoryRepository.findAll()
                 .stream()
                 .map(this::convertCategoryToDTO)
-                .collect(Collectors.toList());
+                .collect(toList());
     }
 
     CategoryDTO add(CategoryDTO categoryDTO) {
@@ -80,6 +81,6 @@ class CategoryService {
         return category.getCourses()
                 .stream()
                 .map(this::convertCourseToDTO)
-                .collect(Collectors.toList());
+                .collect(toList());
     }
 }

@@ -57,7 +57,7 @@ class Course {
         this.lectures = lectures;
     }
 
-    void addToLectures(Lecture lecture) {
+    void add(Lecture lecture) {
         lectures.add(lecture);
     }
 

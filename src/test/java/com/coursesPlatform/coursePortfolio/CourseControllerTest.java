@@ -80,5 +80,4 @@ public class CourseControllerTest {
                 .andExpect(jsonPath("$[0].price").value(lecture.getPrice()))
                 .andExpect(jsonPath("$[0].duration").value(lecture.getDuration()));
     }
-
 }

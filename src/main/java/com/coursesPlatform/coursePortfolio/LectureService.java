@@ -63,7 +63,7 @@ class LectureService {
             throw new IllegalLengthException();
         }
         Lecture savedLecture = lectureRepository.save(convertLectureDTOToLecture(lectureDTO));
-        course.addToLectures(savedLecture);
+        course.add(savedLecture);
         courseRepository.save(course);
         return convertLectureToDTO(savedLecture);
     }
