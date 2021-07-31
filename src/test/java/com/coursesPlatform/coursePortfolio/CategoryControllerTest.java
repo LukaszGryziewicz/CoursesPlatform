@@ -26,16 +26,7 @@ public class CategoryControllerTest {
     private MockMvc mockMvc;
 
     @Autowired
-    private CategoryRepository categoryRepository;
-
-    @Autowired
     private CategoryService categoryService;
-
-    @Autowired
-    private CourseRepository courseRepository;
-
-    @Autowired
-    private LectureRepository lectureRepository;
 
     @Autowired
     private CourseService courseService;
@@ -85,5 +76,21 @@ public class CategoryControllerTest {
                 .andExpect(jsonPath("$[0].description").value(category.getDescription()));
 
     }
+
+    @Test
+    void shouldReturnCoursesAssignedToCategory() throws Exception {
+        //given
+        CategoryDTO category = new CategoryDTO("Cleaning", "abc");
+        categoryService.add(category);
+        CourseDTO course = new CourseDTO("Xyz", "Abc");
+        courseService.add(course, category.getTitle());
+        //expect
+        this.mockMvc.perform(get("/category/courses/" + category.getTitle()))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].title").value(course.getTitle()))
+                .andExpect(jsonPath("$[0].description").value(course.getDescription()));
+    }
+
 }
 

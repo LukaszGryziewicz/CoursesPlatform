@@ -28,5 +28,11 @@ class CategoryController {
         return new ResponseEntity<>(add, HttpStatus.CREATED);
     }
 
+    @GetMapping("/courses/{categoryTitle}")
+    ResponseEntity<List<CourseDTO>> getAllCoursesOfCategory(@PathVariable("categoryTitle") String categoryTitle) {
+        List<CourseDTO> categoriesOfCourse = categoryService.findCategoriesOfCourse(categoryTitle);
+        return new ResponseEntity<>(categoriesOfCourse, HttpStatus.OK);
+    }
+
 
 }

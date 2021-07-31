@@ -14,7 +14,7 @@ class Category {
     @Column(length = 1000)
     private String description;
     @OneToMany()
-    private List<Course> courses = new ArrayList<>();
+    private final List<Course> courses = new ArrayList<>();
 
     Category(String title, String description) {
         this.title = title;
@@ -52,8 +52,8 @@ class Category {
         return courses;
     }
 
-    public void setCourses(List<Course> courses) {
-        this.courses = courses;
+    public void add(Course course) {
+        courses.add(course);
     }
 
     @Override

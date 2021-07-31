@@ -28,4 +28,9 @@ class CourseController {
         return new ResponseEntity<>(add, HttpStatus.CREATED);
     }
 
+    @GetMapping("/lectures/{courseTitle}")
+    ResponseEntity<List<LectureDTO>> getAllCoursesOfCategory(@PathVariable("courseTitle") String courseTitle) {
+        List<LectureDTO> lecturesOfCourse = courseService.findLecturesOfCourse(courseTitle);
+        return new ResponseEntity<>(lecturesOfCourse, HttpStatus.OK);
+    }
 }
