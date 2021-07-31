@@ -20,7 +20,6 @@ class Course {
     Course(String title, String description) {
         this.title = title;
         this.description = description;
-
     }
 
     Course() {
@@ -56,6 +55,10 @@ class Course {
 
     public void setLectures(List<Lecture> lectures) {
         this.lectures = lectures;
+    }
+
+    void addToLectures(Lecture lecture) {
+        lectures.add(lecture);
     }
 
     @Override

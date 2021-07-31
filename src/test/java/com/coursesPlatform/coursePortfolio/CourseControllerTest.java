@@ -9,6 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import javax.transaction.Transactional;
+import java.math.BigDecimal;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -28,6 +29,8 @@ public class CourseControllerTest {
     private CourseService courseService;
     @Autowired
     private CategoryService categoryService;
+    @Autowired
+    private LectureService lectureService;
 
     @Test
     void shouldAddCourse() throws Exception {
@@ -58,6 +61,24 @@ public class CourseControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].title").value(course.getTitle()))
                 .andExpect(jsonPath("$[0].description").value(course.getDescription()));
+    }
+
+    @Test
+    void shouldReturnLecturesAssignedToCourse() throws Exception {
+        //given
+        CategoryDTO category = new CategoryDTO("IT", "ABC");
+        categoryService.add(category);
+        CourseDTO course = new CourseDTO("Abc", "Xyz");
+        courseService.add(course, category.getTitle());
+        LectureDTO lecture = new LectureDTO("AB", "YZ", BigDecimal.valueOf(200), 20);
+        lectureService.add(lecture, course.getTitle());
+        //expect
+        mockMvc.perform(get("/course/lectures/" + course.getTitle()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].title").value(lecture.getTitle()))
+                .andExpect(jsonPath("$[0].description").value(lecture.getDescription()))
+                .andExpect(jsonPath("$[0].price").value(lecture.getPrice()))
+                .andExpect(jsonPath("$[0].duration").value(lecture.getDuration()));
     }
 
 }
