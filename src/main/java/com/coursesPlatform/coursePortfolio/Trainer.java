@@ -3,7 +3,7 @@ package com.coursesPlatform.coursePortfolio;
 import javax.persistence.*;
 
 @Entity
-public class Trainer {
+class Trainer {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;

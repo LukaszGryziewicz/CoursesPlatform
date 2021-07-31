@@ -1,12 +1,11 @@
 package com.coursesPlatform.coursePortfolio;
 
-import java.util.List;
 import java.util.Objects;
 
 public class TrainerExternalDTO {
     private final String name;
-    private final  String lastName;
-    private String biography;
+    private final String lastName;
+    private final String biography;
 
     public TrainerExternalDTO(String name, String lastName, String biography) {
         this.name = name;
@@ -24,10 +23,6 @@ public class TrainerExternalDTO {
 
     public String getBiography() {
         return biography;
-    }
-
-    public void setBiography(String biography) {
-        this.biography = biography;
     }
 
     @Override

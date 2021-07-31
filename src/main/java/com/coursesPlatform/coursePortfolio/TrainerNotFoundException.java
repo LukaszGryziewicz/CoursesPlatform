@@ -1,6 +1,6 @@
 package com.coursesPlatform.coursePortfolio;
 
-public class TrainerNotFoundException extends  RuntimeException{
+public class TrainerNotFoundException extends RuntimeException {
     public TrainerNotFoundException() {
     }
 }
