@@ -18,10 +18,13 @@ class LectureService {
     @Value("${description.length.limit}")
     private int descriptionLengthLimit;
 
-    LectureService(LectureRepository lectureRepository, CourseRepository courseRepository) { this.lectureRepository = lectureRepository;this.courseRepository = courseRepository; }
+    LectureService(LectureRepository lectureRepository, CourseRepository courseRepository) {
+        this.lectureRepository = lectureRepository;
+        this.courseRepository = courseRepository;
+    }
 
-    private LectureDTO convertLectureToDTO(Lecture lecture){
-        return  new LectureDTO(
+    private LectureDTO convertLectureToDTO(Lecture lecture) {
+        return new LectureDTO(
                 lecture.getTitle(),
                 lecture.getDescription(),
                 lecture.getPrice(),
@@ -29,7 +32,7 @@ class LectureService {
         );
     }
 
-   private Lecture convertLectureDTOToLecture(LectureDTO lectureDTO){
+    private Lecture convertLectureDTOToLecture(LectureDTO lectureDTO) {
         Lecture lecture = new Lecture();
         lecture.setTitle(lectureDTO.getTitle());
         lecture.setDescription(lectureDTO.getDescription());
@@ -38,7 +41,7 @@ class LectureService {
         return lecture;
     }
 
-    List<LectureDTO> findAllLectures(){
+    List<LectureDTO> findAllLectures() {
         return lectureRepository.findAll()
                 .stream()
                 .map(this::convertLectureToDTO)
@@ -50,7 +53,7 @@ class LectureService {
         Course course = courseByTitle.orElseThrow(CourseNotFoundException::new);
 
         Optional<Lecture> lecture = lectureRepository.findLectureByTitleAndDescription(lectureDTO.getTitle(), lectureDTO.getDescription());
-        if ( lecture.isPresent()) {
+        if ( lecture.isPresent() ) {
             throw new IllegalStateException("Lecture with given title and description already exists");
         }
         if ( lectureDTO.getTitle().length() >= titleLengthLimit ) {
@@ -59,7 +62,9 @@ class LectureService {
         if ( lectureDTO.getDescription().length() >= descriptionLengthLimit ) {
             throw new IllegalLengthException();
         }
-        Lecture lecture1 = lectureRepository.save(convertLectureDTOToLecture(lectureDTO));
-        return  convertLectureToDTO(lecture1);
+        Lecture savedLecture = lectureRepository.save(convertLectureDTOToLecture(lectureDTO));
+        course.add(savedLecture);
+        courseRepository.save(course);
+        return convertLectureToDTO(savedLecture);
     }
 }

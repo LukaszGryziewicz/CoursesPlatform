@@ -52,7 +52,7 @@ class Category {
         return courses;
     }
 
-    public void addToCoursesList(Course course) {
+    public void add(Course course) {
         courses.add(course);
     }
 
