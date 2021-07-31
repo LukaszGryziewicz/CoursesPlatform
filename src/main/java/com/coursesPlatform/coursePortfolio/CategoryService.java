@@ -1,5 +1,6 @@
 package com.coursesPlatform.coursePortfolio;
 
+import com.coursesPlatform.exceptions.CategoryNotFoundException;
 import com.coursesPlatform.exceptions.IllegalLengthException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -33,7 +34,13 @@ class CategoryService {
         category.setTitle(categoryDTO.getTitle());
         category.setDescription(categoryDTO.getDescription());
         return category;
+    }
 
+    private CourseDTO convertCourseToDTO(Course course) {
+        return new CourseDTO(
+                course.getTitle(),
+                course.getDescription()
+        );
     }
 
     List<CategoryDTO> findAllCategories() {
@@ -61,5 +68,18 @@ class CategoryService {
 
         Category category = categoryRepository.save(convertDTOToCategory(categoryDTO));
         return convertCategoryToDTO(category);
+    }
+
+    List<CourseDTO> findCategoriesOfCourse(String title) {
+        return categoryRepository.findCategoryByTitle(title)
+                .map(this::mapToDtos)
+                .orElseThrow(CategoryNotFoundException::new);
+    }
+
+    private List<CourseDTO> mapToDtos(Category category) {
+        return category.getCourses()
+                .stream()
+                .map(this::convertCourseToDTO)
+                .collect(Collectors.toList());
     }
 }

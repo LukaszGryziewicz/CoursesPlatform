@@ -42,6 +42,7 @@ class CourseService {
         }
 
         Course savedCourse = courseRepository.save(convertDTOToCourse(courseDTO));
+        category.addToCoursesList(savedCourse);
         return convertCourseToDTO(savedCourse);
     }
 

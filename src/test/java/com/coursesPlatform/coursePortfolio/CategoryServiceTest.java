@@ -1,5 +1,6 @@
 package com.coursesPlatform.coursePortfolio;
 
+import com.coursesPlatform.exceptions.CategoryNotFoundException;
 import com.coursesPlatform.exceptions.IllegalLengthException;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.assertj.core.api.Assertions;
@@ -17,9 +18,9 @@ import static org.assertj.core.api.Assertions.catchThrowable;
 @Transactional
 public class CategoryServiceTest {
     @Autowired
-    private CategoryRepository categoryRepository;
-    @Autowired
     private CategoryService categoryService;
+    @Autowired
+    private CourseService courseService;
 
 
     @Test
@@ -72,5 +73,36 @@ public class CategoryServiceTest {
         categoryService.add(category);
         //then
         assertThat(categoryService.findAllCategories()).containsExactlyInAnyOrder(category);
+    }
+
+    @Test
+    void shouldReturnCoursesAssignedToCategory() {
+        //given
+        CategoryDTO category = new CategoryDTO("Abc", "Xyz");
+        CourseDTO course = new CourseDTO("Bca", "Poq");
+        CourseDTO course2 = new CourseDTO("Aph", "Lkk");
+        categoryService.add(category);
+        courseService.add(course, category.getTitle());
+        courseService.add(course2, category.getTitle());
+        //when
+        List<CourseDTO> categoriesOfCourse = categoryService.findCategoriesOfCourse(category.getTitle());
+        //than
+        assertThat(categoriesOfCourse).contains(course, course2);
+    }
+
+    @Test
+    void shouldThrowExceptionWhenCategoryDoesNotExist() {
+        //given
+        CategoryDTO category = new CategoryDTO("Abc", "Xyz");
+        categoryService.add(category);
+        CourseDTO course = new CourseDTO("Bca", "Poq");
+        CourseDTO course2 = new CourseDTO("Aph", "Lkk");
+        courseService.add(course, category.getTitle());
+        courseService.add(course2, category.getTitle());
+        //when
+        Throwable thrown = catchThrowable(() -> categoryService
+                .findCategoriesOfCourse("dupa"));
+        //than
+        assertThat(thrown).isInstanceOf(CategoryNotFoundException.class);
     }
 }
