@@ -14,46 +14,6 @@ public class TrainerService {
         this.trainerRepository = trainerRepository;
     }
 
-    TrainerDTO convertTrainerToDTO(Trainer trainer) {
-        return new TrainerDTO(
-                trainer.getName(),
-                trainer.getLastName(),
-                trainer.getMail(),
-                trainer.getPhoneNumber(),
-                trainer.getBiography()
-        );
-    }
-
-    Trainer convertDTOToTrainer(TrainerDTO trainerDTO) {
-        Trainer trainer = new Trainer();
-        trainer.setName(trainerDTO.getName());
-        trainer.setLastName(trainerDTO.getLastName());
-        trainer.setMail(trainerDTO.getMail());
-        trainer.setPhoneNumber(trainerDTO.getPhoneNumber());
-        trainer.setBiography(trainerDTO.getBiography());
-
-        return trainer;
-
-    }
-
-    private TrainerExternalDTO convertTrainerToExternalDTO(Trainer trainer) {
-        return new TrainerExternalDTO(
-                trainer.getName(),
-                trainer.getLastName(),
-                trainer.getBiography()
-        );
-    }
-
-    private TrainerDTO convertTrainerToInternalDTO(Trainer trainer) {
-        return new TrainerDTO(
-                trainer.getName(),
-                trainer.getLastName(),
-                trainer.getMail(),
-                trainer.getPhoneNumber(),
-                trainer.getBiography()
-        );
-    }
-
     List<TrainerDTO> findAllTrainers() {
         return trainerRepository.findAll()
                 .stream()
@@ -102,6 +62,46 @@ public class TrainerService {
         Optional<Trainer> find = trainerRepository.findByNameAndLastName(name, lastName);
         Trainer trainer = find.orElseThrow(TrainerNotFoundException::new);
         return convertTrainerToDTO(trainer);
+    }
+
+    private TrainerDTO convertTrainerToDTO(Trainer trainer) {
+        return new TrainerDTO(
+                trainer.getName(),
+                trainer.getLastName(),
+                trainer.getMail(),
+                trainer.getPhoneNumber(),
+                trainer.getBiography()
+        );
+    }
+
+    private Trainer convertDTOToTrainer(TrainerDTO trainerDTO) {
+        Trainer trainer = new Trainer();
+        trainer.setName(trainerDTO.getName());
+        trainer.setLastName(trainerDTO.getLastName());
+        trainer.setMail(trainerDTO.getMail());
+        trainer.setPhoneNumber(trainerDTO.getPhoneNumber());
+        trainer.setBiography(trainerDTO.getBiography());
+
+        return trainer;
+
+    }
+
+    private TrainerExternalDTO convertTrainerToExternalDTO(Trainer trainer) {
+        return new TrainerExternalDTO(
+                trainer.getName(),
+                trainer.getLastName(),
+                trainer.getBiography()
+        );
+    }
+
+    private TrainerDTO convertTrainerToInternalDTO(Trainer trainer) {
+        return new TrainerDTO(
+                trainer.getName(),
+                trainer.getLastName(),
+                trainer.getMail(),
+                trainer.getPhoneNumber(),
+                trainer.getBiography()
+        );
     }
 }
 
