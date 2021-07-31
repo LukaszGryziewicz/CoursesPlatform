@@ -27,9 +27,9 @@ public class CourseTest {
         //given
         CategoryDTO category = new CategoryDTO("", "");
         CourseDTO course = new CourseDTO("", "");
-        addCategory(category);
+        categoryService.add(category);
         //when
-        addCourse(category, course);
+        courseService.add(course, category.getTitle());
         //then
         assertThat(courseService.findAllCourses()).contains(course);
         assertThat(categoryService.findAllCategories()).contains(category);
@@ -40,8 +40,8 @@ public class CourseTest {
         //given
         CategoryDTO category = new CategoryDTO("", "");
         CourseDTO course = new CourseDTO("", "");
-        addCategory(category);
-        addCourse(category, course);
+        categoryService.add(category);
+        courseService.add(course, category.getTitle());
         //when
         List<CourseDTO> allCourses = courseService.findAllCourses();
         //then
@@ -51,10 +51,9 @@ public class CourseTest {
     @Test
     void shouldReturnLecturesFromCourse() {
         //given
-        CategoryDTO category = new CategoryDTO("Abc", "Xyz");
-        addCategory(category);
+        CategoryDTO category = createCategory("Abc", "Xad");
         CourseDTO course = new CourseDTO("Xyz", "Abc");
-        CourseDTO addedCourse = addCourse(category, course);
+        CourseDTO addedCourse = courseService.add(course, category.getTitle());
         LectureDTO lecture = createLecture(addedCourse, "PPP", "XXX");
         LectureDTO lecture2 = createLecture(addedCourse, "BBB", "AAA");
         //when
@@ -63,12 +62,10 @@ public class CourseTest {
         assertThat(lecturesOfCourse).containsExactlyInAnyOrder(lecture, lecture2);
     }
 
-    private CourseDTO addCourse(CategoryDTO category, CourseDTO course) {
-        return courseService.add(course, category.getTitle());
-    }
-
-    private CategoryDTO addCategory(CategoryDTO category) {
-        return categoryService.add(category);
+    private CategoryDTO createCategory(String title, String description) {
+        CategoryDTO category = new CategoryDTO(title, description);
+        categoryService.add(category);
+        return category;
     }
 
     private LectureDTO createLecture(CourseDTO addedCourse, String title, String description) {
@@ -80,10 +77,9 @@ public class CourseTest {
     @Test
     void shouldThrowExceptionWhenCourseDoesNotExist() {
         //given
-        CategoryDTO category = new CategoryDTO("Abc", "Xyz");
-        addCategory(category);
+        CategoryDTO category = createCategory("Abc", "UAS");
         CourseDTO course = new CourseDTO("Xyz", "Abc");
-        CourseDTO addedCourse = addCourse(category, course);
+        CourseDTO addedCourse = courseService.add(course, category.getTitle());
         LectureDTO lecture = createLecture(addedCourse, "PPP", "XXX");
         LectureDTO lecture2 = createLecture(addedCourse, "BBB", "AAA");
         //when
