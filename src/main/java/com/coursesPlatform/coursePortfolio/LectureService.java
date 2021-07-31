@@ -64,6 +64,7 @@ class LectureService {
         }
         Lecture savedLecture = lectureRepository.save(convertLectureDTOToLecture(lectureDTO));
         course.addToLectures(savedLecture);
+        courseRepository.save(course);
         return convertLectureToDTO(savedLecture);
     }
 }

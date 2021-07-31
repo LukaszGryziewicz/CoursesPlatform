@@ -14,8 +14,6 @@ class Lecture {
     private String description;
     private BigDecimal price;
     private int duration;
-    @ManyToOne
-    private Course course;
 
     public Lecture() {
     }
