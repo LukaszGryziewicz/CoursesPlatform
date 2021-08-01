@@ -46,4 +46,12 @@ public class CustomerDTO {
         return Objects.hash(name, mail, phoneNumber);
     }
 
+    @Override
+    public String toString() {
+        return "CustomerDTO{" +
+                "name='" + name + '\'' +
+                ", mail='" + mail + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                '}';
+    }
 }
