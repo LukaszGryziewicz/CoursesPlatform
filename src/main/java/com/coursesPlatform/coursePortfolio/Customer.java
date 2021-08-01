@@ -25,7 +25,6 @@ public class Customer {
         this.phoneNumber = phoneNumber;
     }
 
-
     public long getId() {
         return id;
     }

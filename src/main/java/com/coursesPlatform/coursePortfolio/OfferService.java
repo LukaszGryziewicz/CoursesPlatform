@@ -85,7 +85,7 @@ class OfferService {
         Customer customer = customerRepository.findCustomerByMail(offerDTO.getMail()).orElseThrow(CustomerNotFoundException::new);
         Category category = categoryRepository.findCategoryByTitle(offerDTO.getCategoryTitle()).orElseThrow(CategoryNotFoundException::new);
         Course course = courseRepository.findCourseByTitle(offerDTO.getCourseTitle()).orElseThrow(CourseNotFoundException::new);
-        List<Lecture> lectures = checkIfLectureListIsNotEmpty(offerDTO.getLecturesTitle());
+        List<Lecture> lectures = findAllLecturesWithGivenMails(offerDTO.getLecturesTitle());
         BigDecimal summaryPrice = offerDTO.getSummaryPrice();
         int summaryDuration = offerDTO.getSummaryDuration();
         return new Offer(
@@ -98,7 +98,7 @@ class OfferService {
         );
     }
 
-    private List<Lecture> checkIfLectureListIsNotEmpty(List<String> lectures) {
+    private List<Lecture> findAllLecturesWithGivenMails(List<String> lectures) {
         List<Lecture> lectureList = lectureRepository.findByTitleIn(lectures);
         if ( lectureList.isEmpty() ) {
             throw new LectureListIsEmptyException();
