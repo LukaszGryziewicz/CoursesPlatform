@@ -9,6 +9,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 
 @SpringBootTest
 @Transactional
@@ -61,5 +62,16 @@ public class CustomerTest {
         //then
         List<CustomerDTO> allCustomers = customerService.findAllCustomers();
         assertThat(allCustomers).containsExactly(newCustomer);
+    }
+    @Test
+    public void shouldThrowExceptionWhenMailIsInUse() {
+        //given
+        CustomerDTO customer = new CustomerDTO("Adam", "dominik.adam4538@gmail.com", "123456789");
+        customerService.add(customer);
+        CustomerDTO newCustomer = new CustomerDTO("Lukasz", "dominik.adam4538@gmail.com", "987654321");
+        //when
+       Throwable thrown = catchThrowable(()-> customerService.add(newCustomer));
+        //then
+        assertThat(thrown).isInstanceOf(MailIsAlreadyInUseException.class);
     }
 }
