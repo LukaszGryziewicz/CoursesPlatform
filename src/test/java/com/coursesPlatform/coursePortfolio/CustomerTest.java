@@ -74,4 +74,13 @@ public class CustomerTest {
         //then
         assertThat(thrown).isInstanceOf(MailIsAlreadyInUseException.class);
     }
+    @Test
+    public void shouldThrowExceptionWhenMailIsInvalid() {
+        //given
+        CustomerDTO customer = new CustomerDTO("Adam", "dominikkropkaadam4538małpagmailkropkacom", "123456789");
+        //when
+        Throwable thrown = catchThrowable(()-> customerService.add(customer));
+        //then
+        assertThat(thrown).isInstanceOf(MailIsInvalid.class);
+    }
 }

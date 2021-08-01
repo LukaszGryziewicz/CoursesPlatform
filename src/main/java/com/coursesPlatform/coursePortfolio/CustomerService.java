@@ -1,5 +1,6 @@
 package com.coursesPlatform.coursePortfolio;
 
+import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -20,6 +21,9 @@ public class CustomerService {
     CustomerDTO add(CustomerDTO customerDTO) {
         Optional<Customer> customerByMail = customerRepository
                 .findCustomerByMail(customerDTO.getMail());
+        if(!EmailValidator.getInstance().isValid(customerDTO.getMail())){
+            throw new MailIsInvalid();
+        }
         if(customerByMail.isPresent()){
             throw new MailIsAlreadyInUseException();
         }
