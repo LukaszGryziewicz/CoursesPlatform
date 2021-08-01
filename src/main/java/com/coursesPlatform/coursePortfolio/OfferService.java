@@ -51,6 +51,7 @@ class OfferService {
         int duration = sumDurationOfLectures(lectures);
         offer.setSummaryPrice(price);
         offer.setSummaryDuration(duration);
+        offerRepository.save(offer);
         return convertOfferToDTO(offer);
     }
 
