@@ -20,7 +20,7 @@ public class CustomerTest {
     @Test
     void shouldAddCustomer() {
         //given
-        CustomerDTO customer = new CustomerDTO("av", "Saku", "123456789");
+        CustomerDTO customer = new CustomerDTO("av", "Saku@gmail.com", "123456789");
         //when
         customerService.add(customer);
         //then
@@ -30,7 +30,7 @@ public class CustomerTest {
     @Test
     void shouldShowAllCustomers() {
         //given
-        CustomerDTO customers = new CustomerDTO("", "", "");
+        CustomerDTO customers = new CustomerDTO("", "mail@mail.com", "");
         customerService.add(customers);
         //when
         List<CustomerDTO> allCustomers = customerService.findAllCustomers();
@@ -41,7 +41,7 @@ public class CustomerTest {
     @Test
     public void shouldDeleteCustomer() {
         //given
-        CustomerDTO customer = new CustomerDTO("", "", "");
+        CustomerDTO customer = new CustomerDTO("", "mail@mail.com", "");
         customerService.add(customer);
         //when
         customerService.deleteCustomerByEmail(customer.getMail());
@@ -53,8 +53,8 @@ public class CustomerTest {
     @Test
     public void shouldCheckIfTrainerIsUpdated() {
         //given
-        CustomerDTO customer = new CustomerDTO("Adam", "Dominik", "siema");
-        CustomerDTO newCustomer = new CustomerDTO("Adam", "Dominik", "sirma");
+        CustomerDTO customer = new CustomerDTO("Adam", "Dominik@kozak.pl", "siema");
+        CustomerDTO newCustomer = new CustomerDTO("Adam", "Dominik@kocur.pl", "sirma");
         customerService.add(customer);
 
         //when
@@ -73,5 +73,14 @@ public class CustomerTest {
        Throwable thrown = catchThrowable(()-> customerService.add(newCustomer));
         //then
         assertThat(thrown).isInstanceOf(MailIsAlreadyInUseException.class);
+    }
+    @Test
+    public void shouldThrowExceptionWhenMailIsInvalid() {
+        //given
+        CustomerDTO customer = new CustomerDTO("Adam", "dominikkropkaadam4538małpagmailkropkacom", "123456789");
+        //when
+        Throwable thrown = catchThrowable(()-> customerService.add(customer));
+        //then
+        assertThat(thrown).isInstanceOf(MailIsInvalid.class);
     }
 }
