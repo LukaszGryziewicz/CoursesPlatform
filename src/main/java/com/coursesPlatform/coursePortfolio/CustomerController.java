@@ -28,11 +28,13 @@ public class CustomerController {
         CustomerDTO add = customerService.add(customerDTO);
         return new ResponseEntity<>(add, HttpStatus.CREATED);
     }
+
     @PutMapping("/update/{mail}")
     ResponseEntity<CustomerDTO> updateTrainer(@RequestBody CustomerDTO customerDTO,@PathVariable("mail")String mail) {
         CustomerDTO update = customerService.update(mail , customerDTO);
         return new ResponseEntity<>(update, HttpStatus.OK);
     }
+
     @DeleteMapping("/delete/{mail}")
     ResponseEntity<?> deleteCustomer(@PathVariable("mail") String mail) {
         customerService.deleteCustomerByEmail(mail);

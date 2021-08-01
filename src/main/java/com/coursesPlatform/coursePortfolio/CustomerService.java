@@ -17,7 +17,6 @@ public class CustomerService {
         this.customerRepository = customerRepository;
     }
 
-
     CustomerDTO add(CustomerDTO customerDTO) {
 
         Optional<Customer> addNewCustomer = customerRepository
@@ -41,6 +40,7 @@ public class CustomerService {
         Customer existingCustomer = optionalCustomer.orElseThrow(CustomerNotFoundException::new);
         existingCustomer.update(convertDTOToCustomer(updatedCustomer));
         customerRepository.save(existingCustomer);
+
         return convertCustomerToDTO(existingCustomer);
     }
     void deleteCustomerByEmail(String mail) {
