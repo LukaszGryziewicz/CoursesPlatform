@@ -18,14 +18,15 @@ public class CustomerService {
     }
 
     CustomerDTO add(CustomerDTO customerDTO) {
-
-        Optional<Customer> addNewCustomer = customerRepository
+        Optional<Customer> customerByMail = customerRepository
                 .findCustomerByMail(customerDTO.getMail());
-
-
+        if(customerByMail.isPresent()){
+            throw new MailIsAlreadyInUseException();
+        }
         Customer customer = customerRepository.save(convertDTOToCustomer(customerDTO));
         return convertCustomerToDTO(customer);
     }
+
     List<CustomerDTO> findAllCustomers() {
         return customerRepository.findAll()
                 .stream()
@@ -33,16 +34,15 @@ public class CustomerService {
                 .collect(Collectors.toList());
     }
 
-
-    CustomerDTO update(String mail,CustomerDTO updatedCustomer) {
+    CustomerDTO update(String mail, CustomerDTO updatedCustomer) {
         Optional<Customer> optionalCustomer = customerRepository
                 .findCustomerByMail((mail));
         Customer existingCustomer = optionalCustomer.orElseThrow(CustomerNotFoundException::new);
         existingCustomer.update(convertDTOToCustomer(updatedCustomer));
         customerRepository.save(existingCustomer);
-
         return convertCustomerToDTO(existingCustomer);
     }
+
     void deleteCustomerByEmail(String mail) {
         customerRepository.deleteCustomerByMail(mail);
     }
