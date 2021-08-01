@@ -6,7 +6,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -23,6 +22,8 @@ public class OfferServiceTest {
     private LectureService lectureService;
     @Autowired
     private OfferService offerService;
+    @Autowired
+    private CustomerService customerService;
 
     private CategoryDTO createCategory(String title, String description) {
         CategoryDTO category = new CategoryDTO(title, description);
@@ -42,31 +43,81 @@ public class OfferServiceTest {
         return lecture;
     }
 
-    @Test
-    void shouldSumPriceOfLectures() {
-        //given
-        CategoryDTO category = createCategory("Abc", "Xyz");
-        CourseDTO course = createCourse(category, "Poi", "Lkj");
-        LectureDTO lecture = createLecture(course, "Qwe", "Rty", BigDecimal.valueOf(500), 5);
-        LectureDTO lecture2 = createLecture(course, "Mno", "Prs", BigDecimal.valueOf(1000), 10);
-        List<LectureDTO> lectureDTOS = Arrays.asList(lecture, lecture2);
-        //when
-        BigDecimal price = offerService.sumPriceOfLectures(lectureDTOS);
-        //then
-        assertThat(price).isEqualTo(BigDecimal.valueOf(1500));
+    private CustomerDTO createCustomer(String name, String mail, String phoneNumber) {
+        CustomerDTO customer = new CustomerDTO(name, mail, phoneNumber);
+        customerService.add(customer);
+        return customer;
     }
 
     @Test
-    public void shouldSumDurationOfLectures() {
+    void shouldCreateOffer() {
         //given
-        CategoryDTO category = createCategory("Abc", "Xyz");
-        CourseDTO course = createCourse(category, "Poi", "Lkj");
-        LectureDTO lecture = createLecture(course, "Qwe", "Rty", BigDecimal.valueOf(500), 5);
-        LectureDTO lecture2 = createLecture(course, "Mno", "Prs", BigDecimal.valueOf(500), 10);
-        List<LectureDTO> lectureDTOS = Arrays.asList(lecture, lecture2);
+        CustomerDTO customer = createCustomer("Adam Dominik", "adamdominik@gmail.com", "123456789");
+        CategoryDTO category = createCategory("Java", "Abc");
+        CourseDTO course = createCourse(category, "Basics", "Abc");
+        LectureDTO lecture = createLecture(course, "Java util", "Abc", BigDecimal.valueOf(100), 10);
+        LectureDTO lecture2 = createLecture(course, "Spring", "Abc", BigDecimal.valueOf(200), 20);
+        List<String> listOfLectures = List.of(lecture.getTitle(), lecture2.getTitle());
+        OfferDTO offer = new OfferDTO(
+                customer.getMail(),
+                category.getTitle(),
+                course.getTitle(),
+                listOfLectures
+        );
         //when
-        int duration = offerService.sumDurationOfLectures(lectureDTOS);
+        offerService.create(offer);
         //then
-        assertThat(duration).isEqualTo(15);
+        List<OfferDTO> allOffers = offerService.findAllOffers();
+        OfferDTO offerFromDB = allOffers.get(0);
+        assertThat(allOffers.size()).isEqualTo(1);
+        assertThat(offerFromDB.getMail()).isEqualTo(customer.getMail());
+        assertThat(offerFromDB.getCategoryTitle()).isEqualTo(category.getTitle());
+        assertThat(offerFromDB.getCourseTitle()).isEqualTo(course.getTitle());
+        assertThat(offerFromDB.getLecturesTitle()).isEqualTo(listOfLectures);
+        assertThat(offerFromDB.getSummaryPrice()).isEqualTo(BigDecimal.valueOf(300));
+        assertThat(offerFromDB.getSummaryDuration()).isEqualTo(30);
+    }
+
+    @Test
+    void shouldReturnAllOffersOfCustomer() {
+        //given
+        CustomerDTO customer = createCustomer("Adam Dominik", "adamdominik@gmail.com", "123456789");
+        CategoryDTO category = createCategory("Java", "Abc");
+        CourseDTO course = createCourse(category, "Basics", "Abc");
+        LectureDTO lecture = createLecture(course, "Java util", "Abc", BigDecimal.valueOf(100), 10);
+        LectureDTO lecture2 = createLecture(course, "Spring", "Abc", BigDecimal.valueOf(200), 20);
+        List<String> listOfLectures = List.of(lecture.getTitle(), lecture2.getTitle());
+        OfferDTO offer = new OfferDTO(
+                customer.getMail(),
+                category.getTitle(),
+                course.getTitle(),
+                listOfLectures
+        );
+        offerService.create(offer);
+
+        CustomerDTO customer2 = createCustomer("Lukasz Gryziewicz", "lukasz@gmail.com", "987654321");
+        CategoryDTO category2 = createCategory("Python", "Abc");
+        CourseDTO course2 = createCourse(category, "Advanced", "Abc");
+        LectureDTO lecture3 = createLecture(course, "Python gui", "Abc", BigDecimal.valueOf(100), 10);
+        LectureDTO lecture4 = createLecture(course, "Django", "Abc", BigDecimal.valueOf(200), 20);
+        List<String> listOfLectures2 = List.of(lecture3.getTitle(), lecture4.getTitle());
+        OfferDTO offer2 = new OfferDTO(
+                customer2.getMail(),
+                category2.getTitle(),
+                course2.getTitle(),
+                listOfLectures2
+        );
+        offerService.create(offer2);
+        //when
+        List<OfferDTO> allOffersOfCustomer = offerService.findAllOffersOfCustomer(customer.getMail());
+        //then
+        OfferDTO offerFromDB = allOffersOfCustomer.get(0);
+        assertThat(allOffersOfCustomer.size()).isEqualTo(1);
+        assertThat(offerFromDB.getMail()).isEqualTo(customer.getMail());
+        assertThat(offerFromDB.getCategoryTitle()).isEqualTo(category.getTitle());
+        assertThat(offerFromDB.getCourseTitle()).isEqualTo(course.getTitle());
+        assertThat(offerFromDB.getLecturesTitle()).isEqualTo(listOfLectures);
+        assertThat(offerFromDB.getSummaryPrice()).isEqualTo(BigDecimal.valueOf(300));
+        assertThat(offerFromDB.getSummaryDuration()).isEqualTo(30);
     }
 }

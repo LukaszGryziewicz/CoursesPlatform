@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OfferDTO {
+    private String mail;
     private String categoryTitle;
     private String courseTitle;
     private List<String> lecturesTitle = new ArrayList<>();
@@ -14,12 +15,28 @@ public class OfferDTO {
     public OfferDTO() {
     }
 
-    public OfferDTO(String categoryTitle, String courseTitle, List<String> lecturesTitle, BigDecimal summaryPrice, int summaryDuration) {
+    public OfferDTO(String mail, String categoryTitle, String courseTitle, List<String> lecturesTitle) {
+        this.mail = mail;
+        this.categoryTitle = categoryTitle;
+        this.courseTitle = courseTitle;
+        this.lecturesTitle = lecturesTitle;
+    }
+
+    public OfferDTO(String mail, String categoryTitle, String courseTitle, List<String> lecturesTitle, BigDecimal summaryPrice, int summaryDuration) {
+        this.mail = mail;
         this.categoryTitle = categoryTitle;
         this.courseTitle = courseTitle;
         this.lecturesTitle = lecturesTitle;
         this.summaryPrice = summaryPrice;
         this.summaryDuration = summaryDuration;
+    }
+
+    public String getMail() {
+        return mail;
+    }
+
+    public void setMail(String mail) {
+        this.mail = mail;
     }
 
     public String getCategoryTitle() {
