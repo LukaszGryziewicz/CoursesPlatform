@@ -11,8 +11,8 @@ public class CategoryDTO {
 
     @JsonCreator
     public CategoryDTO(
-            @JsonProperty(value = "title") String title,
-            @JsonProperty(value = "description") String description
+            @JsonProperty("title") String title,
+            @JsonProperty("description") String description
     ) {
         this.title = title;
         this.description = description;

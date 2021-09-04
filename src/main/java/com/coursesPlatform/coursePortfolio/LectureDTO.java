@@ -15,10 +15,10 @@ public class LectureDTO {
 
     @JsonCreator
     public LectureDTO(
-            @JsonProperty(value = "title") String title,
-            @JsonProperty(value = "description") String description,
-            @JsonProperty(value = "price") BigDecimal price,
-            @JsonProperty(value = "duration") int duration
+            @JsonProperty("title") String title,
+            @JsonProperty("description") String description,
+            @JsonProperty("price") BigDecimal price,
+            @JsonProperty("duration") int duration
     ) {
         this.title = title;
         this.description = description;

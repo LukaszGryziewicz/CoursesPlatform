@@ -12,9 +12,9 @@ public class CustomerDTO {
 
     @JsonCreator
     public CustomerDTO(
-            @JsonProperty(value = "name") String name,
-            @JsonProperty(value = "mail") String mail,
-            @JsonProperty(value = "phoneNumber") String phoneNumber
+            @JsonProperty("name") String name,
+            @JsonProperty("mail") String mail,
+            @JsonProperty("phoneNumber") String phoneNumber
     ) {
         this.name = name;
         this.mail = mail;
