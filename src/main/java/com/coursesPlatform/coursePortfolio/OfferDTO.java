@@ -84,4 +84,14 @@ public class OfferDTO {
     public void setSummaryDuration(int summaryDuration) {
         this.summaryDuration = summaryDuration;
     }
+
+    @Override
+    public String toString() {
+        return "Temat twoich kursów: " + courseTitle + "\n" +
+                "Twoje kursy: " + "\n- " + String.join("\n- ", lecturesTitle) + "\n" +
+                "Cena: " + summaryPrice + "$" + "\n" +
+                "Czas trwania: " + summaryDuration + "h" + "\n" +
+                "Zespół INQOO";
+
+    }
 }

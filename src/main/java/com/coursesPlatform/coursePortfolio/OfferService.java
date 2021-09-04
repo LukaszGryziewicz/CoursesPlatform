@@ -1,5 +1,6 @@
 package com.coursesPlatform.coursePortfolio;
 
+import com.coursesPlatform.emailSender.EmailFacade;
 import com.coursesPlatform.exceptions.CategoryNotFoundException;
 import com.coursesPlatform.exceptions.CourseNotFoundException;
 import com.coursesPlatform.exceptions.LectureListIsEmptyException;
@@ -19,13 +20,21 @@ class OfferService {
     private final CategoryRepository categoryRepository;
     private final CourseRepository courseRepository;
     private final LectureRepository lectureRepository;
+    private final EmailFacade emailFacade;
 
-    OfferService(OfferRepository offerRepository, CustomerRepository customerRepository, CategoryRepository categoryRepository, CourseRepository courseRepository, LectureRepository lectureRepository) {
+    OfferService(OfferRepository offerRepository,
+                 CustomerRepository customerRepository,
+                 CategoryRepository categoryRepository,
+                 CourseRepository courseRepository,
+                 LectureRepository lectureRepository,
+                 EmailFacade emailFacade
+    ) {
         this.offerRepository = offerRepository;
         this.customerRepository = customerRepository;
         this.categoryRepository = categoryRepository;
         this.courseRepository = courseRepository;
         this.lectureRepository = lectureRepository;
+        this.emailFacade = emailFacade;
     }
 
     List<OfferDTO> findAllOffers() {
@@ -45,14 +54,16 @@ class OfferService {
 
     @Transactional
     OfferDTO create(OfferDTO offerDTO) {
-        Offer offer = offerRepository.save(convertDTOToOffer(offerDTO));
+        Offer offer = convertDTOToOffer(offerDTO);
         List<Lecture> lectures = offer.getLectures();
         BigDecimal price = sumPriceOfLectures(lectures);
         int duration = sumDurationOfLectures(lectures);
         offer.setSummaryPrice(price);
         offer.setSummaryDuration(duration);
         offerRepository.save(offer);
-        return convertOfferToDTO(offer);
+        OfferDTO createdOffer = convertOfferToDTO(offer);
+        emailFacade.sendMessage(createdOffer.getMail(), createdOffer);
+        return createdOffer;
     }
 
     private BigDecimal sumPriceOfLectures(List<Lecture> lectures) {
