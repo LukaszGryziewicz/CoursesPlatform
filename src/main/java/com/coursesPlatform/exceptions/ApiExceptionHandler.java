@@ -29,7 +29,7 @@ public class ApiExceptionHandler {
         return new ResponseEntity<String>("Mail is already used!", HttpStatus.BAD_REQUEST);
     }
     @ExceptionHandler(MailIsInvalidException.class)
-    ResponseEntity<String> handleInvalidMail(Exception e){
+    ResponseEntity<String> handleInvalidMailException(Exception e){
         return new ResponseEntity<String>("Mail is invalid!",HttpStatus.BAD_REQUEST);
     }
 }
