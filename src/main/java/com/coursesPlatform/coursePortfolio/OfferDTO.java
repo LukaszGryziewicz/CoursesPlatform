@@ -1,5 +1,8 @@
 package com.coursesPlatform.coursePortfolio;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,10 +15,13 @@ public class OfferDTO {
     private BigDecimal summaryPrice;
     private int summaryDuration;
 
-    public OfferDTO() {
-    }
-
-    public OfferDTO(String mail, String categoryTitle, String courseTitle, List<String> lecturesTitle) {
+    @JsonCreator
+    public OfferDTO(
+            @JsonProperty("mail") String mail,
+            @JsonProperty("categoryTitle") String categoryTitle,
+            @JsonProperty("courseTitle") String courseTitle,
+            @JsonProperty("lecturesTitle") List<String> lecturesTitle
+    ) {
         this.mail = mail;
         this.categoryTitle = categoryTitle;
         this.courseTitle = courseTitle;

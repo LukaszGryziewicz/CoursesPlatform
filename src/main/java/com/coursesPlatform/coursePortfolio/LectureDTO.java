@@ -1,5 +1,8 @@
 package com.coursesPlatform.coursePortfolio;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.math.BigDecimal;
 import java.util.Objects;
 
@@ -10,7 +13,13 @@ public class LectureDTO {
     private BigDecimal price;
     private int duration;
 
-    public LectureDTO(String title, String description, BigDecimal price, int duration) {
+    @JsonCreator
+    public LectureDTO(
+            @JsonProperty("title") String title,
+            @JsonProperty("description") String description,
+            @JsonProperty("price") BigDecimal price,
+            @JsonProperty("duration") int duration
+    ) {
         this.title = title;
         this.description = description;
         this.price = price;
@@ -51,8 +60,8 @@ public class LectureDTO {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if ( this == o ) return true;
+        if ( o == null || getClass() != o.getClass() ) return false;
         LectureDTO that = (LectureDTO) o;
         return duration == that.duration && title.equals(that.title) && description.equals(that.description) && price.equals(that.price);
     }

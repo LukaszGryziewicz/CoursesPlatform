@@ -1,5 +1,8 @@
 package com.coursesPlatform.coursePortfolio;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.Objects;
 
 public class TrainerDTO {
@@ -9,7 +12,14 @@ public class TrainerDTO {
     private String phoneNumber;
     private String biography;
 
-    public TrainerDTO(String name, String lastName, String mail, String phoneNumber, String biography) {
+    @JsonCreator
+    public TrainerDTO(
+            @JsonProperty("name") String name,
+            @JsonProperty("lastName") String lastName,
+            @JsonProperty("mail") String mail,
+            @JsonProperty("phoneNumber") String phoneNumber,
+            @JsonProperty("biography") String biography
+    ) {
         this.name = name;
         this.lastName = lastName;
         this.mail = mail;
@@ -56,8 +66,8 @@ public class TrainerDTO {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if ( this == o ) return true;
+        if ( o == null || getClass() != o.getClass() ) return false;
         TrainerDTO that = (TrainerDTO) o;
         return Objects.equals(name, that.name) && Objects.equals(lastName, that.lastName) && Objects.equals(mail, that.mail) && Objects.equals(phoneNumber, that.phoneNumber) && Objects.equals(biography, that.biography);
     }
