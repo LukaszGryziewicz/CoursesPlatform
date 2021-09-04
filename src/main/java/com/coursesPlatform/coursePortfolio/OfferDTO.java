@@ -87,12 +87,11 @@ public class OfferDTO {
 
     @Override
     public String toString() {
-        return "OfferDTO{" +
-                "categoryTitle='" + categoryTitle + '\'' +
-                ", courseTitle='" + courseTitle + '\'' +
-                ", lecturesTitle=" + lecturesTitle +
-                ", summaryPrice=" + summaryPrice +
-                ", summaryDuration=" + summaryDuration +
-                '}';
+        return "Temat twoich kursów: " + courseTitle + "\n" +
+                "Twoje kursy: " + "\n- " + String.join("\n- ", lecturesTitle) + "\n" +
+                "Cena: " + summaryPrice + "$" + "\n" +
+                "Czas trwania: " + summaryDuration + "h" + "\n" +
+                "Zespół INQOO";
+
     }
 }

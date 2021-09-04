@@ -10,16 +10,13 @@ import org.springframework.stereotype.Service;
 public class EmailService {
 
     private final JavaMailSender mailSender;
-    private final String sender;
     private final String subject;
 
     EmailService(
             JavaMailSender mailSender,
-            @Value("${spring.mail.username}") String sender,
             @Value("${email.subject}") String subject
     ) {
         this.mailSender = mailSender;
-        this.sender = sender;
         this.subject = subject;
     }
 
@@ -30,8 +27,9 @@ public class EmailService {
     private SimpleMailMessage setupMail(String email, OfferDTO offerDTO) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(email);
-        message.setSubject(subject);
+        message.setSubject(subject + " " + offerDTO.getCategoryTitle());
         message.setText(offerDTO.toString());
+        System.out.println(message);
         return message;
     }
 }
