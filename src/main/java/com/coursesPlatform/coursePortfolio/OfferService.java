@@ -22,7 +22,13 @@ class OfferService {
     private final LectureRepository lectureRepository;
     private final EmailFacade emailFacade;
 
-    OfferService(OfferRepository offerRepository, CustomerRepository customerRepository, CategoryRepository categoryRepository, CourseRepository courseRepository, LectureRepository lectureRepository, EmailFacade emailFacade) {
+    OfferService(OfferRepository offerRepository,
+                 CustomerRepository customerRepository,
+                 CategoryRepository categoryRepository,
+                 CourseRepository courseRepository,
+                 LectureRepository lectureRepository,
+                 EmailFacade emailFacade
+    ) {
         this.offerRepository = offerRepository;
         this.customerRepository = customerRepository;
         this.categoryRepository = categoryRepository;
