@@ -1,12 +1,19 @@
 package com.coursesPlatform.coursePortfolio;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.Objects;
 
 public class CategoryDTO {
     private String title;
     private String description;
 
-    public CategoryDTO(String title, String description) {
+    @JsonCreator
+    public CategoryDTO(
+            @JsonProperty(value = "title") String title,
+            @JsonProperty(value = "description") String description
+    ) {
         this.title = title;
         this.description = description;
     }
