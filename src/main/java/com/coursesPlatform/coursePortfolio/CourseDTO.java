@@ -11,6 +11,9 @@ public class CourseDTO {
         this.description = description;
     }
 
+    public CourseDTO() {
+    }
+
     public String getTitle() {
         return title;
     }

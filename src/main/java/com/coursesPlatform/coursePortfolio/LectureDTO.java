@@ -17,6 +17,9 @@ public class LectureDTO {
         this.duration = duration;
     }
 
+    public LectureDTO() {
+    }
+
     public String getTitle() {
         return title;
     }

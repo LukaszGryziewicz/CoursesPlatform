@@ -11,6 +11,9 @@ public class CategoryDTO {
         this.description = description;
     }
 
+    public CategoryDTO() {
+    }
+
     public String getTitle() {
         return title;
     }

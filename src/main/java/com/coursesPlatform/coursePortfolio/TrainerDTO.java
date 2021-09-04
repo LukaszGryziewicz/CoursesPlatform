@@ -3,11 +3,14 @@ package com.coursesPlatform.coursePortfolio;
 import java.util.Objects;
 
 public class TrainerDTO {
-    private final String name;
-    private final String lastName;
+    private String name;
+    private String lastName;
     private String mail;
     private String phoneNumber;
     private String biography;
+
+    public TrainerDTO() {
+    }
 
     public TrainerDTO(String name, String lastName, String mail, String phoneNumber, String biography) {
         this.name = name;
@@ -56,8 +59,8 @@ public class TrainerDTO {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if ( this == o ) return true;
+        if ( o == null || getClass() != o.getClass() ) return false;
         TrainerDTO that = (TrainerDTO) o;
         return Objects.equals(name, that.name) && Objects.equals(lastName, that.lastName) && Objects.equals(mail, that.mail) && Objects.equals(phoneNumber, that.phoneNumber) && Objects.equals(biography, that.biography);
     }

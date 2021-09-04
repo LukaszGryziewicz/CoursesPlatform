@@ -3,7 +3,7 @@ package com.coursesPlatform.coursePortfolio;
 import java.util.Objects;
 
 public class CustomerDTO {
-    private final String name;
+    private String name;
     private String mail;
     private String phoneNumber;
 
@@ -11,6 +11,9 @@ public class CustomerDTO {
         this.name = name;
         this.mail = mail;
         this.phoneNumber = phoneNumber;
+    }
+
+    public CustomerDTO() {
     }
 
     public String getName() {
@@ -35,8 +38,8 @@ public class CustomerDTO {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if ( this == o ) return true;
+        if ( o == null || getClass() != o.getClass() ) return false;
         CustomerDTO that = (CustomerDTO) o;
         return Objects.equals(name, that.name) && Objects.equals(mail, that.mail) && Objects.equals(phoneNumber, that.phoneNumber);
     }
