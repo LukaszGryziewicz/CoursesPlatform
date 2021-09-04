@@ -1,9 +1,9 @@
 package com.coursesPlatform.exceptions;
 
 import com.coursesPlatform.coursePortfolio.CustomerNotFoundException;
-import com.coursesPlatform.coursePortfolio.MailIsAlreadyInUseException;
 import com.coursesPlatform.coursePortfolio.MailInvalidException;
-import com.coursesPlatform.coursePortfolio.TrainerNotFoundException;
+import com.coursesPlatform.coursePortfolio.MailIsAlreadyInUseException;
+import com.coursesPlatform.trainer.TrainerNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
