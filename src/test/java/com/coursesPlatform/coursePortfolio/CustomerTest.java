@@ -81,6 +81,6 @@ public class CustomerTest {
         //when
         Throwable thrown = catchThrowable(()-> customerService.add(customer));
         //then
-        assertThat(thrown).isInstanceOf(MailIsInvalid.class);
+        assertThat(thrown).isInstanceOf(MailInvalidException.class);
     }
 }
