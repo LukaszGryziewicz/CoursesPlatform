@@ -1,4 +1,4 @@
-package com.coursesPlatform.coursePortfolio;
+package com.coursesPlatform.trainer;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
