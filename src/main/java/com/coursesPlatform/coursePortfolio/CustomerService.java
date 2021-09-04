@@ -22,7 +22,7 @@ public class CustomerService {
         Optional<Customer> customerByMail = customerRepository
                 .findCustomerByMail(customerDTO.getMail());
         if(!EmailValidator.getInstance().isValid(customerDTO.getMail())){
-            throw new MailIsInvalidException();
+            throw new MailInvalidException();
         }
         if(customerByMail.isPresent()){
             throw new MailIsAlreadyInUseException();
