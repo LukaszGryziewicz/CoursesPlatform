@@ -50,7 +50,7 @@ public class TrainerServiceTest {
     }
 
     @Test
-    public void shouldCheckIfTrainerIsUpdated() {
+    public void shouldCheckIfTrainerIsUpdated() throws TrainerNotFoundException {
         //given
         TrainerDTO trainer = new TrainerDTO("Adam", "Dominik", "siema", "123456789", "jestem przystojny");
         TrainerDTO newTrainer = new TrainerDTO("Adam", "Dominik", "sirma", "987654321", "jestem miły");

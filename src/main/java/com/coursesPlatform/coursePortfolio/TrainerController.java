@@ -35,7 +35,7 @@ class TrainerController {
     }
 
     @PutMapping("/update")
-    ResponseEntity<TrainerDTO> updatedTrainer(@RequestBody TrainerDTO trainerDTO) {
+    ResponseEntity<TrainerDTO> updatedTrainer(@RequestBody TrainerDTO trainerDTO) throws TrainerNotFoundException {
         TrainerDTO update = trainerService.update(trainerDTO);
         return new ResponseEntity<>(update, HttpStatus.OK);
     }
