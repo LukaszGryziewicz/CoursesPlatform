@@ -78,4 +78,15 @@ public class OfferDTO {
     public void setSummaryDuration(int summaryDuration) {
         this.summaryDuration = summaryDuration;
     }
+
+    @Override
+    public String toString() {
+        return "OfferDTO{" +
+                "categoryTitle='" + categoryTitle + '\'' +
+                ", courseTitle='" + courseTitle + '\'' +
+                ", lecturesTitle=" + lecturesTitle +
+                ", summaryPrice=" + summaryPrice +
+                ", summaryDuration=" + summaryDuration +
+                '}';
+    }
 }
