@@ -1,4 +1,4 @@
-package com.coursesPlatform.trainer;
+package com.coursesPlatform.trainerHR;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,35 +16,35 @@ import static org.assertj.core.api.Assertions.catchThrowable;
 public class TrainerServiceTest {
 
     @Autowired
-    private TrainerFacade trainerFacade;
+    private TrainerHrFacade trainerHrFacade;
 
-    private TrainerDTO createTrainer(
+    private TrainerHrDTO createTrainer(
             String firstName, String lastName, String email, String phoneNumber, String biography
     ) {
-        TrainerDTO trainer = new TrainerDTO(firstName, lastName, email, phoneNumber, biography);
-        trainerFacade.add(trainer);
+        TrainerHrDTO trainer = new TrainerHrDTO(firstName, lastName, email, phoneNumber, biography);
+        trainerHrFacade.add(trainer);
         return trainer;
     }
 
     @Test
     void shouldAddTrainer() {
         //when
-        TrainerDTO trainer = createTrainer(
+        TrainerHrDTO trainer = createTrainer(
                 "Adam", "Dominik", "xyz@gmail.com", "987654321", "jestem przystojny"
         );
         //then
-        List<TrainerDTO> allTrainers = trainerFacade.findAllTrainers();
+        List<TrainerHrDTO> allTrainers = trainerHrFacade.findAllTrainers();
         assertThat(allTrainers).containsExactlyInAnyOrder(trainer);
     }
 
     @Test
     void shouldThrowExceptionWhenTrainerAlreadyExists() {
         //given
-        TrainerDTO trainer1 = createTrainer(
+        TrainerHrDTO trainer1 = createTrainer(
                 "Adam", "Dominik", "xyz@gmail.com", "987654321", "jestem przystojny"
         );
         //when
-        Throwable thrown = catchThrowable(() -> trainerFacade.add(trainer1));
+        Throwable thrown = catchThrowable(() -> trainerHrFacade.add(trainer1));
         //then
         assertThat(thrown).isInstanceOf(IllegalStateException.class)
                 .hasMessageContaining("Trainer with given name and lastname already exists");
@@ -53,14 +53,14 @@ public class TrainerServiceTest {
     @Test
     void shouldShowAllTrainers() {
         //given
-        TrainerDTO trainer1 = createTrainer(
+        TrainerHrDTO trainer1 = createTrainer(
                 "Adam", "Dominik", "xyz@gmail.com", "987654321", "jestem przystojny"
         );
-        TrainerDTO trainer2 = createTrainer(
+        TrainerHrDTO trainer2 = createTrainer(
                 "Dawid", "Jamka", "abc@gmail", "123456789", "jestem mega"
         );
         //when
-        List<TrainerDTO> allTrainers = trainerFacade.findAllTrainers();
+        List<TrainerHrDTO> allTrainers = trainerHrFacade.findAllTrainers();
         //then
         assertThat(allTrainers).containsExactlyInAnyOrder(trainer1, trainer2);
     }
@@ -68,31 +68,31 @@ public class TrainerServiceTest {
     @Test
     public void shouldDeleteTrainer() {
         //given
-        TrainerDTO trainer = createTrainer(
+        TrainerHrDTO trainer = createTrainer(
                 "Adam", "Dominik", "xyz@gmail.com", "987654321", "jestem przystojny"
         );
         //when
-        trainerFacade.deleteByNameAndLastName(trainer.getName(), trainer.getLastName());
+        trainerHrFacade.deleteByNameAndLastName(trainer.getName(), trainer.getLastName());
         //then
-        List<TrainerDTO> allTrainers = trainerFacade.findAllTrainers();
+        List<TrainerHrDTO> allTrainers = trainerHrFacade.findAllTrainers();
         assertThat(allTrainers).isEmpty();
     }
 
     @Test
     public void shouldUpdateTrainer() throws TrainerNotFoundException {
         //given
-        TrainerDTO trainer = createTrainer(
+        TrainerHrDTO trainer = createTrainer(
                 "Adam", "Dominik", "xyz@gmail.com", "987654321", "jestem przystojny"
         );
-        TrainerDTO newTrainer = new TrainerDTO(
+        TrainerHrDTO newTrainer = new TrainerHrDTO(
                 "Dawid", "Jamka", "abc@gmail.com", "123456789", "jestem miły"
         );
         //when
-        TrainerDTO updatedTrainer = trainerFacade.update(
+        TrainerHrDTO updatedTrainer = trainerHrFacade.update(
                 trainer.getName(), trainer.getLastName(), newTrainer
         );
         //then
-        List<TrainerDTO> allTrainers = trainerFacade.findAllTrainers();
+        List<TrainerHrDTO> allTrainers = trainerHrFacade.findAllTrainers();
         assertThat(allTrainers).containsExactlyInAnyOrder(updatedTrainer);
     }
 
@@ -101,10 +101,10 @@ public class TrainerServiceTest {
         //given
         String randomName = randomUUID().toString();
         String randomLastname = randomUUID().toString();
-        TrainerDTO newTrainer = new TrainerDTO(
+        TrainerHrDTO newTrainer = new TrainerHrDTO(
                 "Dawid", "Jamka", "abc@gmail.com", "987654321", "jestem miły");
         //when
-        Throwable thrown = catchThrowable(() -> trainerFacade.update(
+        Throwable thrown = catchThrowable(() -> trainerHrFacade.update(
                 randomName, randomLastname, newTrainer
         ));
         //then
@@ -114,21 +114,21 @@ public class TrainerServiceTest {
     @Test
     public void shouldReturnAllTrainersAsExternalDTOS() {
         //given
-        TrainerDTO trainer1 = createTrainer(
+        TrainerHrDTO trainer1 = createTrainer(
                 "Adam", "Dominik", "xyz@gmail.com", "987654321", "jestem przystojny"
         );
-        TrainerDTO trainer2 = createTrainer(
+        TrainerHrDTO trainer2 = createTrainer(
                 "Dawid", "Jamka", "abc@gmail", "123456789", "jestem mega"
         );
         //when
-        List<TrainerExternalDTO> trainerExternalDTOS = trainerFacade.showAllTrainersExternal();
+        List<TrainerHrExternalDTO> trainerExternalDTOS = trainerHrFacade.showAllTrainersExternal();
         //then
         assertThat(trainerExternalDTOS.size()).isEqualTo(2);
-        TrainerExternalDTO firstExternal = trainerExternalDTOS.get(0);
+        TrainerHrExternalDTO firstExternal = trainerExternalDTOS.get(0);
         assertThat(firstExternal.getName()).isEqualTo(trainer1.getName());
         assertThat(firstExternal.getLastName()).isEqualTo(trainer1.getLastName());
         assertThat(firstExternal.getBiography()).isEqualTo(trainer1.getBiography());
-        TrainerExternalDTO secondExternal = trainerExternalDTOS.get(1);
+        TrainerHrExternalDTO secondExternal = trainerExternalDTOS.get(1);
         assertThat(secondExternal.getName()).isEqualTo(trainer2.getName());
         assertThat(secondExternal.getLastName()).isEqualTo(trainer2.getLastName());
         assertThat(secondExternal.getBiography()).isEqualTo(trainer2.getBiography());

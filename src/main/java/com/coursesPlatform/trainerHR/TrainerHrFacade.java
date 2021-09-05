@@ -1,31 +1,31 @@
-package com.coursesPlatform.trainer;
+package com.coursesPlatform.trainerHR;
 
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @Component
-public class TrainerFacade {
+public class TrainerHrFacade {
 
-    private final TrainerService trainerService;
+    private final TrainerHrService trainerService;
 
-    public TrainerFacade(TrainerService trainerService) {
+    public TrainerHrFacade(TrainerHrService trainerService) {
         this.trainerService = trainerService;
     }
 
-    List<TrainerDTO> findAllTrainers() {
+    List<TrainerHrDTO> findAllTrainers() {
         return trainerService.findAllTrainers();
     }
 
-    List<TrainerExternalDTO> showAllTrainersExternal() {
+    List<TrainerHrExternalDTO> showAllTrainersExternal() {
         return trainerService.showAllTrainersExternal();
     }
 
-    TrainerDTO add(TrainerDTO trainerDTO) {
+    public TrainerHrDTO add(TrainerHrDTO trainerDTO) {
         return trainerService.add(trainerDTO);
     }
 
-    TrainerDTO update(String firstname, String lastname, TrainerDTO updatedTrainer) {
+    TrainerHrDTO update(String firstname, String lastname, TrainerHrDTO updatedTrainer) {
         return trainerService.update(firstname, lastname, updatedTrainer);
     }
 
@@ -33,7 +33,7 @@ public class TrainerFacade {
         trainerService.deleteByNameAndLastName(name, lastName);
     }
 
-    TrainerDTO findByNameAndLastName(String name, String lastName) {
+    TrainerHrDTO findByNameAndLastName(String name, String lastName) {
         return trainerService.findByNameAndLastName(name, lastName);
     }
 }

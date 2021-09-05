@@ -1,17 +1,17 @@
-package com.coursesPlatform.trainer;
+package com.coursesPlatform.trainerHR;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Objects;
 
-public class TrainerExternalDTO {
+public class TrainerHrExternalDTO {
     private final String name;
     private final String lastName;
     private final String biography;
 
     @JsonCreator
-    public TrainerExternalDTO(
+    public TrainerHrExternalDTO(
             @JsonProperty("name") String name,
             @JsonProperty("lastName") String lastName,
             @JsonProperty("biography") String biography
@@ -37,7 +37,7 @@ public class TrainerExternalDTO {
     public boolean equals(Object o) {
         if ( this == o ) return true;
         if ( o == null || getClass() != o.getClass() ) return false;
-        TrainerExternalDTO that = (TrainerExternalDTO) o;
+        TrainerHrExternalDTO that = (TrainerHrExternalDTO) o;
         return Objects.equals(name, that.name) && Objects.equals(lastName, that.lastName) && Objects.equals(biography, that.biography);
     }
 

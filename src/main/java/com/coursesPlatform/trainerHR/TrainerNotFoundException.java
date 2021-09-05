@@ -1,4 +1,4 @@
-package com.coursesPlatform.trainer;
+package com.coursesPlatform.trainerHR;
 
 public class TrainerNotFoundException extends RuntimeException {
     public TrainerNotFoundException() {
