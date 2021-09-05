@@ -38,7 +38,7 @@ class TrainerService {
         return convertTrainerToDTO(trainer);
     }
 
-    TrainerDTO update(String firstname, String lastname, TrainerDTO updatedTrainer) throws TrainerNotFoundException {
+    TrainerDTO update(String firstname, String lastname, TrainerDTO updatedTrainer) {
         Optional<Trainer> existingTrainer = trainerRepository
                 .findByNameAndLastName(firstname, lastname);
         Trainer trainer = existingTrainer.orElseThrow(TrainerNotFoundException::new);
@@ -51,7 +51,7 @@ class TrainerService {
         trainerRepository.deleteByNameAndLastName(name, lastName);
     }
 
-    TrainerDTO findByNameAndLastName(String name, String lastName) throws TrainerNotFoundException {
+    TrainerDTO findByNameAndLastName(String name, String lastName) {
         Optional<Trainer> find = trainerRepository.findByNameAndLastName(name, lastName);
         Trainer trainer = find.orElseThrow(TrainerNotFoundException::new);
         return convertTrainerToDTO(trainer);

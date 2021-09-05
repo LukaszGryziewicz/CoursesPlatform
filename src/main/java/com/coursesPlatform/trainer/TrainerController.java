@@ -35,10 +35,10 @@ class TrainerController {
     }
 
     @PutMapping("/{name}/{lastName}")
-    ResponseEntity<TrainerDTO> updatedTrainer(@PathVariable("name") String firstname,
-                                              @PathVariable("lastName") String lastname,
-                                              @RequestBody TrainerDTO trainerDTO
-    ) throws TrainerNotFoundException {
+    ResponseEntity<TrainerDTO> updateTrainer(@PathVariable("name") String firstname,
+                                             @PathVariable("lastName") String lastname,
+                                             @RequestBody TrainerDTO trainerDTO
+    ) {
         TrainerDTO update = trainerService.update(firstname, lastname, trainerDTO);
         return new ResponseEntity<>(update, HttpStatus.OK);
     }
