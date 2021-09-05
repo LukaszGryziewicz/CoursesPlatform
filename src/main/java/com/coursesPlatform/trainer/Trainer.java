@@ -12,14 +12,14 @@ class Trainer {
     private long id;
     private String name;
     private String lastName;
-    private String  mail;
+    private String mail;
     private String phoneNumber;
     private String biography;
 
-    public Trainer() {
+    Trainer() {
     }
 
-    public Trainer( String name, String lastName, String mail, String phoneNumber, String biography) {
+    Trainer(String name, String lastName, String mail, String phoneNumber, String biography) {
         this.name = name;
         this.lastName = lastName;
         this.mail = mail;
@@ -27,51 +27,51 @@ class Trainer {
         this.biography = biography;
     }
 
-    public long getId() {
+    long getId() {
         return id;
     }
 
-    public String getName() {
+    String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    void setName(String name) {
         this.name = name;
     }
 
-    public String getLastName() {
+    String getLastName() {
         return lastName;
     }
 
-    public void setLastName(String lastName) {
+    void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
-    public String getMail() {
+    String getMail() {
         return mail;
     }
 
-    public void setMail(String mail) {
+    void setMail(String mail) {
         this.mail = mail;
     }
 
-    public String getPhoneNumber() {
+    String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
+    void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getBiography() {
+    String getBiography() {
         return biography;
     }
 
-    public void setBiography(String biography) {
+    void setBiography(String biography) {
         this.biography = biography;
     }
 
-    void update(Trainer trainer){
+    void update(Trainer trainer) {
         this.mail = trainer.getMail();
         this.phoneNumber = trainer.getPhoneNumber();
         this.biography = trainer.getBiography();

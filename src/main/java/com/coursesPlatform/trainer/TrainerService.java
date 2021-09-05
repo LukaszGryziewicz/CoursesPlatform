@@ -7,10 +7,10 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class TrainerService {
+class TrainerService {
     private final TrainerRepository trainerRepository;
 
-    public TrainerService(TrainerRepository trainerRepository) {
+    TrainerService(TrainerRepository trainerRepository) {
         this.trainerRepository = trainerRepository;
     }
 
@@ -28,37 +28,30 @@ public class TrainerService {
                 .collect(Collectors.toList());
     }
 
-    List<TrainerDTO> showAllTrainers() {
-        return trainerRepository.findAll()
-                .stream()
-                .map(this::convertTrainerToInternalDTO)
-                .collect(Collectors.toList());
-    }
-
     TrainerDTO add(TrainerDTO trainerDTO) {
-
-        Optional<Trainer> titleAndDescription = trainerRepository
+        Optional<Trainer> byNameAndLastName = trainerRepository
                 .findByNameAndLastName(trainerDTO.getName(), trainerDTO.getLastName());
-
-
+        if ( byNameAndLastName.isPresent() ) {
+            throw new IllegalStateException("Trainer with given name and lastname already exists");
+        }
         Trainer trainer = trainerRepository.save(convertDTOToTrainer(trainerDTO));
         return convertTrainerToDTO(trainer);
     }
 
-    TrainerDTO update(TrainerDTO updatedTrainer) throws TrainerNotFoundException {
+    TrainerDTO update(String firstname, String lastname, TrainerDTO updatedTrainer) {
         Optional<Trainer> existingTrainer = trainerRepository
-                .findByNameAndLastName(updatedTrainer.getName(), updatedTrainer.getLastName());
-
+                .findByNameAndLastName(firstname, lastname);
         Trainer trainer = existingTrainer.orElseThrow(TrainerNotFoundException::new);
         trainer.update(convertDTOToTrainer(updatedTrainer));
-        return updatedTrainer;
+        Trainer savedTrainer = trainerRepository.save(trainer);
+        return convertTrainerToDTO(savedTrainer);
     }
 
     void deleteByNameAndLastName(String name, String lastName) {
         trainerRepository.deleteByNameAndLastName(name, lastName);
     }
 
-    TrainerDTO findByNameAndLastName(String name, String lastName) throws TrainerNotFoundException {
+    TrainerDTO findByNameAndLastName(String name, String lastName) {
         Optional<Trainer> find = trainerRepository.findByNameAndLastName(name, lastName);
         Trainer trainer = find.orElseThrow(TrainerNotFoundException::new);
         return convertTrainerToDTO(trainer);
@@ -81,25 +74,13 @@ public class TrainerService {
         trainer.setMail(trainerDTO.getMail());
         trainer.setPhoneNumber(trainerDTO.getPhoneNumber());
         trainer.setBiography(trainerDTO.getBiography());
-
         return trainer;
-
     }
 
     private TrainerExternalDTO convertTrainerToExternalDTO(Trainer trainer) {
         return new TrainerExternalDTO(
                 trainer.getName(),
                 trainer.getLastName(),
-                trainer.getBiography()
-        );
-    }
-
-    private TrainerDTO convertTrainerToInternalDTO(Trainer trainer) {
-        return new TrainerDTO(
-                trainer.getName(),
-                trainer.getLastName(),
-                trainer.getMail(),
-                trainer.getPhoneNumber(),
                 trainer.getBiography()
         );
     }
