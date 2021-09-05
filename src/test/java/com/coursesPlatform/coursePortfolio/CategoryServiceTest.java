@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.transaction.Transactional;
+import java.util.InputMismatchException;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -104,5 +105,18 @@ public class CategoryServiceTest {
                 .findCategoriesOfCourse("dupa"));
         //than
         assertThat(thrown).isInstanceOf(CategoryNotFoundException.class);
+    }
+
+    @Test
+    void shouldThrowExceptionWhenCategoryTitleAlreadyExist() {
+        //given
+        CategoryDTO category = new CategoryDTO("Abc", "Xyz");
+        categoryService.add(category);
+        CategoryDTO category2 = new CategoryDTO("Abc", "Def");
+        //when
+        Throwable thrown = catchThrowable(() -> categoryService.add(category2));
+        //then
+        assertThat(thrown).isInstanceOf(IllegalStateException.class)
+                .hasMessageContaining("Category with given title already exists");
     }
 }

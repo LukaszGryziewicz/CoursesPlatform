@@ -53,12 +53,11 @@ class CategoryService {
 
     CategoryDTO add(CategoryDTO categoryDTO) {
 
-        Optional<Category> titleAndDescription = categoryRepository
-                .findCategoryByTitleAndDescription(categoryDTO.getTitle(),
-                        categoryDTO.getDescription());
+        Optional<Category> categoryTitle = categoryRepository
+                .findCategoryByTitle(categoryDTO.getTitle());
 
-        if ( titleAndDescription.isPresent() ) {
-            throw new IllegalStateException("Category with given title and description already exists");
+        if ( categoryTitle.isPresent() ) {
+            throw new IllegalStateException("Category with given title already exists");
         }
         if ( categoryDTO.getTitle().length() >= titleLengthLimit ) {
             throw new IllegalLengthException();

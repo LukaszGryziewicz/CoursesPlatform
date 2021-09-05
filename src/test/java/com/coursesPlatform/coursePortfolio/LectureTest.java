@@ -8,6 +8,7 @@ import javax.transaction.Transactional;
 import java.math.BigDecimal;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 
 @SpringBootTest
 @Transactional
@@ -18,6 +19,11 @@ public class LectureTest {
     private LectureService lectureService;
     @Autowired
     private CourseRepository courseRepository;
+    @Autowired
+    private CourseService courseService;
+    @Autowired
+    private CategoryService categoryService;
+
 
     @Test
     void shouldAddLecture() {
@@ -41,5 +47,20 @@ public class LectureTest {
         lectureService.add(lectureDTO, course.getTitle());
         //then
         assertThat(lectureService.findAllLectures()).contains((lectureDTO));
+    }
+
+    @Test
+    void shouldThrowExceptionWhenLectureTitleAlreadyExist() {
+        CategoryDTO category = new CategoryDTO("Abc", "Xyz");
+        categoryService.add(category);
+        CourseDTO course = new CourseDTO("Xyz", "Abc");
+        courseService.add(course, "Abc");
+        LectureDTO lecture = new LectureDTO("123", "asd", BigDecimal.ONE, 1);
+        lectureService.add(lecture, course.getTitle());
+        LectureDTO lecture2 = new LectureDTO("123", "def", BigDecimal.ONE, 2);
+        //when
+        Throwable thrown = catchThrowable(() -> lectureService.add(lecture2, course.getTitle()));
+        //than
+        assertThat(thrown).isInstanceOf(IllegalStateException.class).hasMessageContaining("Lecture with given title already exists");
     }
 }
