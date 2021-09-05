@@ -54,7 +54,7 @@ class LectureService {
 
         Optional<Lecture> lectureTitle = lectureRepository.findLectureByTitle(lectureDTO.getTitle());
         if ( lectureTitle.isPresent() ) {
-            throw new IllegalStateException("Lecture with given title and description already exists");
+            throw new IllegalStateException("Lecture with given title already exists");
         }
         if ( lectureDTO.getTitle().length() >= titleLengthLimit ) {
             throw new IllegalLengthException();

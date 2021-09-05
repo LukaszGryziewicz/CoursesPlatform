@@ -87,4 +87,18 @@ public class CourseTest {
         //than
         assertThat(thrown).isInstanceOf(CourseNotFoundException.class);
     }
+
+    @Test
+    void shouldThrowExceptionWhenCourseTitleAlreadyExist() {
+        //given
+        CategoryDTO category = new CategoryDTO("Abc", "Xyz");
+        categoryService.add(category);
+        CourseDTO course = new CourseDTO("Xyz", "Abc");
+        courseService.add(course, "Abc");
+        CourseDTO course2 = new CourseDTO("Xyz", "Def");
+        //when
+        Throwable thrown = catchThrowable(() -> courseService.add(course2,"Abc"));
+        //than
+        assertThat(thrown).isInstanceOf(IllegalStateException.class).hasMessageContaining("Course with given title already exists");
+    }
 }

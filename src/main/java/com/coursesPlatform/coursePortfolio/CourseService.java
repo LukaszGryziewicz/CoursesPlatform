@@ -33,7 +33,7 @@ class CourseService {
         Optional<Course> courseTitle = courseRepository
                 .findCourseByTitle(courseDTO.getTitle());
         if ( courseTitle.isPresent() ) {
-            throw new IllegalStateException("Course with given title and description already exists");
+            throw new IllegalStateException("Course with given title already exists");
         }
         if ( courseDTO.getDescription().length() >= titleLengthLimit ) {
             throw new IllegalLengthException();
