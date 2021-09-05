@@ -7,7 +7,7 @@ import java.util.Optional;
 
 interface LectureRepository extends JpaRepository<Lecture, Long> {
 
-    Optional<Lecture> findLectureByTitleAndDescription(String title, String description);
+    Optional<Lecture> findLectureByTitle(String title);
 
     List<Lecture> findByTitleIn(List<String> titles);
 }

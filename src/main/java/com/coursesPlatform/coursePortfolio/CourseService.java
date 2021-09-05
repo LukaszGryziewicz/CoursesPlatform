@@ -30,9 +30,9 @@ class CourseService {
         Optional<Category> categoryByTitle = categoryRepository.findCategoryByTitle(categoryTitle);
         Category category = categoryByTitle.orElseThrow(CategoryNotFoundException::new);
 
-        Optional<Course> course = courseRepository
-                .findCourseByTitleAndDescription(courseDTO.getTitle(), courseDTO.getDescription());
-        if ( course.isPresent() ) {
+        Optional<Course> courseTitle = courseRepository
+                .findCourseByTitle(courseDTO.getTitle());
+        if ( courseTitle.isPresent() ) {
             throw new IllegalStateException("Course with given title and description already exists");
         }
         if ( courseDTO.getDescription().length() >= titleLengthLimit ) {

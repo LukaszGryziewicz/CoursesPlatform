@@ -47,7 +47,7 @@ public class CategoryServiceTest {
     @Test
     public void shouldThrowExceptionAfterTextIsTooLong() {
         //given
-        CategoryDTO category = new CategoryDTO(RandomStringUtils.randomAlphanumeric(300), "");
+        CategoryDTO category = new CategoryDTO(RandomStringUtils.randomAlphanumeric(200), "");
         //when
         Throwable thrown = catchThrowable(() -> categoryService.add(category));
         //then

@@ -52,8 +52,8 @@ class LectureService {
         Optional<Course> courseByTitle = courseRepository.findCourseByTitle(courseTitle);
         Course course = courseByTitle.orElseThrow(CourseNotFoundException::new);
 
-        Optional<Lecture> lecture = lectureRepository.findLectureByTitleAndDescription(lectureDTO.getTitle(), lectureDTO.getDescription());
-        if ( lecture.isPresent() ) {
+        Optional<Lecture> lectureTitle = lectureRepository.findLectureByTitle(lectureDTO.getTitle());
+        if ( lectureTitle.isPresent() ) {
             throw new IllegalStateException("Lecture with given title and description already exists");
         }
         if ( lectureDTO.getTitle().length() >= titleLengthLimit ) {
