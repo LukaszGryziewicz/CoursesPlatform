@@ -12,26 +12,27 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 @Transactional
 public class TrainerServiceTest {
+
     @Autowired
-    private TrainerService trainerService;
+    private TrainerFacade trainerFacade;
 
     @Test
     void shouldAddTrainer() {
         //given
         TrainerDTO trainer = new TrainerDTO("ada", "ada");
         //when
-        trainerService.add(trainer);
+        trainerFacade.add(trainer);
         //then
-        assertThat(trainerService.findAllTrainers()).containsExactlyInAnyOrder(trainer);
+        assertThat(trainerFacade.findAllTrainers()).containsExactlyInAnyOrder(trainer);
     }
 
     @Test
     void shouldShowAllTrainers() {
         //given
         TrainerDTO trainers = new TrainerDTO("", "");
-        trainerService.add(trainers);
+        trainerFacade.add(trainers);
         //when
-        List<TrainerDTO> allTrainers = trainerService.findAllTrainers();
+        List<TrainerDTO> allTrainers = trainerFacade.findAllTrainers();
         //then
         assertThat(allTrainers).contains(trainers);
     }
@@ -40,11 +41,11 @@ public class TrainerServiceTest {
     public void shouldDeleteTrainer() {
         //given
         TrainerDTO trainer = new TrainerDTO("", "");
-        trainerService.add(trainer);
+        trainerFacade.add(trainer);
         //when
-        trainerService.deleteByNameAndLastName(trainer.getName(), trainer.getLastName());
+        trainerFacade.deleteByNameAndLastName(trainer.getName(), trainer.getLastName());
         //then
-        List<TrainerDTO> allTrainers = trainerService.findAllTrainers();
+        List<TrainerDTO> allTrainers = trainerFacade.findAllTrainers();
         assertThat(allTrainers).isEmpty();
     }
 
@@ -53,12 +54,12 @@ public class TrainerServiceTest {
         //given
         TrainerDTO trainer = new TrainerDTO("Adam", "Dominik", "siema", "123456789", "jestem przystojny");
         TrainerDTO newTrainer = new TrainerDTO("Adam", "Dominik", "sirma", "987654321", "jestem miły");
-        trainerService.add(trainer);
+        trainerFacade.add(trainer);
 
         //when
-        TrainerDTO update = trainerService.update(newTrainer);
+        TrainerDTO update = trainerFacade.update(newTrainer);
         //then
-        TrainerDTO byNameAndLastName = trainerService.findByNameAndLastName("Adam", "Dominik");
+        TrainerDTO byNameAndLastName = trainerFacade.findByNameAndLastName("Adam", "Dominik");
         assertThat(byNameAndLastName).isEqualTo(newTrainer);
     }
 }

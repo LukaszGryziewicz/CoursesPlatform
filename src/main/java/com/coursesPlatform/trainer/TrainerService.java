@@ -7,10 +7,10 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class TrainerService {
+class TrainerService {
     private final TrainerRepository trainerRepository;
 
-    public TrainerService(TrainerRepository trainerRepository) {
+    TrainerService(TrainerRepository trainerRepository) {
         this.trainerRepository = trainerRepository;
     }
 
