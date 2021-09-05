@@ -18,7 +18,7 @@ class TrainerController {
 
     @GetMapping("/all/internal")
     ResponseEntity<List<TrainerDTO>> getAllTrainers() {
-        List<TrainerDTO> allTrainers = trainerService.showAllTrainers();
+        List<TrainerDTO> allTrainers = trainerService.findAllTrainers();
         return new ResponseEntity<>(allTrainers, HttpStatus.OK);
     }
 
@@ -34,9 +34,12 @@ class TrainerController {
         return new ResponseEntity<>(add, HttpStatus.CREATED);
     }
 
-    @PutMapping("/update")
-    ResponseEntity<TrainerDTO> updatedTrainer(@RequestBody TrainerDTO trainerDTO) throws TrainerNotFoundException {
-        TrainerDTO update = trainerService.update(trainerDTO);
+    @PutMapping("/{name}/{lastName}")
+    ResponseEntity<TrainerDTO> updatedTrainer(@PathVariable("name") String firstname,
+                                              @PathVariable("lastName") String lastname,
+                                              @RequestBody TrainerDTO trainerDTO
+    ) throws TrainerNotFoundException {
+        TrainerDTO update = trainerService.update(firstname, lastname, trainerDTO);
         return new ResponseEntity<>(update, HttpStatus.OK);
     }
 

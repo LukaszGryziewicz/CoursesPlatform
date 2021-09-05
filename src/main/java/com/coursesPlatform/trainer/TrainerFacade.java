@@ -21,16 +21,12 @@ public class TrainerFacade {
         return trainerService.showAllTrainersExternal();
     }
 
-    List<TrainerDTO> showAllTrainers() {
-        return trainerService.showAllTrainers();
-    }
-
     TrainerDTO add(TrainerDTO trainerDTO) {
         return trainerService.add(trainerDTO);
     }
 
-    TrainerDTO update(TrainerDTO updatedTrainer) {
-        return trainerService.update(updatedTrainer);
+    TrainerDTO update(String firstname, String lastname, TrainerDTO updatedTrainer) {
+        return trainerService.update(firstname, lastname, updatedTrainer);
     }
 
     void deleteByNameAndLastName(String name, String lastName) {
