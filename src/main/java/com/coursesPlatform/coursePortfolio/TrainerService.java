@@ -2,9 +2,13 @@ package com.coursesPlatform.coursePortfolio;
 
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
+import static java.time.temporal.ChronoUnit.DAYS;
+import static java.util.Collections.disjoint;
 import static java.util.stream.Collectors.toList;
+import static java.util.stream.LongStream.range;
 
 @Service
 class TrainerService {
@@ -26,11 +30,27 @@ class TrainerService {
                 .collect(toList());
     }
 
+    public Trainer findAvailableTrainer(LocalDate orderStartDate, LocalDate orderEndDate) {
+        List<LocalDate> orderDates = getDaysBetween(orderStartDate, orderEndDate);
+        List<Trainer> collect = trainerRepository.findAll().stream()
+                .filter(trainer -> disjoint(orderDates, trainer.getUnavailableDays()))
+                .collect(toList());
+        return collect.get(0);
+    }
+
+    private List<LocalDate> getDaysBetween(LocalDate orderStartDate, LocalDate orderEndDate) {
+        long numOfDays = DAYS.between(orderStartDate, orderEndDate);
+        return range(0, numOfDays)
+                .mapToObj(orderStartDate::plusDays)
+                .collect(toList());
+    }
+
     private TrainerDTO convertTrainerToDTO(Trainer trainer) {
         return new TrainerDTO(
                 trainer.getName(),
                 trainer.getLastName(),
-                trainer.getMail()
+                trainer.getMail(),
+                trainer.getUnavailableDays()
         );
     }
 
@@ -38,7 +58,8 @@ class TrainerService {
         return new Trainer(
                 trainerDTO.getName(),
                 trainerDTO.getLastName(),
-                trainerDTO.getMail()
+                trainerDTO.getMail(),
+                trainerDTO.getUnavailableDays()
         );
     }
 }

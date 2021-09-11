@@ -3,12 +3,16 @@ package com.coursesPlatform.coursePortfolio;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class TrainerDTO {
     private String name;
     private String lastName;
     private String mail;
+    private List<LocalDate> unavailableDays = new ArrayList<>();
 
     @JsonCreator
     public TrainerDTO(
@@ -18,6 +22,13 @@ public class TrainerDTO {
         this.name = name;
         this.lastName = lastName;
         this.mail = mail;
+    }
+
+    public TrainerDTO(String name, String lastName, String mail, List<LocalDate> unavailableDays) {
+        this.name = name;
+        this.lastName = lastName;
+        this.mail = mail;
+        this.unavailableDays = unavailableDays;
     }
 
     public String getName() {
@@ -38,6 +49,14 @@ public class TrainerDTO {
 
     public String getMail() {
         return mail;
+    }
+
+    public List<LocalDate> getUnavailableDays() {
+        return unavailableDays;
+    }
+
+    public void setUnavailableDays(List<LocalDate> unavailableDays) {
+        this.unavailableDays = unavailableDays;
     }
 
     public void setMail(String mail) {

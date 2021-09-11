@@ -1,9 +1,9 @@
 package com.coursesPlatform.coursePortfolio;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -14,7 +14,8 @@ class Trainer {
     private String name;
     private String lastName;
     private String mail;
-    private boolean occupied;
+    @ElementCollection
+    private List<LocalDate> unavailableDays = new ArrayList<>();
 
     Trainer() {
     }
@@ -23,6 +24,13 @@ class Trainer {
         this.name = name;
         this.lastName = lastName;
         this.mail = mail;
+    }
+
+    public Trainer(String name, String lastName, String mail, List<LocalDate> unavailableDays) {
+        this.name = name;
+        this.lastName = lastName;
+        this.mail = mail;
+        this.unavailableDays = unavailableDays;
     }
 
     String getName() {
@@ -49,12 +57,16 @@ class Trainer {
         this.mail = mail;
     }
 
-    boolean isOccupied() {
-        return occupied;
+    public List<LocalDate> getUnavailableDays() {
+        return unavailableDays;
     }
 
-    void setOccupied(boolean occupied) {
-        this.occupied = occupied;
+    public void setUnavailableDays(List<LocalDate> unavailableDays) {
+        this.unavailableDays = unavailableDays;
+    }
+
+    void addUnavailableDays(List<LocalDate> unavailableDay) {
+        unavailableDays.addAll(unavailableDay);
     }
 
     @Override
@@ -62,11 +74,11 @@ class Trainer {
         if ( this == o ) return true;
         if ( o == null || getClass() != o.getClass() ) return false;
         Trainer trainer = (Trainer) o;
-        return occupied == trainer.occupied && Objects.equals(id, trainer.id) && Objects.equals(name, trainer.name) && Objects.equals(lastName, trainer.lastName) && Objects.equals(mail, trainer.mail);
+        return Objects.equals(id, trainer.id) && Objects.equals(name, trainer.name) && Objects.equals(lastName, trainer.lastName) && Objects.equals(mail, trainer.mail) && Objects.equals(unavailableDays, trainer.unavailableDays);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, lastName, mail, occupied);
+        return Objects.hash(id, name, lastName, mail, unavailableDays);
     }
 }

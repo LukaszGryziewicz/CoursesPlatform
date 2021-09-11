@@ -4,24 +4,26 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 public class OrderDTO {
+    private String offerId;
     private String mail;
     private String categoryTitle;
     private String courseTitle;
-    private List<String> lecturesTitle = new ArrayList<>();
+    private List<String> lecturesTitle;
     private BigDecimal summaryPrice;
     private int summaryDuration;
 
     @JsonCreator
-    public OrderDTO(@JsonProperty("mail") String mail,
-                    @JsonProperty("categoryTitle") String categoryTitle,
-                    @JsonProperty("courseTitle") String courseTitle,
-                    @JsonProperty("lecturesTitle") List<String> lecturesTitle,
-                    @JsonProperty("summaryPrice") BigDecimal summaryPrice,
-                    @JsonProperty("summaryDuration") int summaryDuration) {
+    public OrderDTO(
+            @JsonProperty("offerId") String offerId,
+            @JsonProperty("mail") String mail,
+            @JsonProperty("categoryTitle") String categoryTitle,
+            @JsonProperty("courseTitle") String courseTitle,
+            @JsonProperty("lecturesTitle") List<String> lecturesTitle,
+            @JsonProperty("summaryPrice") BigDecimal summaryPrice,
+            @JsonProperty("summaryDuration") int summaryDuration) {
         this.mail = mail;
         this.categoryTitle = categoryTitle;
         this.courseTitle = courseTitle;

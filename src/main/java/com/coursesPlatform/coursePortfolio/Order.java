@@ -7,6 +7,7 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private String orderId;
     @OneToOne
     private Offer offer;
     @ManyToOne
@@ -15,9 +16,18 @@ public class Order {
     public Order() {
     }
 
-    public Order(Offer offer, Trainer trainer) {
+    public Order(String orderId, Offer offer, Trainer trainer) {
+        this.orderId = orderId;
         this.offer = offer;
         this.trainer = trainer;
+    }
+
+    public String getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
     }
 
     public Offer getOffer() {
