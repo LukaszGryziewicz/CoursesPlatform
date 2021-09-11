@@ -1,6 +1,7 @@
 package com.coursesPlatform.coursePortfolio;
 
 import com.coursesPlatform.exceptions.CourseNotFoundException;
+import com.coursesPlatform.exceptions.CourseTitleAlreadyExists;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -99,6 +100,6 @@ public class CourseTest {
         //when
         Throwable thrown = catchThrowable(() -> courseService.add(course2,"Abc"));
         //than
-        assertThat(thrown).isInstanceOf(IllegalStateException.class).hasMessageContaining("Course with given title already exists");
+        assertThat(thrown).isInstanceOf(CourseTitleAlreadyExists.class).hasMessageContaining("Course title already exists");
     }
 }

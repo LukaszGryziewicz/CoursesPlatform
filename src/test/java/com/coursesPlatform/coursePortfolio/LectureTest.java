@@ -1,5 +1,6 @@
 package com.coursesPlatform.coursePortfolio;
 
+import com.coursesPlatform.exceptions.LectureTitleAlreadyExists;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -61,6 +62,6 @@ public class LectureTest {
         //when
         Throwable thrown = catchThrowable(() -> lectureService.add(lecture2, course.getTitle()));
         //than
-        assertThat(thrown).isInstanceOf(IllegalStateException.class).hasMessageContaining("Lecture with given title already exists");
+        assertThat(thrown).isInstanceOf(LectureTitleAlreadyExists.class).hasMessageContaining("Lecture title already exists");
     }
 }
