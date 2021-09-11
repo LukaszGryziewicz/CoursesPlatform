@@ -1,9 +1,11 @@
 package com.coursesPlatform.coursePortfolio;
 
+import com.coursesPlatform.trainer.TrainerExternalDTO;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static java.time.temporal.ChronoUnit.DAYS;
 import static java.util.UUID.randomUUID;
@@ -21,6 +23,13 @@ class OrderService {
         this.orderRepository = orderRepository;
         this.offerService = offerService;
         this.trainerService = trainerService;
+    }
+
+    List<OrderDTO> showAllOrders() {
+        return orderRepository.findAll()
+                .stream()
+                .map(this::convertOrderToDto)
+                .collect(Collectors.toList());
     }
 
     OrderDTO add(String offerId, LocalDate orderStartDate, LocalDate orderEndDate) {

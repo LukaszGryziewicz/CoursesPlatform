@@ -24,12 +24,21 @@ public class OrderDTO {
             @JsonProperty("lecturesTitle") List<String> lecturesTitle,
             @JsonProperty("summaryPrice") BigDecimal summaryPrice,
             @JsonProperty("summaryDuration") int summaryDuration) {
+        this.offerId = offerId;
         this.mail = mail;
         this.categoryTitle = categoryTitle;
         this.courseTitle = courseTitle;
         this.lecturesTitle = lecturesTitle;
         this.summaryPrice = summaryPrice;
         this.summaryDuration = summaryDuration;
+    }
+
+    public String getOfferId() {
+        return offerId;
+    }
+
+    public void setOfferId(String offerId) {
+        this.offerId = offerId;
     }
 
     public String getMail() {
