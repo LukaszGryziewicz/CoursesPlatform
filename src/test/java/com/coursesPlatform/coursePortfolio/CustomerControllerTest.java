@@ -86,7 +86,6 @@ public class CustomerControllerTest {
         //given
         CustomerDTO customerDTO = new CustomerDTO("Adam", "dominator.aligator@gmail.com", "123123123");
         customerService.add(customerDTO);
-        List<CustomerDTO> emptyList = new ArrayList<>();
 
         //expect
         this.mockMvc.perform(delete("/customer/delete/dominator.aligator@gmail.com"))

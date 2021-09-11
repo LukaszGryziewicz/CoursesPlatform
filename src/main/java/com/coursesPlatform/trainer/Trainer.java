@@ -72,6 +72,8 @@ class Trainer {
     }
 
     void update(Trainer trainer) {
+        this.name = trainer.getName();
+        this.lastName = trainer.getLastName();
         this.mail = trainer.getMail();
         this.phoneNumber = trainer.getPhoneNumber();
         this.biography = trainer.getBiography();

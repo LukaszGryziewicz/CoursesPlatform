@@ -43,7 +43,7 @@ class TrainerController {
         return new ResponseEntity<>(update, HttpStatus.OK);
     }
 
-    @DeleteMapping("/delete/{name}/{lastname}")
+    @DeleteMapping("/delete/{name}/{lastName}")
     ResponseEntity<?> deleteTrainer(@PathVariable("name") String trainerName, @PathVariable("lastName") String trainerLastName) {
         trainerService.deleteByNameAndLastName(trainerName, trainerLastName);
         return new ResponseEntity<>(HttpStatus.OK);
