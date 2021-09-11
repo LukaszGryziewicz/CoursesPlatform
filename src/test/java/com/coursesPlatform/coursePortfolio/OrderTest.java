@@ -28,7 +28,7 @@ public class OrderTest {
     @Autowired
     private CustomerService customerService;
     @Autowired
-    private TrainerService trainerService;
+    private TrainerProjectionService trainerService;
     @Autowired
     private OfferService offerService;
     @Autowired
@@ -75,9 +75,9 @@ public class OrderTest {
                 listOfLectures
         );
         OfferDTO createdOffer = offerService.create(offer);
-        TrainerDTO trainer1 = trainerService.add("Adam", "Dominik", "adam@dominik.com");
+        TrainerProjectionDTO trainer1 = trainerService.add("Adam", "Dominik", "adam@dominik.com");
         trainer1.getUnavailableDays().add(LocalDate.of(2021, 9, 12));
-        TrainerDTO trainer2 = trainerService.add("Dawid", "Jamka", "dawid@jamka.com");
+        TrainerProjectionDTO trainer2 = trainerService.add("Dawid", "Jamka", "dawid@jamka.com");
         //when
         LocalDate orderStartDate = LocalDate.of(2021, 9, 11);
         LocalDate orderEndDate = LocalDate.of(2021, 9, 13);

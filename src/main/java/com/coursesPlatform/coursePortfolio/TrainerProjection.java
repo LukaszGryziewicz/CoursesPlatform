@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-class Trainer {
+class TrainerProjection {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -17,16 +17,16 @@ class Trainer {
     @ElementCollection
     private List<LocalDate> unavailableDays = new ArrayList<>();
 
-    Trainer() {
+    TrainerProjection() {
     }
 
-    Trainer(String name, String lastName, String mail) {
+    TrainerProjection(String name, String lastName, String mail) {
         this.name = name;
         this.lastName = lastName;
         this.mail = mail;
     }
 
-    public Trainer(String name, String lastName, String mail, List<LocalDate> unavailableDays) {
+    public TrainerProjection(String name, String lastName, String mail, List<LocalDate> unavailableDays) {
         this.name = name;
         this.lastName = lastName;
         this.mail = mail;
@@ -73,7 +73,7 @@ class Trainer {
     public boolean equals(Object o) {
         if ( this == o ) return true;
         if ( o == null || getClass() != o.getClass() ) return false;
-        Trainer trainer = (Trainer) o;
+        TrainerProjection trainer = (TrainerProjection) o;
         return Objects.equals(id, trainer.id) && Objects.equals(name, trainer.name) && Objects.equals(lastName, trainer.lastName) && Objects.equals(mail, trainer.mail) && Objects.equals(unavailableDays, trainer.unavailableDays);
     }
 

@@ -8,14 +8,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class TrainerDTO {
+public class TrainerProjectionDTO {
     private String name;
     private String lastName;
     private String mail;
     private List<LocalDate> unavailableDays = new ArrayList<>();
 
     @JsonCreator
-    public TrainerDTO(
+    public TrainerProjectionDTO(
             @JsonProperty("name") String name,
             @JsonProperty("lastName") String lastName,
             @JsonProperty("mail") String mail) {
@@ -24,7 +24,7 @@ public class TrainerDTO {
         this.mail = mail;
     }
 
-    public TrainerDTO(String name, String lastName, String mail, List<LocalDate> unavailableDays) {
+    public TrainerProjectionDTO(String name, String lastName, String mail, List<LocalDate> unavailableDays) {
         this.name = name;
         this.lastName = lastName;
         this.mail = mail;
@@ -67,7 +67,7 @@ public class TrainerDTO {
     public boolean equals(Object o) {
         if ( this == o ) return true;
         if ( o == null || getClass() != o.getClass() ) return false;
-        TrainerDTO that = (TrainerDTO) o;
+        TrainerProjectionDTO that = (TrainerProjectionDTO) o;
         return Objects.equals(name, that.name) && Objects.equals(lastName, that.lastName) && Objects.equals(mail, that.mail);
     }
 

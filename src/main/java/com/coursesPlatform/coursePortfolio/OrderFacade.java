@@ -6,17 +6,17 @@ import java.util.List;
 
 @Component
 public class OrderFacade {
-    private final TrainerService trainerService;
+    private final TrainerProjectionService trainerService;
 
-    public OrderFacade(TrainerService trainerService) {
+    public OrderFacade(TrainerProjectionService trainerService) {
         this.trainerService = trainerService;
     }
 
-    public TrainerDTO add(String name, String lastName, String email) {
+    public TrainerProjectionDTO add(String name, String lastName, String email) {
         return trainerService.add(name, lastName, email);
     }
 
-    List<TrainerDTO> findAll() {
+    List<TrainerProjectionDTO> findAll() {
         return trainerService.findAll();
     }
 }

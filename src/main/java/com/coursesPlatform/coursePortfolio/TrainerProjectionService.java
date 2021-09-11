@@ -11,28 +11,28 @@ import static java.util.stream.Collectors.toList;
 import static java.util.stream.LongStream.range;
 
 @Service
-class TrainerService {
-    private final TrainerRepository trainerRepository;
+class TrainerProjectionService {
+    private final TrainerProjectionRepository trainerRepository;
 
-    TrainerService(TrainerRepository trainerRepository) {
+    TrainerProjectionService(TrainerProjectionRepository trainerRepository) {
         this.trainerRepository = trainerRepository;
     }
 
-    TrainerDTO add(String name, String lastName, String email) {
-        TrainerDTO trainerDTO = new TrainerDTO(name, lastName, email);
-        Trainer savedTrainer = trainerRepository.save(convertDTOToTrainer(trainerDTO));
+    TrainerProjectionDTO add(String name, String lastName, String email) {
+        TrainerProjectionDTO trainerDTO = new TrainerProjectionDTO(name, lastName, email);
+        TrainerProjection savedTrainer = trainerRepository.save(convertDTOToTrainer(trainerDTO));
         return convertTrainerToDTO(savedTrainer);
     }
 
-    List<TrainerDTO> findAll() {
+    List<TrainerProjectionDTO> findAll() {
         return trainerRepository.findAll().stream()
                 .map(this::convertTrainerToDTO)
                 .collect(toList());
     }
 
-    public Trainer findAvailableTrainer(LocalDate orderStartDate, LocalDate orderEndDate) {
+    public TrainerProjection findAvailableTrainer(LocalDate orderStartDate, LocalDate orderEndDate) {
         List<LocalDate> orderDates = getDaysBetween(orderStartDate, orderEndDate);
-        List<Trainer> collect = trainerRepository.findAll().stream()
+        List<TrainerProjection> collect = trainerRepository.findAll().stream()
                 .filter(trainer -> disjoint(orderDates, trainer.getUnavailableDays()))
                 .collect(toList());
         return collect.get(0);
@@ -45,8 +45,8 @@ class TrainerService {
                 .collect(toList());
     }
 
-    private TrainerDTO convertTrainerToDTO(Trainer trainer) {
-        return new TrainerDTO(
+    private TrainerProjectionDTO convertTrainerToDTO(TrainerProjection trainer) {
+        return new TrainerProjectionDTO(
                 trainer.getName(),
                 trainer.getLastName(),
                 trainer.getMail(),
@@ -54,8 +54,8 @@ class TrainerService {
         );
     }
 
-    private Trainer convertDTOToTrainer(TrainerDTO trainerDTO) {
-        return new Trainer(
+    private TrainerProjection convertDTOToTrainer(TrainerProjectionDTO trainerDTO) {
+        return new TrainerProjection(
                 trainerDTO.getName(),
                 trainerDTO.getLastName(),
                 trainerDTO.getMail(),

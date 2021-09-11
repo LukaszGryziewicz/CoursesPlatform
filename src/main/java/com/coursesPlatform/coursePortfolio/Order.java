@@ -11,12 +11,12 @@ public class Order {
     @OneToOne
     private Offer offer;
     @ManyToOne
-    private Trainer trainer;
+    private TrainerProjection trainer;
 
     public Order() {
     }
 
-    public Order(String orderId, Offer offer, Trainer trainer) {
+    public Order(String orderId, Offer offer, TrainerProjection trainer) {
         this.orderId = orderId;
         this.offer = offer;
         this.trainer = trainer;
@@ -38,11 +38,11 @@ public class Order {
         this.offer = offer;
     }
 
-    public Trainer getTrainer() {
+    public TrainerProjection getTrainer() {
         return trainer;
     }
 
-    public void setTrainer(Trainer trainer) {
+    public void setTrainer(TrainerProjection trainer) {
         this.trainer = trainer;
     }
 }

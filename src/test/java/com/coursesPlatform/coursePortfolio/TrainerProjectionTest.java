@@ -11,27 +11,27 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @Transactional
-public class TrainerTest {
+public class TrainerProjectionTest {
 
     @Autowired
-    private TrainerService trainerService;
+    private TrainerProjectionService trainerService;
 
     @Test
     void shouldAddTrainer() {
         //when
-        TrainerDTO trainer = trainerService.add("Adam", "Domnik", "abc@gmail.com");
+        TrainerProjectionDTO trainer = trainerService.add("Adam", "Domnik", "abc@gmail.com");
         //then
-        List<TrainerDTO> trainerList = trainerService.findAll();
+        List<TrainerProjectionDTO> trainerList = trainerService.findAll();
         assertThat(trainerList).containsExactlyInAnyOrder(trainer);
     }
 
     @Test
     void shouldFindAllTrainers() {
         //given
-        TrainerDTO trainer1 = trainerService.add("Adam", "Domnik", "abc@gmail.com");
-        TrainerDTO trainer2 = trainerService.add("Dawid", "Jamka", "xyz@gmail.com");
+        TrainerProjectionDTO trainer1 = trainerService.add("Adam", "Domnik", "abc@gmail.com");
+        TrainerProjectionDTO trainer2 = trainerService.add("Dawid", "Jamka", "xyz@gmail.com");
         //when
-        List<TrainerDTO> trainerList = trainerService.findAll();
+        List<TrainerProjectionDTO> trainerList = trainerService.findAll();
         //then
         assertThat(trainerList).containsExactlyInAnyOrder(trainer1, trainer2);
     }
