@@ -1,4 +1,4 @@
-package com.coursesPlatform.trainerHR;
+package com.coursesPlatform.trainer;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,37 +9,37 @@ import java.util.List;
 @RestController
 @RequestMapping("/trainer")
 @CrossOrigin(origins = "http://localhost:4200/")
-class TrainerHrController {
-    private final TrainerHrService trainerService;
+class TrainerController {
+    private final TrainerService trainerService;
 
-    TrainerHrController(TrainerHrService trainerService) {
+    TrainerController(TrainerService trainerService) {
         this.trainerService = trainerService;
     }
 
     @GetMapping("/all/internal")
-    ResponseEntity<List<TrainerHrDTO>> getAllTrainers() {
-        List<TrainerHrDTO> allTrainers = trainerService.findAllTrainers();
+    ResponseEntity<List<TrainerDTO>> getAllTrainers() {
+        List<TrainerDTO> allTrainers = trainerService.findAllTrainers();
         return new ResponseEntity<>(allTrainers, HttpStatus.OK);
     }
 
     @GetMapping("/all/external")
-    ResponseEntity<List<TrainerHrExternalDTO>> getAllTrainersExternal() {
-        List<TrainerHrExternalDTO> allTrainers = trainerService.showAllTrainersExternal();
+    ResponseEntity<List<TrainerExternalDTO>> getAllTrainersExternal() {
+        List<TrainerExternalDTO> allTrainers = trainerService.showAllTrainersExternal();
         return new ResponseEntity<>(allTrainers, HttpStatus.OK);
     }
 
     @PostMapping("/add")
-    ResponseEntity<TrainerHrDTO> addNewTrainer(@RequestBody TrainerHrDTO trainerDTO) {
-        TrainerHrDTO add = trainerService.add(trainerDTO);
+    ResponseEntity<TrainerDTO> addNewTrainer(@RequestBody TrainerDTO trainerDTO) {
+        TrainerDTO add = trainerService.add(trainerDTO);
         return new ResponseEntity<>(add, HttpStatus.CREATED);
     }
 
     @PutMapping("/{name}/{lastName}")
-    ResponseEntity<TrainerHrDTO> updateTrainer(@PathVariable("name") String firstname,
-                                               @PathVariable("lastName") String lastname,
-                                               @RequestBody TrainerHrDTO trainerDTO
+    ResponseEntity<TrainerDTO> updateTrainer(@PathVariable("name") String firstname,
+                                             @PathVariable("lastName") String lastname,
+                                             @RequestBody TrainerDTO trainerDTO
     ) {
-        TrainerHrDTO update = trainerService.update(firstname, lastname, trainerDTO);
+        TrainerDTO update = trainerService.update(firstname, lastname, trainerDTO);
         return new ResponseEntity<>(update, HttpStatus.OK);
     }
 

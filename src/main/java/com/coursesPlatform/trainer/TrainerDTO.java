@@ -1,11 +1,11 @@
-package com.coursesPlatform.trainerHR;
+package com.coursesPlatform.trainer;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Objects;
 
-class TrainerHrDTO {
+class TrainerDTO {
     private final String name;
     private final String lastName;
     private String mail;
@@ -13,7 +13,7 @@ class TrainerHrDTO {
     private String biography;
 
     @JsonCreator
-    public TrainerHrDTO(
+    public TrainerDTO(
             @JsonProperty("name") String name,
             @JsonProperty("lastName") String lastName,
             @JsonProperty("mail") String mail,
@@ -63,7 +63,7 @@ class TrainerHrDTO {
     public boolean equals(Object o) {
         if ( this == o ) return true;
         if ( o == null || getClass() != o.getClass() ) return false;
-        TrainerHrDTO that = (TrainerHrDTO) o;
+        TrainerDTO that = (TrainerDTO) o;
         return Objects.equals(name, that.name) && Objects.equals(lastName, that.lastName) && Objects.equals(mail, that.mail) && Objects.equals(phoneNumber, that.phoneNumber) && Objects.equals(biography, that.biography);
     }
 

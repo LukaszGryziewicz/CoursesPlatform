@@ -1,4 +1,4 @@
-package com.coursesPlatform.trainerHR;
+package com.coursesPlatform.trainer;
 
 import com.coursesPlatform.coursePortfolio.OrderFacade;
 import org.springframework.stereotype.Service;
@@ -9,23 +9,23 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-class TrainerHrService {
-    private final TrainerHrRepository trainerRepository;
+class TrainerService {
+    private final TrainerRepository trainerRepository;
     private final OrderFacade orderFacade;
 
-    TrainerHrService(TrainerHrRepository trainerRepository, OrderFacade orderFacade) {
+    TrainerService(TrainerRepository trainerRepository, OrderFacade orderFacade) {
         this.trainerRepository = trainerRepository;
         this.orderFacade = orderFacade;
     }
 
-    List<TrainerHrDTO> findAllTrainers() {
+    List<TrainerDTO> findAllTrainers() {
         return trainerRepository.findAll()
                 .stream()
                 .map(this::convertTrainerToDTO)
                 .collect(Collectors.toList());
     }
 
-    List<TrainerHrExternalDTO> showAllTrainersExternal() {
+    List<TrainerExternalDTO> showAllTrainersExternal() {
         return trainerRepository.findAll()
                 .stream()
                 .map(this::convertTrainerToExternalDTO)
@@ -33,23 +33,23 @@ class TrainerHrService {
     }
 
     @Transactional
-    TrainerHrDTO add(TrainerHrDTO trainerDTO) {
-        Optional<TrainerHR> byNameAndLastName = trainerRepository
+    TrainerDTO add(TrainerDTO trainerDTO) {
+        Optional<Trainer> byNameAndLastName = trainerRepository
                 .findByNameAndLastName(trainerDTO.getName(), trainerDTO.getLastName());
         if ( byNameAndLastName.isPresent() ) {
             throw new IllegalStateException("Trainer with given name and lastname already exists");
         }
-        TrainerHR trainer = trainerRepository.save(convertDTOToTrainer(trainerDTO));
+        Trainer trainer = trainerRepository.save(convertDTOToTrainer(trainerDTO));
         orderFacade.add(trainer.getName(), trainer.getLastName(), trainer.getMail());
         return convertTrainerToDTO(trainer);
     }
 
-    TrainerHrDTO update(String firstname, String lastname, TrainerHrDTO updatedTrainer) {
-        Optional<TrainerHR> existingTrainer = trainerRepository
+    TrainerDTO update(String firstname, String lastname, TrainerDTO updatedTrainer) {
+        Optional<Trainer> existingTrainer = trainerRepository
                 .findByNameAndLastName(firstname, lastname);
-        TrainerHR trainer = existingTrainer.orElseThrow(TrainerNotFoundException::new);
+        Trainer trainer = existingTrainer.orElseThrow(TrainerNotFoundException::new);
         trainer.update(convertDTOToTrainer(updatedTrainer));
-        TrainerHR savedTrainer = trainerRepository.save(trainer);
+        Trainer savedTrainer = trainerRepository.save(trainer);
         return convertTrainerToDTO(savedTrainer);
     }
 
@@ -57,14 +57,14 @@ class TrainerHrService {
         trainerRepository.deleteByNameAndLastName(name, lastName);
     }
 
-    TrainerHrDTO findByNameAndLastName(String name, String lastName) {
-        Optional<TrainerHR> find = trainerRepository.findByNameAndLastName(name, lastName);
-        TrainerHR trainer = find.orElseThrow(TrainerNotFoundException::new);
+    TrainerDTO findByNameAndLastName(String name, String lastName) {
+        Optional<Trainer> find = trainerRepository.findByNameAndLastName(name, lastName);
+        Trainer trainer = find.orElseThrow(TrainerNotFoundException::new);
         return convertTrainerToDTO(trainer);
     }
 
-    private TrainerHrDTO convertTrainerToDTO(TrainerHR trainer) {
-        return new TrainerHrDTO(
+    private TrainerDTO convertTrainerToDTO(Trainer trainer) {
+        return new TrainerDTO(
                 trainer.getName(),
                 trainer.getLastName(),
                 trainer.getMail(),
@@ -73,8 +73,8 @@ class TrainerHrService {
         );
     }
 
-    private TrainerHR convertDTOToTrainer(TrainerHrDTO trainerDTO) {
-        TrainerHR trainer = new TrainerHR();
+    private Trainer convertDTOToTrainer(TrainerDTO trainerDTO) {
+        Trainer trainer = new Trainer();
         trainer.setName(trainerDTO.getName());
         trainer.setLastName(trainerDTO.getLastName());
         trainer.setMail(trainerDTO.getMail());
@@ -83,8 +83,8 @@ class TrainerHrService {
         return trainer;
     }
 
-    private TrainerHrExternalDTO convertTrainerToExternalDTO(TrainerHR trainer) {
-        return new TrainerHrExternalDTO(
+    private TrainerExternalDTO convertTrainerToExternalDTO(Trainer trainer) {
+        return new TrainerExternalDTO(
                 trainer.getName(),
                 trainer.getLastName(),
                 trainer.getBiography()

@@ -1,4 +1,4 @@
-package com.coursesPlatform.trainerHR;
+package com.coursesPlatform.trainer;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -6,7 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-class TrainerHR {
+class Trainer {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
@@ -16,10 +16,10 @@ class TrainerHR {
     private String phoneNumber;
     private String biography;
 
-    TrainerHR() {
+    Trainer() {
     }
 
-    TrainerHR(String name, String lastName, String mail, String phoneNumber, String biography) {
+    Trainer(String name, String lastName, String mail, String phoneNumber, String biography) {
         this.name = name;
         this.lastName = lastName;
         this.mail = mail;
@@ -71,7 +71,7 @@ class TrainerHR {
         this.biography = biography;
     }
 
-    void update(TrainerHR trainer) {
+    void update(Trainer trainer) {
         this.mail = trainer.getMail();
         this.phoneNumber = trainer.getPhoneNumber();
         this.biography = trainer.getBiography();
