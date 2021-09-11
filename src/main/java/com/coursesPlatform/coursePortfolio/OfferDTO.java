@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OfferDTO {
+    private String offerId;
     private String mail;
     private String categoryTitle;
     private String courseTitle;
@@ -28,13 +29,22 @@ public class OfferDTO {
         this.lecturesTitle = lecturesTitle;
     }
 
-    public OfferDTO(String mail, String categoryTitle, String courseTitle, List<String> lecturesTitle, BigDecimal summaryPrice, int summaryDuration) {
+    public OfferDTO(String offerId, String mail, String categoryTitle, String courseTitle, List<String> lecturesTitle, BigDecimal summaryPrice, int summaryDuration) {
+        this.offerId = offerId;
         this.mail = mail;
         this.categoryTitle = categoryTitle;
         this.courseTitle = courseTitle;
         this.lecturesTitle = lecturesTitle;
         this.summaryPrice = summaryPrice;
         this.summaryDuration = summaryDuration;
+    }
+
+    public String getOfferId() {
+        return offerId;
+    }
+
+    public void setOfferId(String offerId) {
+        this.offerId = offerId;
     }
 
     public String getMail() {

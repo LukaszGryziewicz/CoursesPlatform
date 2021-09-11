@@ -11,6 +11,7 @@ class Offer {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+    private String offerId;
     @OneToOne
     private Customer customer;
     @OneToOne
@@ -25,7 +26,8 @@ class Offer {
     Offer() {
     }
 
-    Offer(Customer customer, Category category, Course course, List<Lecture> lectures, BigDecimal summaryPrice, int summaryDuration) {
+    Offer(String offerId, Customer customer, Category category, Course course, List<Lecture> lectures, BigDecimal summaryPrice, int summaryDuration) {
+        this.offerId = offerId;
         this.customer = customer;
         this.category = category;
         this.course = course;
@@ -34,8 +36,12 @@ class Offer {
         this.summaryDuration = summaryDuration;
     }
 
-    public long getId() {
-        return id;
+    public String getOfferId() {
+        return offerId;
+    }
+
+    public void setOfferId(String offerId) {
+        this.offerId = offerId;
     }
 
     public Customer getCustomer() {

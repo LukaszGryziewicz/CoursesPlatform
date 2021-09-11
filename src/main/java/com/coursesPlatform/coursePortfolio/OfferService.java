@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
+import static java.util.UUID.randomUUID;
 import static java.util.stream.Collectors.toList;
 
 @Service
@@ -52,6 +54,11 @@ class OfferService {
 
     }
 
+    Offer findOfferEntityByOfferId(String offerId) {
+        Optional<Offer> offerById = offerRepository.findByOfferId(offerId);
+        return offerById.orElseThrow(OfferNotFoundException::new);
+    }
+
     @Transactional
     OfferDTO create(OfferDTO offerDTO) {
         Offer offer = convertDTOToOffer(offerDTO);
@@ -60,6 +67,7 @@ class OfferService {
         int duration = sumDurationOfLectures(lectures);
         offer.setSummaryPrice(price);
         offer.setSummaryDuration(duration);
+        offer.setOfferId(randomUUID().toString());
         offerRepository.save(offer);
         OfferDTO createdOffer = convertOfferToDTO(offer);
         emailFacade.sendMessage(createdOffer.getMail(), createdOffer);
@@ -84,6 +92,7 @@ class OfferService {
         Course course = offer.getCourse();
         List<Lecture> lectures = offer.getLectures();
         return new OfferDTO(
+                offer.getOfferId(),
                 customer.getMail(),
                 category.getTitle(),
                 course.getTitle(),
@@ -101,6 +110,7 @@ class OfferService {
         BigDecimal summaryPrice = offerDTO.getSummaryPrice();
         int summaryDuration = offerDTO.getSummaryDuration();
         return new Offer(
+                offerDTO.getOfferId(),
                 customer,
                 category,
                 course,
