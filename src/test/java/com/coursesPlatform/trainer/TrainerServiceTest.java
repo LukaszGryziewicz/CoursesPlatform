@@ -93,6 +93,7 @@ public class TrainerServiceTest {
         );
         //then
         List<TrainerDTO> allTrainers = trainerFacade.findAllTrainers();
+
         assertThat(allTrainers).containsExactlyInAnyOrder(updatedTrainer);
     }
 
