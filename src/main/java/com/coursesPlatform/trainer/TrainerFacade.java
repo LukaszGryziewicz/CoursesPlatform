@@ -21,7 +21,7 @@ public class TrainerFacade {
         return trainerService.showAllTrainersExternal();
     }
 
-    TrainerDTO add(TrainerDTO trainerDTO) {
+    public TrainerDTO add(TrainerDTO trainerDTO) {
         return trainerService.add(trainerDTO);
     }
 

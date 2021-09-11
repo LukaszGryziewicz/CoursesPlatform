@@ -1,7 +1,9 @@
 package com.coursesPlatform.trainer;
 
+import com.coursesPlatform.coursePortfolio.OrderFacade;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -9,9 +11,11 @@ import java.util.stream.Collectors;
 @Service
 class TrainerService {
     private final TrainerRepository trainerRepository;
+    private final OrderFacade orderFacade;
 
-    TrainerService(TrainerRepository trainerRepository) {
+    TrainerService(TrainerRepository trainerRepository, OrderFacade orderFacade) {
         this.trainerRepository = trainerRepository;
+        this.orderFacade = orderFacade;
     }
 
     List<TrainerDTO> findAllTrainers() {
@@ -28,6 +32,7 @@ class TrainerService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional
     TrainerDTO add(TrainerDTO trainerDTO) {
         Optional<Trainer> byNameAndLastName = trainerRepository
                 .findByNameAndLastName(trainerDTO.getName(), trainerDTO.getLastName());
@@ -35,6 +40,7 @@ class TrainerService {
             throw new IllegalStateException("Trainer with given name and lastname already exists");
         }
         Trainer trainer = trainerRepository.save(convertDTOToTrainer(trainerDTO));
+        orderFacade.add(trainer.getName(), trainer.getLastName(), trainer.getMail());
         return convertTrainerToDTO(trainer);
     }
 

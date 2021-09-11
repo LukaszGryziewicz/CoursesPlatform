@@ -4,47 +4,32 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
-public class OfferDTO {
+public class OrderDTO {
     private String offerId;
     private String mail;
     private String categoryTitle;
     private String courseTitle;
-    private List<String> lecturesTitle = new ArrayList<>();
+    private List<String> lecturesTitle;
     private BigDecimal summaryPrice;
     private int summaryDuration;
 
     @JsonCreator
-    public OfferDTO(
+    public OrderDTO(
+            @JsonProperty("offerId") String offerId,
             @JsonProperty("mail") String mail,
             @JsonProperty("categoryTitle") String categoryTitle,
             @JsonProperty("courseTitle") String courseTitle,
-            @JsonProperty("lecturesTitle") List<String> lecturesTitle
-    ) {
-        this.mail = mail;
-        this.categoryTitle = categoryTitle;
-        this.courseTitle = courseTitle;
-        this.lecturesTitle = lecturesTitle;
-    }
-
-    public OfferDTO(String offerId, String mail, String categoryTitle, String courseTitle, List<String> lecturesTitle, BigDecimal summaryPrice, int summaryDuration) {
-        this.offerId = offerId;
+            @JsonProperty("lecturesTitle") List<String> lecturesTitle,
+            @JsonProperty("summaryPrice") BigDecimal summaryPrice,
+            @JsonProperty("summaryDuration") int summaryDuration) {
         this.mail = mail;
         this.categoryTitle = categoryTitle;
         this.courseTitle = courseTitle;
         this.lecturesTitle = lecturesTitle;
         this.summaryPrice = summaryPrice;
         this.summaryDuration = summaryDuration;
-    }
-
-    public String getOfferId() {
-        return offerId;
-    }
-
-    public void setOfferId(String offerId) {
-        this.offerId = offerId;
     }
 
     public String getMail() {
@@ -93,15 +78,5 @@ public class OfferDTO {
 
     public void setSummaryDuration(int summaryDuration) {
         this.summaryDuration = summaryDuration;
-    }
-
-    @Override
-    public String toString() {
-        return "Temat twoich kursów: " + courseTitle + "\n" +
-                "Twoje kursy: " + "\n- " + String.join("\n- ", lecturesTitle) + "\n" +
-                "Cena: " + summaryPrice + "$" + "\n" +
-                "Czas trwania: " + summaryDuration + "h" + "\n" +
-                "Zespół INQOO";
-
     }
 }

@@ -8,7 +8,12 @@ import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.util.List;
 
+import static java.math.BigDecimal.valueOf;
+import static java.util.List.of;
+import static java.util.UUID.randomUUID;
+import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 
 @SpringBootTest
 @Transactional
@@ -55,9 +60,9 @@ public class OfferServiceTest {
         CustomerDTO customer = createCustomer("Adam Dominik", "adamdominik@gmail.com", "123456789");
         CategoryDTO category = createCategory("Java", "Abc");
         CourseDTO course = createCourse(category, "Basics", "Abc");
-        LectureDTO lecture = createLecture(course, "Java util", "Abc", BigDecimal.valueOf(100), 10);
-        LectureDTO lecture2 = createLecture(course, "Spring", "Abc", BigDecimal.valueOf(200), 20);
-        List<String> listOfLectures = List.of(lecture.getTitle(), lecture2.getTitle());
+        LectureDTO lecture = createLecture(course, "Java util", "Abc", valueOf(100), 10);
+        LectureDTO lecture2 = createLecture(course, "Spring", "Abc", valueOf(200), 20);
+        List<String> listOfLectures = of(lecture.getTitle(), lecture2.getTitle());
         OfferDTO offer = new OfferDTO(
                 customer.getMail(),
                 category.getTitle(),
@@ -74,7 +79,7 @@ public class OfferServiceTest {
         assertThat(offerFromDB.getCategoryTitle()).isEqualTo(category.getTitle());
         assertThat(offerFromDB.getCourseTitle()).isEqualTo(course.getTitle());
         assertThat(offerFromDB.getLecturesTitle()).isEqualTo(listOfLectures);
-        assertThat(offerFromDB.getSummaryPrice()).isEqualTo(BigDecimal.valueOf(300));
+        assertThat(offerFromDB.getSummaryPrice()).isEqualTo(valueOf(300));
         assertThat(offerFromDB.getSummaryDuration()).isEqualTo(30);
     }
 
@@ -84,9 +89,9 @@ public class OfferServiceTest {
         CustomerDTO customer = createCustomer("Adam Dominik", "adamdominik@gmail.com", "123456789");
         CategoryDTO category = createCategory("Java", "Abc");
         CourseDTO course = createCourse(category, "Basics", "Abc");
-        LectureDTO lecture = createLecture(course, "Java util", "Abc", BigDecimal.valueOf(100), 10);
-        LectureDTO lecture2 = createLecture(course, "Spring", "Abc", BigDecimal.valueOf(200), 20);
-        List<String> listOfLectures = List.of(lecture.getTitle(), lecture2.getTitle());
+        LectureDTO lecture = createLecture(course, "Java util", "Abc", valueOf(100), 10);
+        LectureDTO lecture2 = createLecture(course, "Spring", "Abc", valueOf(200), 20);
+        List<String> listOfLectures = of(lecture.getTitle(), lecture2.getTitle());
         OfferDTO offer = new OfferDTO(
                 customer.getMail(),
                 category.getTitle(),
@@ -98,9 +103,9 @@ public class OfferServiceTest {
         CustomerDTO customer2 = createCustomer("Lukasz Gryziewicz", "lukasz@gmail.com", "987654321");
         CategoryDTO category2 = createCategory("Python", "Abc");
         CourseDTO course2 = createCourse(category, "Advanced", "Abc");
-        LectureDTO lecture3 = createLecture(course, "Python gui", "Abc", BigDecimal.valueOf(100), 10);
-        LectureDTO lecture4 = createLecture(course, "Django", "Abc", BigDecimal.valueOf(200), 20);
-        List<String> listOfLectures2 = List.of(lecture3.getTitle(), lecture4.getTitle());
+        LectureDTO lecture3 = createLecture(course, "Python gui", "Abc", valueOf(100), 10);
+        LectureDTO lecture4 = createLecture(course, "Django", "Abc", valueOf(200), 20);
+        List<String> listOfLectures2 = of(lecture3.getTitle(), lecture4.getTitle());
         OfferDTO offer2 = new OfferDTO(
                 customer2.getMail(),
                 category2.getTitle(),
@@ -117,7 +122,45 @@ public class OfferServiceTest {
         assertThat(offerFromDB.getCategoryTitle()).isEqualTo(category.getTitle());
         assertThat(offerFromDB.getCourseTitle()).isEqualTo(course.getTitle());
         assertThat(offerFromDB.getLecturesTitle()).isEqualTo(listOfLectures);
-        assertThat(offerFromDB.getSummaryPrice()).isEqualTo(BigDecimal.valueOf(300));
+        assertThat(offerFromDB.getSummaryPrice()).isEqualTo(valueOf(300));
         assertThat(offerFromDB.getSummaryDuration()).isEqualTo(30);
+    }
+
+    @Test
+    public void shouldFindOfferByOfferId() {
+        //given
+        CustomerDTO customer = createCustomer("Adam Dominik", "adamdominik@gmail.com", "123456789");
+        CategoryDTO category = createCategory("Java", "Abc");
+        CourseDTO course = createCourse(category, "Basics", "Abc");
+        LectureDTO lecture = createLecture(course, "Java util", "Abc", valueOf(100), 10);
+        LectureDTO lecture2 = createLecture(course, "Spring", "Abc", valueOf(200), 20);
+        List<String> listOfLectures = of(lecture.getTitle(), lecture2.getTitle());
+        OfferDTO offer = new OfferDTO(
+                customer.getMail(),
+                category.getTitle(),
+                course.getTitle(),
+                listOfLectures
+        );
+        OfferDTO offerDTO = offerService.create(offer);
+        //when
+        Offer offerByOfferId = offerService.findOfferEntityByOfferId(offerDTO.getOfferId());
+        //then
+        assertThat(offerByOfferId.getOfferId()).isEqualTo(offerDTO.getOfferId());
+        assertThat(offerByOfferId.getCategory().getTitle()).isEqualTo(offerDTO.getCategoryTitle());
+        assertThat(offerByOfferId.getCourse().getTitle()).isEqualTo(offerDTO.getCourseTitle());
+        List<String> lectureTitles = offerByOfferId.getLectures().stream()
+                .map(Lecture::getTitle).collect(toList());
+        assertThat(lectureTitles).isEqualTo(offerDTO.getLecturesTitle());
+        assertThat(offerByOfferId.getSummaryDuration()).isEqualTo(offerDTO.getSummaryDuration());
+        assertThat(offerByOfferId.getSummaryPrice()).isEqualTo(offerDTO.getSummaryPrice());
+    }
+
+    @Test
+    public void shouldThrowExceptionWhenOfferIsNotFound() {
+        String randomId = randomUUID().toString();
+        //when
+        Throwable thrown = catchThrowable(() -> offerService.findOfferEntityByOfferId(randomId));
+        //then
+        assertThat(thrown).isInstanceOf(OfferNotFoundException.class);
     }
 }
