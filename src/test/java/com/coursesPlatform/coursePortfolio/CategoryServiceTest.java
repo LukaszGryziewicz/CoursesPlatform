@@ -1,7 +1,8 @@
 package com.coursesPlatform.coursePortfolio;
 
 import com.coursesPlatform.exceptions.CategoryNotFoundException;
-import com.coursesPlatform.exceptions.IllegalLengthException;
+import com.coursesPlatform.exceptions.CategoryTitleAlreadyExists;
+import com.coursesPlatform.exceptions.IllegalTitleLengthException;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -9,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.transaction.Transactional;
-import java.util.InputMismatchException;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -52,8 +52,8 @@ public class CategoryServiceTest {
         //when
         Throwable thrown = catchThrowable(() -> categoryService.add(category));
         //then
-        assertThat(thrown).isInstanceOf(IllegalLengthException.class)
-                .hasMessageContaining("Text too long !");
+        assertThat(thrown).isInstanceOf(IllegalTitleLengthException.class)
+                .hasMessageContaining("Title too long !");
     }
 
     @Test
@@ -63,7 +63,7 @@ public class CategoryServiceTest {
         //when
         Throwable thrown = catchThrowable(() -> categoryService.add(category));
         //then
-        assertThat(thrown).isInstanceOf(IllegalLengthException.class);
+        assertThat(thrown).isInstanceOf(IllegalTitleLengthException.class);
     }
 
     @Test
@@ -116,7 +116,7 @@ public class CategoryServiceTest {
         //when
         Throwable thrown = catchThrowable(() -> categoryService.add(category2));
         //then
-        assertThat(thrown).isInstanceOf(IllegalStateException.class)
-                .hasMessageContaining("Category with given title already exists");
+        assertThat(thrown).isInstanceOf(CategoryTitleAlreadyExists.class)
+                .hasMessageContaining("Category title already exists");
     }
 }
