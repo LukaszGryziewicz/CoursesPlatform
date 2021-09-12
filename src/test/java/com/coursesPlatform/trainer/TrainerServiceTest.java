@@ -156,7 +156,7 @@ public class TrainerServiceTest {
         //then
         Trainer trainerEntity = trainerFacade.
                 findTrainerEntity(trainer1.getName(), trainer1.getLastName());
-        long numOfDays = DAYS.between(vacationStart, vacationEnd);
+        long numOfDays = DAYS.between(vacationStart, vacationEnd.plusDays(1));
         LocalDate[] localDates = range(0, numOfDays + 1)
                 .mapToObj(vacationStart::plusDays)
                 .toArray(LocalDate[]::new);

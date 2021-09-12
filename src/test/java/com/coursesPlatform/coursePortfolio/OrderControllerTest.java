@@ -1,27 +1,19 @@
 package com.coursesPlatform.coursePortfolio;
 
-import com.coursesPlatform.trainer.TrainerDTO;
-import com.coursesPlatform.trainer.TrainerService;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import net.minidev.json.JSONArray;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 
 import javax.transaction.Transactional;
-
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static java.math.BigDecimal.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static java.math.BigDecimal.valueOf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -46,7 +38,7 @@ class OrderControllerTest {
     @Autowired
     private CustomerService customerService;
     @Autowired
-    private TrainerProjectionService trainerProjectionService;
+    private OrderFacade orderFacade;
     ObjectMapper objectMapper = new ObjectMapper();
 
     @Test
@@ -61,7 +53,7 @@ class OrderControllerTest {
         lectureService.add(lecture, course.getTitle());
         lectureService.add(lecture1, course.getTitle());
         TrainerProjectionDTO trainer = new TrainerProjectionDTO("Adam", "Dominik", "adam@gmail.com");
-        trainerProjectionService.add(trainer.getName(), trainer.getLastName(), trainer.getMail());
+        orderFacade.trainerCreated(trainer.getName(), trainer.getLastName(), trainer.getMail());
         List<String> listOfLectures = List.of(lecture, lecture1)
                 .stream()
                 .map(LectureDTO::getTitle)

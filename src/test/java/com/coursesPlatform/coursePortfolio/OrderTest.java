@@ -94,7 +94,7 @@ public class OrderTest {
         assertThat(createdOrder.getLecturesTitle()).isEqualTo(listOfLectures);
         assertThat(createdOrder.getSummaryDuration()).isEqualTo(createdOffer.getSummaryDuration());
         assertThat(createdOrder.getSummaryPrice()).isEqualTo(createdOffer.getSummaryPrice());
-        long numOfDays = DAYS.between(orderStartDate, orderEndDate);
+        long numOfDays = DAYS.between(orderStartDate, orderEndDate.plusDays(1));
         LocalDate[] unavailableDays = range(0, numOfDays)
                 .mapToObj(orderStartDate::plusDays)
                 .toArray(LocalDate[]::new);
