@@ -13,6 +13,8 @@ public class EmailFacade {
     }
 
     public void sendMessage(String email, OfferDTO offerDTO) {
-        emailService.sendMessage(email, offerDTO);
+        for(int i=0;i<3;i++){
+            emailService.sendMessage(email, offerDTO);
+        }
     }
 }
