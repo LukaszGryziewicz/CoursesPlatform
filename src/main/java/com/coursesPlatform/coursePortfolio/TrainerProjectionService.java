@@ -1,5 +1,6 @@
 package com.coursesPlatform.coursePortfolio;
 
+import com.coursesPlatform.trainer.TrainerNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -18,7 +19,7 @@ class TrainerProjectionService {
         this.trainerRepository = trainerRepository;
     }
 
-    TrainerProjectionDTO add(String name, String lastName, String email) {
+    TrainerProjectionDTO trainerCreated(String name, String lastName, String email) {
         TrainerProjectionDTO trainerDTO = new TrainerProjectionDTO(name, lastName, email);
         TrainerProjection savedTrainer = trainerRepository.save(convertDTOToTrainer(trainerDTO));
         return convertTrainerToDTO(savedTrainer);
@@ -30,16 +31,23 @@ class TrainerProjectionService {
                 .collect(toList());
     }
 
-    public TrainerProjection findAvailableTrainer(LocalDate orderStartDate, LocalDate orderEndDate) {
-        List<LocalDate> orderDates = getDaysBetween(orderStartDate, orderEndDate);
+    TrainerProjection findAvailableTrainer(LocalDate orderStartDate, LocalDate orderEndDate) {
+        List<LocalDate> orderDates = getDaysBetween(orderStartDate, orderEndDate.plusDays(1));
         List<TrainerProjection> collect = trainerRepository.findAll().stream()
                 .filter(trainer -> disjoint(orderDates, trainer.getUnavailableDays()))
                 .collect(toList());
         return collect.get(0);
     }
 
+    void vacationRegistered(String name, String lastName, List<LocalDate> vacationDays) {
+        TrainerProjection trainerProjection = trainerRepository.findByNameAndLastName(name, lastName)
+                .orElseThrow(TrainerNotFoundException::new);
+        trainerProjection.getUnavailableDays().addAll(vacationDays);
+    }
+
+
     private List<LocalDate> getDaysBetween(LocalDate orderStartDate, LocalDate orderEndDate) {
-        long numOfDays = DAYS.between(orderStartDate, orderEndDate);
+        long numOfDays = DAYS.between(orderStartDate, orderEndDate.plusDays(1));
         return range(0, numOfDays)
                 .mapToObj(orderStartDate::plusDays)
                 .collect(toList());

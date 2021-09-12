@@ -1,5 +1,6 @@
 package com.coursesPlatform.coursePortfolio;
 
+import com.coursesPlatform.trainer.TrainerFacade;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -17,7 +18,7 @@ class OrderService {
     private final OfferService offerService;
     private final TrainerProjectionService trainerService;
 
-    OrderService(OrderRepository orderRepository, OfferService offerService, TrainerProjectionService trainerService) {
+    OrderService(OrderRepository orderRepository, OfferService offerService, TrainerProjectionService trainerService, TrainerFacade trainerFacade) {
         this.orderRepository = orderRepository;
         this.offerService = offerService;
         this.trainerService = trainerService;
@@ -25,15 +26,17 @@ class OrderService {
 
     OrderDTO add(String offerId, LocalDate orderStartDate, LocalDate orderEndDate) {
         Offer offerByOfferId = offerService.findOfferEntityByOfferId(offerId);
-        TrainerProjection availableTrainer = trainerService.findAvailableTrainer(orderStartDate, orderEndDate);
+        TrainerProjection availableTrainer = trainerService
+                .findAvailableTrainer(orderStartDate, orderEndDate);
         Order order = new Order(randomUUID().toString(), offerByOfferId, availableTrainer);
         Order savedOrder = orderRepository.save(order);
         assignUnavailableDaysToTrainer(orderStartDate, orderEndDate, availableTrainer);
         return convertOrderToDto(savedOrder);
     }
 
-    private void assignUnavailableDaysToTrainer(LocalDate orderStartDate, LocalDate orderEndDate, TrainerProjection availableTrainer) {
-        long numOfDays = DAYS.between(orderStartDate, orderEndDate);
+    private void assignUnavailableDaysToTrainer(LocalDate orderStartDate, LocalDate orderEndDate,
+                                                TrainerProjection availableTrainer) {
+        long numOfDays = DAYS.between(orderStartDate, orderEndDate.plusDays(1));
         List<LocalDate> orderDates = range(0, numOfDays)
                 .mapToObj(orderStartDate::plusDays)
                 .collect(toList());

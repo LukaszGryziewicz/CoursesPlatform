@@ -75,9 +75,9 @@ public class OrderTest {
                 listOfLectures
         );
         OfferDTO createdOffer = offerService.create(offer);
-        TrainerProjectionDTO trainer1 = trainerService.add("Adam", "Dominik", "adam@dominik.com");
+        TrainerProjectionDTO trainer1 = trainerService.trainerCreated("Adam", "Dominik", "adam@dominik.com");
         trainer1.getUnavailableDays().add(LocalDate.of(2021, 9, 12));
-        TrainerProjectionDTO trainer2 = trainerService.add("Dawid", "Jamka", "dawid@jamka.com");
+        TrainerProjectionDTO trainer2 = trainerService.trainerCreated("Dawid", "Jamka", "dawid@jamka.com");
         //when
         LocalDate orderStartDate = LocalDate.of(2021, 9, 11);
         LocalDate orderEndDate = LocalDate.of(2021, 9, 13);

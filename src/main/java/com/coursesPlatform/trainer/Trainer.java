@@ -1,9 +1,9 @@
 package com.coursesPlatform.trainer;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 class Trainer {
@@ -15,6 +15,8 @@ class Trainer {
     private String mail;
     private String phoneNumber;
     private String biography;
+    @ElementCollection
+    private final List<LocalDate> vacations = new ArrayList<>();
 
     Trainer() {
     }
@@ -69,6 +71,14 @@ class Trainer {
 
     void setBiography(String biography) {
         this.biography = biography;
+    }
+
+    List<LocalDate> getVacations() {
+        return vacations;
+    }
+
+    void addVacation(List<LocalDate> listOfVacations) {
+        vacations.addAll(listOfVacations);
     }
 
     void update(Trainer trainer) {

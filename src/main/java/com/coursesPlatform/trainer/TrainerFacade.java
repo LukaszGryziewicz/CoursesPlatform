@@ -2,6 +2,7 @@ package com.coursesPlatform.trainer;
 
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Component
@@ -33,7 +34,11 @@ public class TrainerFacade {
         trainerService.deleteByNameAndLastName(name, lastName);
     }
 
-    TrainerDTO findByNameAndLastName(String name, String lastName) {
-        return trainerService.findByNameAndLastName(name, lastName);
+    public void addVacationToTrainer(String name, String lastName, LocalDate vacationStart, LocalDate vacationEnd) {
+        trainerService.addVacationToTrainer(name, lastName, vacationStart, vacationEnd);
+    }
+
+    Trainer findTrainerEntity(String name, String lastName) {
+        return trainerService.findTrainer(name, lastName);
     }
 }

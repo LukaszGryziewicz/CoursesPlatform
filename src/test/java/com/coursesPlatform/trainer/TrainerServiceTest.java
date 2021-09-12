@@ -5,9 +5,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.util.List;
 
+import static java.time.temporal.ChronoUnit.DAYS;
 import static java.util.UUID.randomUUID;
+import static java.util.stream.LongStream.range;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 
@@ -133,6 +136,53 @@ public class TrainerServiceTest {
         assertThat(secondExternal.getName()).isEqualTo(trainer2.getName());
         assertThat(secondExternal.getLastName()).isEqualTo(trainer2.getLastName());
         assertThat(secondExternal.getBiography()).isEqualTo(trainer2.getBiography());
+    }
+
+    @Test
+    void shouldAddVacationToTrainer() {
+        //given
+        TrainerDTO trainer1 = createTrainer(
+                "Adam", "Dominik", "xyz@gmail.com", "987654321", "jestem przystojny"
+        );
+        LocalDate vacationStart = LocalDate.of(2021, 9, 11);
+        LocalDate vacationEnd = LocalDate.of(2021, 9, 13);
+        //when
+        trainerFacade.addVacationToTrainer(
+                trainer1.getName(),
+                trainer1.getLastName(),
+                vacationStart,
+                vacationEnd
+        );
+        //then
+        Trainer trainerEntity = trainerFacade.
+                findTrainerEntity(trainer1.getName(), trainer1.getLastName());
+        long numOfDays = DAYS.between(vacationStart, vacationEnd);
+        LocalDate[] localDates = range(0, numOfDays + 1)
+                .mapToObj(vacationStart::plusDays)
+                .toArray(LocalDate[]::new);
+        assertThat(trainerEntity.getVacations()).containsExactlyInAnyOrder(localDates);
+    }
+
+    @Test
+    void shouldThrowExceptionWhenEnteredVacationPeriodIsTooLong() {
+        //given
+        TrainerDTO trainer1 = createTrainer(
+                "Adam", "Dominik", "xyz@gmail.com", "987654321", "jestem przystojny"
+        );
+        LocalDate vacationStart = LocalDate.of(2021, 9, 1);
+        LocalDate vacationEnd = LocalDate.of(2021, 9, 30);
+        //when
+        Throwable thrown = catchThrowable(() -> trainerFacade.addVacationToTrainer(
+                trainer1.getName(),
+                trainer1.getLastName(),
+                vacationStart,
+                vacationEnd)
+        );
+        //then
+        assertThat(thrown).isInstanceOf(VacationTooLongException.class);
+        Trainer trainerEntity = trainerFacade.
+                findTrainerEntity(trainer1.getName(), trainer1.getLastName());
+        assertThat(trainerEntity.getVacations()).isEmpty();
     }
 }
 
