@@ -9,6 +9,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+public
 class TrainerService {
     private final TrainerRepository trainerRepository;
     private final OrderFacade orderFacade;

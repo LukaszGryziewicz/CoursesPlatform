@@ -56,6 +56,7 @@ class OrderService {
                 .collect(toList());
         return new OrderDTO(
                 order.getOrderId(),
+                order.getOffer().getOfferId(),
                 order.getTrainer().getMail(),
                 offer.getCategory().getTitle(),
                 offer.getCourse().getTitle(),
