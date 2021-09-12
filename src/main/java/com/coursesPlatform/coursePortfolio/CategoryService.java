@@ -1,7 +1,9 @@
 package com.coursesPlatform.coursePortfolio;
 
 import com.coursesPlatform.exceptions.CategoryNotFoundException;
-import com.coursesPlatform.exceptions.IllegalLengthException;
+import com.coursesPlatform.exceptions.CategoryTitleAlreadyExists;
+import com.coursesPlatform.exceptions.IllegalDescriptionLengthException;
+import com.coursesPlatform.exceptions.IllegalTitleLengthException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -57,13 +59,13 @@ class CategoryService {
                 .findCategoryByTitle(categoryDTO.getTitle());
 
         if ( categoryTitle.isPresent() ) {
-            throw new IllegalStateException("Category with given title already exists");
+            throw new CategoryTitleAlreadyExists();
         }
         if ( categoryDTO.getTitle().length() >= titleLengthLimit ) {
-            throw new IllegalLengthException();
+            throw new IllegalTitleLengthException();
         }
         if ( categoryDTO.getDescription().length() >= descriptionLengthLimit ) {
-            throw new IllegalLengthException();
+            throw new IllegalDescriptionLengthException();
         }
 
         Category category = categoryRepository.save(convertDTOToCategory(categoryDTO));

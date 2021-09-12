@@ -16,7 +16,7 @@ public class ApiExceptionHandler {
     ResponseEntity<String> handleNotFoundExceptions(Exception e) {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
     }
-    @ExceptionHandler(IllegalLengthException.class)
+    @ExceptionHandler(value = {IllegalTitleLengthException.class, IllegalDescriptionLengthException.class})
     ResponseEntity<String> handleIllegalLengthException(Exception e) {
         return new ResponseEntity<>(e.getMessage(),  HttpStatus.BAD_REQUEST);
     }
@@ -28,5 +28,10 @@ public class ApiExceptionHandler {
     @ExceptionHandler(MailInvalidException.class)
     ResponseEntity<String> handleInvalidMailException(Exception e){
         return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(value = {CategoryTitleAlreadyExists.class, CourseTitleAlreadyExists.class, LectureTitleAlreadyExists.class})
+    ResponseEntity<String> handleAlreadyTitleTakenException(Exception e){
+        return new ResponseEntity<>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

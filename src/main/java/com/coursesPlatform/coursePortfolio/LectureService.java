@@ -1,7 +1,9 @@
 package com.coursesPlatform.coursePortfolio;
 
 import com.coursesPlatform.exceptions.CourseNotFoundException;
-import com.coursesPlatform.exceptions.IllegalLengthException;
+import com.coursesPlatform.exceptions.IllegalDescriptionLengthException;
+import com.coursesPlatform.exceptions.IllegalTitleLengthException;
+import com.coursesPlatform.exceptions.LectureTitleAlreadyExists;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -54,13 +56,13 @@ class LectureService {
 
         Optional<Lecture> lectureTitle = lectureRepository.findLectureByTitle(lectureDTO.getTitle());
         if ( lectureTitle.isPresent() ) {
-            throw new IllegalStateException("Lecture with given title already exists");
+            throw new LectureTitleAlreadyExists();
         }
         if ( lectureDTO.getTitle().length() >= titleLengthLimit ) {
-            throw new IllegalLengthException();
+            throw new IllegalTitleLengthException();
         }
         if ( lectureDTO.getDescription().length() >= descriptionLengthLimit ) {
-            throw new IllegalLengthException();
+            throw new IllegalDescriptionLengthException();
         }
         Lecture savedLecture = lectureRepository.save(convertLectureDTOToLecture(lectureDTO));
         course.add(savedLecture);

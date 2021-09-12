@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Objects;
 
-class TrainerDTO {
+ public class TrainerDTO {
     private final String name;
     private final String lastName;
     private String mail;

@@ -14,6 +14,7 @@ import static java.time.temporal.ChronoUnit.DAYS;
 import static java.util.List.of;
 import static java.util.stream.LongStream.range;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 
 @SpringBootTest
 @Transactional
@@ -98,5 +99,27 @@ public class OrderTest {
                 .mapToObj(orderStartDate::plusDays)
                 .toArray(LocalDate[]::new);
         assertThat(trainer2.getUnavailableDays()).containsExactlyInAnyOrder(unavailableDays);
+    }
+
+    @Test
+    void shouldThrowExceptionWhenNoTrainerIsAvailable() {
+        CustomerDTO customer = createCustomer("Adam Dominik", "adamdominik@gmail.com", "123456789");
+        CategoryDTO category = createCategory("Java", "Abc");
+        CourseDTO course = createCourse(category, "Basics", "Abc");
+        LectureDTO lecture = createLecture(course, "Java util", "Abc", valueOf(100), 10);
+        LectureDTO lecture2 = createLecture(course, "Spring", "Abc", valueOf(200), 20);
+        List<String> listOfLectures = of(lecture.getTitle(), lecture2.getTitle());
+        OfferDTO offer = new OfferDTO(
+                customer.getMail(),
+                category.getTitle(),
+                course.getTitle(),
+                listOfLectures
+        );
+        OfferDTO createdOffer = offerService.create(offer);
+        LocalDate orderStartDate = LocalDate.of(2021, 9, 11);
+        LocalDate orderEndDate = LocalDate.of(2021, 9, 13);
+        Throwable thrown = catchThrowable(() -> orderService
+                .add(createdOffer.getOfferId(), orderStartDate, orderEndDate));
+        assertThat(thrown).isInstanceOf(NoTrainerAvailableException.class);
     }
 }

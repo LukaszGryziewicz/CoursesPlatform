@@ -36,6 +36,9 @@ class TrainerProjectionService {
         List<TrainerProjection> collect = trainerRepository.findAll().stream()
                 .filter(trainer -> disjoint(orderDates, trainer.getUnavailableDays()))
                 .collect(toList());
+        if ( collect.size() < 1 ) {
+            throw new NoTrainerAvailableException();
+        }
         return collect.get(0);
     }
 

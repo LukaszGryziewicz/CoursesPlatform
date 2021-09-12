@@ -7,6 +7,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public class OrderDTO {
+    private String orderId;
     private String offerId;
     private String mail;
     private String categoryTitle;
@@ -17,6 +18,7 @@ public class OrderDTO {
 
     @JsonCreator
     public OrderDTO(
+            @JsonProperty("orderId") String orderId,
             @JsonProperty("offerId") String offerId,
             @JsonProperty("mail") String mail,
             @JsonProperty("categoryTitle") String categoryTitle,
@@ -24,12 +26,30 @@ public class OrderDTO {
             @JsonProperty("lecturesTitle") List<String> lecturesTitle,
             @JsonProperty("summaryPrice") BigDecimal summaryPrice,
             @JsonProperty("summaryDuration") int summaryDuration) {
+        this.orderId = orderId;
+        this.offerId = offerId;
         this.mail = mail;
         this.categoryTitle = categoryTitle;
         this.courseTitle = courseTitle;
         this.lecturesTitle = lecturesTitle;
         this.summaryPrice = summaryPrice;
         this.summaryDuration = summaryDuration;
+    }
+
+    public String getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
+    }
+
+    public String getOfferId() {
+        return offerId;
+    }
+
+    public void setOfferId(String offerId) {
+        this.offerId = offerId;
     }
 
     public String getMail() {

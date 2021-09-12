@@ -14,6 +14,7 @@ import static java.util.stream.Collectors.toList;
 import static java.util.stream.LongStream.range;
 
 @Service
+public
 class TrainerService {
     private final TrainerRepository trainerRepository;
     private final OrderFacade orderFacade;

@@ -1,8 +1,6 @@
 package com.coursesPlatform.coursePortfolio;
 
-import com.coursesPlatform.exceptions.CategoryNotFoundException;
-import com.coursesPlatform.exceptions.CourseNotFoundException;
-import com.coursesPlatform.exceptions.IllegalLengthException;
+import com.coursesPlatform.exceptions.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -33,13 +31,13 @@ class CourseService {
         Optional<Course> courseTitle = courseRepository
                 .findCourseByTitle(courseDTO.getTitle());
         if ( courseTitle.isPresent() ) {
-            throw new IllegalStateException("Course with given title already exists");
+            throw new CourseTitleAlreadyExists();
         }
-        if ( courseDTO.getDescription().length() >= titleLengthLimit ) {
-            throw new IllegalLengthException();
+        if ( courseDTO.getTitle().length() >= titleLengthLimit ) {
+            throw new IllegalTitleLengthException();
         }
         if ( courseDTO.getDescription().length() >= descriptionLengthLimit ) {
-            throw new IllegalLengthException();
+            throw new IllegalDescriptionLengthException();
         }
 
         Course savedCourse = courseRepository.save(convertDTOToCourse(courseDTO));
