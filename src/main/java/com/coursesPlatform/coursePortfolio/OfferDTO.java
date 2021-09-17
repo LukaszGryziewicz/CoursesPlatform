@@ -99,7 +99,7 @@ public class OfferDTO {
     public String toString() {
         return "Temat twoich kursów: " + courseTitle + "\n" +
                 "Twoje kursy: " + "\n- " + String.join("\n- ", lecturesTitle) + "\n" +
-                "Cena: " + summaryPrice + "$" + "\n" +
+                "Cena: " + summaryPrice + "zł" + "\n" +
                 "Czas trwania: " + summaryDuration + "h" + "\n" +
                 "Zespół INQOO";
 
