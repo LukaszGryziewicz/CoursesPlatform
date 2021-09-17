@@ -14,17 +14,22 @@ import java.util.List;
 public class OrderController {
     private final OrderService orderService;
 
-    public OrderController(OrderService orderService) { this.orderService = orderService; }
+    public OrderController(OrderService orderService) {
+        this.orderService = orderService;
+    }
 
     @GetMapping("/all")
-    ResponseEntity<List<OrderDTO>> getAllOrders(){
+    ResponseEntity<List<OrderDTO>> getAllOrders() {
         List<OrderDTO> allOrders = orderService.showAllOrders();
         return new ResponseEntity<>(allOrders, HttpStatus.OK);
     }
+
     @PostMapping("/{offerId}/{orderStartDate}/{orderEndDate}")
-    ResponseEntity<OrderDTO> addNewOrder(@PathVariable("offerId") String offerId ,
-                                         @PathVariable("orderStartDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate orderStartDate,
-                                         @PathVariable("orderEndDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate orderEndDate) {
+    ResponseEntity<OrderDTO> addNewOrder(@PathVariable("offerId") String offerId,
+                                         @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+                                         @PathVariable LocalDate orderStartDate,
+                                         @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+                                         @PathVariable LocalDate orderEndDate) {
         OrderDTO add = orderService.add(offerId, orderStartDate, orderEndDate);
         return new ResponseEntity<>(add, HttpStatus.CREATED);
     }

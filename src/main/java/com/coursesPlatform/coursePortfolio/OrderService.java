@@ -1,6 +1,5 @@
 package com.coursesPlatform.coursePortfolio;
 
-import com.coursesPlatform.trainer.TrainerExternalDTO;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -35,7 +34,7 @@ class OrderService {
     OrderDTO add(String offerId, LocalDate orderStartDate, LocalDate orderEndDate) {
         Offer offerByOfferId = offerService.findOfferEntityByOfferId(offerId);
         TrainerProjection availableTrainer = trainerService.findAvailableTrainer(orderStartDate, orderEndDate);
-        Order order = new Order(randomUUID().toString(), offerByOfferId, availableTrainer);
+        Order order = new Order(randomUUID().toString(), orderStartDate, orderEndDate, offerByOfferId, availableTrainer);
         Order savedOrder = orderRepository.save(order);
         assignUnavailableDaysToTrainer(orderStartDate, orderEndDate, availableTrainer);
         return convertOrderToDto(savedOrder);
@@ -56,6 +55,8 @@ class OrderService {
                 .collect(toList());
         return new OrderDTO(
                 order.getOrderId(),
+                order.getOrderStartDate(),
+                order.getOrderEndDate(),
                 order.getOffer().getOfferId(),
                 order.getTrainer().getMail(),
                 offer.getCategory().getTitle(),

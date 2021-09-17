@@ -47,6 +47,8 @@ class OfferService {
     }
 
     List<OfferDTO> findAllOffersOfCustomer(String mail) {
+        customerRepository.findCustomerByMail(mail)
+                .orElseThrow(CustomerNotFoundException::new);
         return offerRepository.findByCustomerMail(mail)
                 .stream()
                 .map(this::convertOfferToDTO)
@@ -122,7 +124,7 @@ class OfferService {
 
     private List<Lecture> findAllLecturesWithGivenMails(List<String> lectures) {
         List<Lecture> lectureList = lectureRepository.findByTitleIn(lectures);
-        if ( lectureList.isEmpty() ) {
+        if (lectureList.isEmpty()) {
             throw new LectureListIsEmptyException();
         }
         return lectureList;
