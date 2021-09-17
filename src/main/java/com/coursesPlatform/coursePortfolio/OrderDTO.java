@@ -4,10 +4,13 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
 public class OrderDTO {
     private String orderId;
+    private LocalDate orderStartDate;
+    private LocalDate orderEndDate;
     private String offerId;
     private String mail;
     private String categoryTitle;
@@ -19,6 +22,8 @@ public class OrderDTO {
     @JsonCreator
     public OrderDTO(
             @JsonProperty("orderId") String orderId,
+            @JsonProperty("orderStartDate") LocalDate orderStartDate,
+            @JsonProperty("orderEndDate") LocalDate orderEndDate,
             @JsonProperty("offerId") String offerId,
             @JsonProperty("mail") String mail,
             @JsonProperty("categoryTitle") String categoryTitle,
@@ -27,6 +32,8 @@ public class OrderDTO {
             @JsonProperty("summaryPrice") BigDecimal summaryPrice,
             @JsonProperty("summaryDuration") int summaryDuration) {
         this.orderId = orderId;
+        this.orderStartDate=orderStartDate;
+        this.orderEndDate=orderEndDate;
         this.offerId = offerId;
         this.mail = mail;
         this.categoryTitle = categoryTitle;
@@ -35,6 +42,7 @@ public class OrderDTO {
         this.summaryPrice = summaryPrice;
         this.summaryDuration = summaryDuration;
     }
+
 
     public String getOrderId() {
         return orderId;
@@ -50,6 +58,22 @@ public class OrderDTO {
 
     public void setOfferId(String offerId) {
         this.offerId = offerId;
+    }
+
+    public LocalDate getOrderStartDate() {
+        return orderStartDate;
+    }
+
+    public void setOrderStartDate(LocalDate orderStartDate) {
+        this.orderStartDate = orderStartDate;
+    }
+
+    public LocalDate getOrderEndDate() {
+        return orderEndDate;
+    }
+
+    public void setOrderEndDate(LocalDate orderEndDate) {
+        this.orderEndDate = orderEndDate;
     }
 
     public String getMail() {
