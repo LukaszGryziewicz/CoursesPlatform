@@ -38,7 +38,7 @@ class TrainerService {
         Optional<Trainer> byNameAndLastName = trainerRepository
                 .findByNameAndLastName(trainerDTO.getName(), trainerDTO.getLastName());
         if ( byNameAndLastName.isPresent() ) {
-            throw new IllegalStateException("Trainer with given name and lastname already exists");
+            throw new TrainerAlreadyExistsException();
         }
         Trainer trainer = trainerRepository.save(convertDTOToTrainer(trainerDTO));
         orderFacade.add(trainer.getName(), trainer.getLastName(), trainer.getMail());

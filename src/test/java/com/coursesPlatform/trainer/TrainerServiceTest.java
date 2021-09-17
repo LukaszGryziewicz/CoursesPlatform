@@ -46,7 +46,7 @@ public class TrainerServiceTest {
         //when
         Throwable thrown = catchThrowable(() -> trainerFacade.add(trainer1));
         //then
-        assertThat(thrown).isInstanceOf(IllegalStateException.class)
+        assertThat(thrown).isInstanceOf(TrainerAlreadyExistsException.class)
                 .hasMessageContaining("Trainer with given name and lastname already exists");
     }
 
