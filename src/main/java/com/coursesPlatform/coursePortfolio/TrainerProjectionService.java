@@ -1,5 +1,6 @@
 package com.coursesPlatform.coursePortfolio;
 
+import com.coursesPlatform.trainer.NoTrainerAvailableException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;

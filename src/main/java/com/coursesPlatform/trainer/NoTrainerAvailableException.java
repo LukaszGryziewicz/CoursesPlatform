@@ -1,4 +1,4 @@
-package com.coursesPlatform.coursePortfolio;
+package com.coursesPlatform.trainer;
 
 public class NoTrainerAvailableException extends RuntimeException {
     public NoTrainerAvailableException() {
