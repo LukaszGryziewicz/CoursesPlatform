@@ -13,7 +13,7 @@ class Category {
     private String title;
     @Column(length = 1000)
     private String description;
-    @OneToMany()
+    @OneToMany(fetch = FetchType.EAGER)
     private final List<Course> courses = new ArrayList<>();
 
     Category(String title, String description) {

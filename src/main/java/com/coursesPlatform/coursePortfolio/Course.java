@@ -14,7 +14,7 @@ class Course {
     private String title;
     @Column(length = 1000)
     private String description;
-    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private List<Lecture> lectures = new ArrayList<>();
 
     Course(String title, String description) {
