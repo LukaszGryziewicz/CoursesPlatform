@@ -110,8 +110,9 @@ class TrainerControllerTest {
                 .andExpect(jsonPath("$.phoneNumber").value(trainer2.getPhoneNumber()))
                 .andExpect(jsonPath("$.biography").value(trainer2.getBiography()));
 
+        System.out.println("123");
         this.mockMvc.perform(get("/trainer/all/internal"))
-                .andExpect(status().isBadGateway())
+                .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].name").value(trainer2.getName()))
                 .andExpect(jsonPath("$[0].lastName").value(trainer2.getLastName()))
                 .andExpect(jsonPath("$[0].mail").value(trainer2.getMail()))
