@@ -1,7 +1,5 @@
 package com.coursesPlatform.trainer;
 
-import com.coursesPlatform.coursePortfolio.CategoryDTO;
-import com.coursesPlatform.coursePortfolio.CustomerDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,11 +10,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import javax.transaction.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.hamcrest.Matchers.hasSize;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -117,7 +111,7 @@ class TrainerControllerTest {
                 .andExpect(jsonPath("$.biography").value(trainer2.getBiography()));
 
         this.mockMvc.perform(get("/trainer/all/internal"))
-                .andExpect(status().isOk())
+                .andExpect(status().isBadGateway())
                 .andExpect(jsonPath("$[0].name").value(trainer2.getName()))
                 .andExpect(jsonPath("$[0].lastName").value(trainer2.getLastName()))
                 .andExpect(jsonPath("$[0].mail").value(trainer2.getMail()))
