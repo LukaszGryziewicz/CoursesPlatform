@@ -13,7 +13,7 @@ import static org.assertj.core.api.Assertions.catchThrowable;
 
 @SpringBootTest
 @Transactional
-public class CustomerTest {
+class CustomerTest {
     @Autowired
     private CustomerService customerService;
 
@@ -63,6 +63,7 @@ public class CustomerTest {
         List<CustomerDTO> allCustomers = customerService.findAllCustomers();
         assertThat(allCustomers).containsExactly(newCustomer);
     }
+
     @Test
     public void shouldThrowExceptionWhenMailIsInUse() {
         //given
@@ -70,16 +71,17 @@ public class CustomerTest {
         customerService.add(customer);
         CustomerDTO newCustomer = new CustomerDTO("Lukasz", "dominik.adam4538@gmail.com", "987654321");
         //when
-       Throwable thrown = catchThrowable(()-> customerService.add(newCustomer));
+        Throwable thrown = catchThrowable(() -> customerService.add(newCustomer));
         //then
         assertThat(thrown).isInstanceOf(MailIsAlreadyInUseException.class);
     }
+
     @Test
     public void shouldThrowExceptionWhenMailIsInvalid() {
         //given
         CustomerDTO customer = new CustomerDTO("Adam", "dominikkropkaadam4538małpagmailkropkacom", "123456789");
         //when
-        Throwable thrown = catchThrowable(()-> customerService.add(customer));
+        Throwable thrown = catchThrowable(() -> customerService.add(customer));
         //then
         assertThat(thrown).isInstanceOf(MailInvalidException.class);
     }

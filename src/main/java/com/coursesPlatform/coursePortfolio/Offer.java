@@ -36,66 +36,50 @@ class Offer {
         this.summaryDuration = summaryDuration;
     }
 
-    public String getOfferId() {
+    String getOfferId() {
         return offerId;
     }
 
-    public void setOfferId(String offerId) {
+    void setOfferId(String offerId) {
         this.offerId = offerId;
     }
 
-    public Customer getCustomer() {
+    Customer getCustomer() {
         return customer;
     }
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
-
-    public Category getCategory() {
+    Category getCategory() {
         return category;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
-    }
-
-    public Course getCourse() {
+    Course getCourse() {
         return course;
     }
 
-    public void setCourse(Course course) {
-        this.course = course;
-    }
-
-    public List<Lecture> getLectures() {
+    List<Lecture> getLectures() {
         return lectures;
     }
 
-    public void setLectures(List<Lecture> lectures) {
-        this.lectures = lectures;
-    }
-
-    public BigDecimal getSummaryPrice() {
+    BigDecimal getSummaryPrice() {
         return summaryPrice;
     }
 
-    public void setSummaryPrice(BigDecimal summaryPrice) {
+    void setSummaryPrice(BigDecimal summaryPrice) {
         this.summaryPrice = summaryPrice;
     }
 
-    public int getSummaryDuration() {
+    int getSummaryDuration() {
         return summaryDuration;
     }
 
-    public void setSummaryDuration(int summaryDuration) {
+    void setSummaryDuration(int summaryDuration) {
         this.summaryDuration = summaryDuration;
     }
 
     @Override
     public boolean equals(Object o) {
-        if ( this == o ) return true;
-        if ( o == null || getClass() != o.getClass() ) return false;
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
         Offer offer = (Offer) o;
         return id == offer.id && summaryDuration == offer.summaryDuration && Objects.equals(customer, offer.customer) && Objects.equals(category, offer.category) && Objects.equals(course, offer.course) && Objects.equals(lectures, offer.lectures) && Objects.equals(summaryPrice, offer.summaryPrice);
     }

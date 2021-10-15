@@ -15,7 +15,7 @@ import static org.assertj.core.api.Assertions.catchThrowable;
 
 @SpringBootTest
 @Transactional
-public class CourseTest {
+class CourseTest {
     @Autowired
     private CourseService courseService;
     @Autowired
@@ -98,7 +98,7 @@ public class CourseTest {
         courseService.add(course, "Abc");
         CourseDTO course2 = new CourseDTO("Xyz", "Def");
         //when
-        Throwable thrown = catchThrowable(() -> courseService.add(course2,"Abc"));
+        Throwable thrown = catchThrowable(() -> courseService.add(course2, "Abc"));
         //than
         assertThat(thrown).isInstanceOf(CourseTitleAlreadyExists.class).hasMessageContaining("Course title already exists");
     }

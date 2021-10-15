@@ -17,8 +17,7 @@ import static org.assertj.core.api.Assertions.catchThrowable;
 
 @SpringBootTest
 @Transactional
-public class OfferServiceTest {
-
+class OfferServiceTest {
     @Autowired
     private CategoryService categoryService;
     @Autowired

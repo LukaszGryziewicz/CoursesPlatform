@@ -10,21 +10,21 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
-public class CustomerService {
+class CustomerService {
 
     private final CustomerRepository customerRepository;
 
-    public CustomerService(CustomerRepository customerRepository) {
+    CustomerService(CustomerRepository customerRepository) {
         this.customerRepository = customerRepository;
     }
 
     CustomerDTO add(CustomerDTO customerDTO) {
         Optional<Customer> customerByMail = customerRepository
                 .findCustomerByMail(customerDTO.getMail());
-        if(!EmailValidator.getInstance().isValid(customerDTO.getMail())){
+        if (!EmailValidator.getInstance().isValid(customerDTO.getMail())) {
             throw new MailInvalidException();
         }
-        if(customerByMail.isPresent()){
+        if (customerByMail.isPresent()) {
             throw new MailIsAlreadyInUseException();
         }
         Customer customer = customerRepository.save(convertDTOToCustomer(customerDTO));

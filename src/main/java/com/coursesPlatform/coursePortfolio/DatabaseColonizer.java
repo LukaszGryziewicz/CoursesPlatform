@@ -26,7 +26,6 @@ public class DatabaseColonizer implements CommandLineRunner {
         CategoryDTO category = new CategoryDTO("IT", "Kursy IT");
         CategoryDTO category2 = new CategoryDTO("Sport", "Kursy Sportowe");
         CategoryDTO category3 = new CategoryDTO("Medica", "Kursy Medica");
-//        CategoryDTO category4 = new CategoryDTO("Medica", "Kursy Medica");
         categoryService.add(category);
         categoryService.add(category2);
         categoryService.add(category3);

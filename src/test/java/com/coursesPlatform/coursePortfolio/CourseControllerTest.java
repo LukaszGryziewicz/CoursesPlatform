@@ -20,8 +20,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @Transactional
 @AutoConfigureMockMvc
-public class CourseControllerTest {
-
+class CourseControllerTest {
     ObjectMapper objectMapper = new ObjectMapper();
     @Autowired
     private MockMvc mockMvc;
@@ -37,12 +36,12 @@ public class CourseControllerTest {
         //given
         CategoryDTO category = new CategoryDTO("IT", "ABC");
         categoryService.add(category);
-        Course course = new Course("Abc", "Xyz");
+        CourseDTO course = new CourseDTO("Abc", "Xyz");
         String content = objectMapper.writeValueAsString(course);
         //expect
         mockMvc.perform(post("/course/add/" + category.getTitle())
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(content))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(content))
                 .andExpect(status().is(201))
                 .andDo(print())
                 .andExpect(jsonPath("$.title").value(course.getTitle()))

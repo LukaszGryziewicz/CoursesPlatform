@@ -20,8 +20,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @Transactional
 @AutoConfigureMockMvc
-public class LectureControllerTest {
-
+class LectureControllerTest {
     ObjectMapper objectMapper = new ObjectMapper();
     @Autowired
     private MockMvc mockMvc;
@@ -43,8 +42,8 @@ public class LectureControllerTest {
         String content = objectMapper.writeValueAsString(lecture);
         //expect
         mockMvc.perform(post("/lecture/add/" + course.getTitle())
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(content))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(content))
                 .andDo(print())
                 .andExpect(status().is(201))
                 .andExpect(jsonPath("$.title").value(lecture.getTitle()))
