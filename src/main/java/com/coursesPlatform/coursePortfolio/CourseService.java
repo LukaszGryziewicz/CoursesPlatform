@@ -33,10 +33,10 @@ class CourseService {
         if ( courseTitle.isPresent() ) {
             throw new CourseTitleAlreadyExists();
         }
-        if ( courseDTO.getTitle().length() >= titleLengthLimit ) {
+        if (courseDTO.getTitle().length() >= titleLengthLimit) {
             throw new IllegalTitleLengthException();
         }
-        if ( courseDTO.getDescription().length() >= descriptionLengthLimit ) {
+        if (courseDTO.getDescription().length() >= descriptionLengthLimit) {
             throw new IllegalDescriptionLengthException();
         }
 

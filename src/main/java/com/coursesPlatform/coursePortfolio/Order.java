@@ -5,7 +5,7 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "TrainingOrder")
-public class Order {
+class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -17,10 +17,10 @@ public class Order {
     @ManyToOne
     private TrainerProjection trainer;
 
-    public Order() {
+    Order() {
     }
 
-    public Order(String orderId, LocalDate orderStartDate, LocalDate orderEndDate, Offer offer, TrainerProjection trainer) {
+    Order(String orderId, LocalDate orderStartDate, LocalDate orderEndDate, Offer offer, TrainerProjection trainer) {
         this.orderId = orderId;
         this.orderStartDate = orderStartDate;
         this.orderEndDate = orderEndDate;
@@ -28,43 +28,23 @@ public class Order {
         this.trainer = trainer;
     }
 
-    public LocalDate getOrderStartDate() {
+    LocalDate getOrderStartDate() {
         return orderStartDate;
     }
 
-    public void setOrderStartDate(LocalDate orderStartDate) {
-        this.orderStartDate = orderStartDate;
-    }
-
-    public LocalDate getOrderEndDate() {
+    LocalDate getOrderEndDate() {
         return orderEndDate;
     }
 
-    public void setOrderEndDate(LocalDate orderEndDate) {
-        this.orderEndDate = orderEndDate;
-    }
-
-    public String getOrderId() {
+    String getOrderId() {
         return orderId;
     }
 
-    public void setOrderId(String orderId) {
-        this.orderId = orderId;
-    }
-
-    public Offer getOffer() {
+    Offer getOffer() {
         return offer;
     }
 
-    public void setOffer(Offer offer) {
-        this.offer = offer;
-    }
-
-    public TrainerProjection getTrainer() {
+    TrainerProjection getTrainer() {
         return trainer;
-    }
-
-    public void setTrainer(TrainerProjection trainer) {
-        this.trainer = trainer;
     }
 }

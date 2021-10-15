@@ -9,10 +9,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/customer")
 @CrossOrigin(origins = "http://localhost:4200/")
-public class CustomerController {
+class CustomerController {
     private final CustomerService customerService;
 
-    public CustomerController(CustomerService customerService) {
+    CustomerController(CustomerService customerService) {
         this.customerService = customerService;
     }
 
@@ -30,8 +30,8 @@ public class CustomerController {
     }
 
     @PutMapping("/update/{mail}")
-    ResponseEntity<CustomerDTO> updateTrainer(@RequestBody CustomerDTO customerDTO,@PathVariable("mail")String mail) {
-        CustomerDTO update = customerService.update(mail , customerDTO);
+    ResponseEntity<CustomerDTO> updateTrainer(@RequestBody CustomerDTO customerDTO, @PathVariable("mail") String mail) {
+        CustomerDTO update = customerService.update(mail, customerDTO);
         return new ResponseEntity<>(update, HttpStatus.OK);
     }
 

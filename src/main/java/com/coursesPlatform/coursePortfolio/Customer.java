@@ -7,7 +7,7 @@ import javax.persistence.Id;
 import java.util.Objects;
 
 @Entity
-public class Customer {
+class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
@@ -15,45 +15,45 @@ public class Customer {
     private String mail;
     private String phoneNumber;
 
-    public Customer() {
+    Customer() {
     }
 
-    public Customer(long id, String name, String mail, String phoneNumber) {
+    Customer(long id, String name, String mail, String phoneNumber) {
         this.id = id;
         this.name = name;
         this.mail = mail;
         this.phoneNumber = phoneNumber;
     }
 
-    public long getId() {
+    long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    void setId(long id) {
         this.id = id;
     }
 
-    public String getName() {
+    String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    void setName(String name) {
         this.name = name;
     }
 
-    public String getMail() {
+    String getMail() {
         return mail;
     }
 
-    public void setMail(String mail) {
+    void setMail(String mail) {
         this.mail = mail;
     }
 
-    public String getPhoneNumber() {
+    String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
+    void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 

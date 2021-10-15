@@ -13,7 +13,7 @@ import static org.assertj.core.api.Assertions.catchThrowable;
 
 @SpringBootTest
 @Transactional
-public class LectureTest {
+class LectureTest {
     @Autowired
     private LectureRepository lectureRepository;
     @Autowired

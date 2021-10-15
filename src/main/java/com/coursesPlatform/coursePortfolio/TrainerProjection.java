@@ -20,13 +20,7 @@ class TrainerProjection {
     TrainerProjection() {
     }
 
-    TrainerProjection(String name, String lastName, String mail) {
-        this.name = name;
-        this.lastName = lastName;
-        this.mail = mail;
-    }
-
-    public TrainerProjection(String name, String lastName, String mail, List<LocalDate> unavailableDays) {
+    TrainerProjection(String name, String lastName, String mail, List<LocalDate> unavailableDays) {
         this.name = name;
         this.lastName = lastName;
         this.mail = mail;
@@ -71,8 +65,8 @@ class TrainerProjection {
 
     @Override
     public boolean equals(Object o) {
-        if ( this == o ) return true;
-        if ( o == null || getClass() != o.getClass() ) return false;
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
         TrainerProjection trainer = (TrainerProjection) o;
         return Objects.equals(id, trainer.id) && Objects.equals(name, trainer.name) && Objects.equals(lastName, trainer.lastName) && Objects.equals(mail, trainer.mail) && Objects.equals(unavailableDays, trainer.unavailableDays);
     }
